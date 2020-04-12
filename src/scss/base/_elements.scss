@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+:root {
+    font-size: 10px;
+}
+
+body {
+    font-family: sans-serif;
+    overflow: hidden;
+    font-size: 1.6rem;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'pokemon_gbregular';
+}
+
+p {
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+}

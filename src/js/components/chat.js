@@ -1,0 +1,1 @@
+kanto_console('Loaded: chat.js');

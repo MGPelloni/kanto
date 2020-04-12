@@ -1,0 +1,30 @@
+{
+  "name": "kanto.chat",
+  "version": "1.0.0",
+  "description": "Chat with other players in the world of Kanto.",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/marcopelloni/kanto-chat.git"
+  },
+  "scripts": {
+    "start": "gulp",
+    "compile": "gulp compile"
+  },
+  "author": "Marco Pelloni",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-preset-env": "^1.7.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify-es": "^2.0.0"
+  },
+  "dependencies": {
+    "pixi.js": "^5.0.0"
+  }
+}
