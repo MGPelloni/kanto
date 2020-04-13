@@ -5,6 +5,7 @@
     background-color: #fbfbfb;
     margin: 0 0 10px;
     font-size: 1.4rem;
+    overflow-y: scroll;
 }
 
 #chat-input {
@@ -49,4 +50,10 @@
     &.character-oak {
         background-image: url('../assets/images/characters/oak.png');
     }
+}
+
+.game-chat-message {
+    margin: 0;
+    padding: 5px 10px;
+    background-color: #cedae6;
 }

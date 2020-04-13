@@ -10,13 +10,12 @@ function kanto_console(message, type) {
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
         var args = [
             "\n %c %c %c Kanto.chat v1.0.0 %c  %c  " + message + "  %c \n",
-            'background: #ff66a5; padding:5px 0;',
-            'background: #ff66a5; padding:5px 0;',
-            'color: #ff66a5; background: #030307; padding:5px 0;',
-            'background: #ff66a5; padding:5px 0;',
-            'color: #ff2424; background: #fff; padding:5px 0;',
-            'background: #ffc3dc; padding:5px 0;',
-            'background: #ff66a5; padding:5px 0;',
+            'background: #cedae6; padding:5px 0;',
+            'background: #cedae6; padding:5px 0;',
+            'color: #cedae6; background: #030307; padding:5px 0;',
+            'background: #cedae6; padding:5px 0;',
+            'color: #2f2f2f; background: #fff; padding:5px 0;',
+            'background: #cedae6; padding:5px 0;',
             ];
         (_a = window.console).log.apply(_a, args);
     }
