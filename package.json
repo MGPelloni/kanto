@@ -1,10 +1,10 @@
 {
-  "name": "kanto.chat",
-  "version": "1.0.0",
-  "description": "Chat with other players in the world of Kanto.",
+  "name": "kanto",
+  "version": "0.0.1",
+  "description": "Telling the stories of the Kanto region.",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/marcopelloni/kanto-chat.git"
+    "url": "https://github.com/MGPelloni/kanto.git"
   },
   "scripts": {
     "start": "gulp",

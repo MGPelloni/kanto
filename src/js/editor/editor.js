@@ -304,7 +304,7 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line"><label>Y:</label><input name="y" type="number"></div>';
             break;
         case 3:
-            display_editor.innerHTML += '<h5>Type: Action</h5>';
+            display_editor.innerHTML += '<h5>Action</h5>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="3" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><input name="message" type="text"></div>';
             break;
