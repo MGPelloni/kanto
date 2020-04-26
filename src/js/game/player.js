@@ -1,101 +1,86 @@
+class Player {
+    constructor(name = '', position = {map: 0, x: 0, y: 0}, spritesheet = false) {
+        this.name = name;
+        this.position = position;
+        this.spritesheet = spritesheet;
 
-function createPlayer(x, y) {
-    player = new PIXI.AnimatedSprite(playerSheet.standSouth);
-    player.anchor.set(0.5);
-    player.animationSpeed = 0.125;
-    player.loop = false;
-    player.x = app.view.width / 2;
-    player.y = app.view.height / 2;
-    player.width = TILE_SIZE;
-    player.height = TILE_SIZE;
-    player.game_pos = {
-        x: 0,
-        y: 0,
+        this.facing = 'South';
+        this.can_check_action = true;
+        this.moving = false;
+        this.current_move_ticker = 0;
+        this.can_move = true;
+        this.current_map = maps[0];
+
+        this.set_sprite();
+        app.stage.addChild(this.sprite);
+        this.place(position.x, position.y);
+       
     }
 
-    player.place = (x, y) => {
-        background.x = background.x + ((x * TILE_SIZE) * -1);
-        background.y = background.y + ((y * TILE_SIZE) * -1);
-        player.game_pos.x = x;
-        player.game_pos.y = y;
-    };
+    set_sprite() {
+        this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standSouth);
+        this.sprite.anchor.set(0.5);
+        this.sprite.animationSpeed = 0.125;
+        this.sprite.loop = false;
+        this.sprite.x = app.view.width / 2;
+        this.sprite.y = app.view.height / 2;
+        this.sprite.width = TILE_SIZE;
+        this.sprite.height = TILE_SIZE;
+    }
 
-    player.check_action = (direction) => {
+    place(x, y, map_id = false) {
+        if (map_id !== false && map_id !== this.current_map.id) {
+            map = maps[map_id]
+            this.current_map = maps[map_id];
+            map.build();
+            this.position.map = map_id;
+        }
+
+        background.x = background.origin.x + ((x * TILE_SIZE) * -1);
+        background.y = background.origin.y + ((y * TILE_SIZE) * -1);
+
+        atts_container.x = atts_container.origin.x + ((x * TILE_SIZE) * -1);
+        atts_container.y = atts_container.origin.y + ((y * TILE_SIZE) * -1);
+
+        this.position.x = x;
+        this.position.y = y;
+        this.position.tile = this.current_map.atts[x + this.current_map.width * y];
+
+        if (editor.enabled) {
+            editor.prepare_tiles();
+        }
+    }
+
+    check_action(direction) {
         switch (direction) {
             case 'North':
-                player.current_map.action(player.game_pos.x, player.game_pos.y - 1);
+                console.log(this.current_map.atts[this.position.x + this.current_map.width * (this.position.y - 1)]);
                 break;
             case 'South':
-                player.current_map.action(player.game_pos.x, player.game_pos.y + 1);
+                console.log(this.current_map.atts[this.position.x + this.current_map.width * (this.position.y + 1)]);
                 break;
             case 'West':
-                player.current_map.action(player.game_pos.x - 1, player.game_pos.y);
+                console.log(this.current_map.atts[(this.position.x - 1) + this.current_map.width * this.position.y]);
                 break;
             case 'East':
-                player.current_map.action(player.game_pos.x + 1, player.game_pos.y);
+                console.log(this.current_map.atts[(this.position.x + 1) + this.current_map.width * this.position.y]);
                 break;
             default:
                 break;
         }
-    };
+    }
 
-    player.facing = 'South';
-    player.can_check_action = true;
+    position_update() {
+        let array_pos = this.position.x + this.current_map.width * this.position.y;
+        this.position.tile = this.current_map.atts[array_pos];
 
-    app.stage.addChild(player);
-
-    player.play();
-
-    
-    player.moving = false;
-    player.current_move_ticker = 0;
-    player.can_move = true;
-}
-
-
-
-function create_player_sheet() {
-    let ssheet = new PIXI.BaseTexture.from(app.loader.resources['red'].url);
-    let w = TILE_SIZE;
-    let h = TILE_SIZE;
-
-    playerSheet["standSouth"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h))
-    ];
-
-    playerSheet["standNorth"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 1 * h, w, h))
-    ];
-
-    playerSheet["standWest"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 2 * h, w, h))
-    ];
-
-    playerSheet["standEast"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 3 * h, w, h))
-    ];
-
-    playerSheet["walkSouth"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 4 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 0, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 4 * h, w, h), null, null, 12),
-    ];
-
-    playerSheet["walkWest"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 2 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 6 * h, w, h)),
-    ];
-
-    playerSheet["walkEast"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 3 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 7 * h, w, h)),
-    ];
-
-    playerSheet["walkNorth"] = [
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 1 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 5 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 1 * h, w, h)),
-        new PIXI.Texture(ssheet, new PIXI.Rectangle(0, 5 * h, w, h), null, null, 12),
-    ];
+        switch (this.position.tile.type) {
+            case 2: // Warp
+                player.place(this.position.tile.x, this.position.tile.y, this.position.tile.map);
+                return;
+                break;
+            default:
+                break;
+        }
+    }
 }

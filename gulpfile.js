@@ -49,8 +49,8 @@ gulp.task('scss', function(){
 gulp.task('js', function(done){
     return gulp.src(js)
 		.pipe(concat('kanto.min.js'))
-		.pipe(babel())
-		.pipe(uglify())
+		// .pipe(babel())
+		// .pipe(uglify())
         .pipe(gulp.dest(`${dest}`))
 });
 

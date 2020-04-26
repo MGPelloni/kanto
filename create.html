@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>Kanto</title>
+        <link rel="stylesheet" href="dist/kanto.min.css?v=1.0.1">
+    </head>
+    <body>
+        <div id="kanto" class="kanto-create">
+            <div class="_container">
+                <header>
+                    <h1>Kanto</h1>
+                    <p>v0.0.1</p>
+                    <nav>
+                        <a href="index.html">Play</a>
+                        <a href="create.html">Create</a>
+                    </nav>
+                </header>
+                <div class="_grid">
+                    <div id="kanto-editor">
+                        <div class="_container">
+                            <nav>
+                                <button data-open="#map-editor">Maps</button>
+                                <button data-open="#tile-editor" data-mode="tiles">Tiles</button>
+                                <button data-open="#att-editor" data-mode="atts">Attributes</button>
+                                <button data-open="#properties-editor">Properties</button>
+                            </nav>
+                            <div id="map-editor" class="editor -active">
+                                <div class="general-editor-display">
+                                    <ol>
+                                        <li class="-active" data-map="0">Pallet Town</li>
+                                        <li data-map="1">RED's House</li>
+                                        <li data-map="2">BLUE's House</li>
+                                        <li data-map="3">Oak's Laboratory</li>
+                                    </ol>
+                                </div>
+                                <div class="general-editor-options">
+                                    <button>New Map</button>
+                                </div>
+                            </div>
+                            <div id="tile-editor" class="editor">
+                                <div class="general-editor-display">
+                                    <img src="assets/images/tileset.png">
+                                </div>
+                                <div class="general-editor-options">
+                                    <button>Background</button>
+                                    <button>Foreground</button>
+                                    <button>Animate Tile</button>
+                                </div>
+                            </div>
+                            <div id="att-editor" class="editor">
+                                <div class="general-editor-display">
+                                    <p>Select an attribute and hover over + click the map to place it. If the attribute has properties that must be set, they will display here!</p>
+                                </div>
+                                <div class="general-editor-options">
+                                    <button data-att="1">Wall</button>
+                                    <button data-att="2">Warp</button>
+                                    <button data-att="3">Action</button>
+                                </div>
+                            </div>
+                            <div id="properties-editor" class="editor">
+                                <div class="general-editor-display">
+                                    <div class="editor-data-line">
+                                        <span>Name: </span>
+                                        <input type="text" name="editor-map-name">
+                                    </div>
+                                    <div class="editor-data-line">
+                                        <span>Music: </span>
+                                        <select name="editor-map-music">
+                                            <option>None</option>
+                                            <option>Pallet Town</option>
+                                            <option>Cerulean City</option>
+                                            <option>Route 1</option>
+                                            <option>Victory Road</option>
+                                        </select>
+                                    </div>
+                                    <div class="editor-data-line -well">
+                                        <p>Start Position:</p>
+                                        <span>X: </span><input type="number" name="editor-start-x">
+                                        <span>Y: </span><input type="number" name="editor-start-y">
+                                    </div>
+                                    <div class="editor-data-line -well">
+                                        <p>Map Dimensions:</p>
+                                        <span>X: </span><input type="number" disabled value="100">
+                                        <span>Y: </span><input type="number" disabled value="100">
+                                    </div>
+                                </div>
+                                <div class="general-editor-options">
+                                    <button data-att="wall">Wall</button>
+                                    <button data-att="warp">Warp</button>
+                                    <button data-att="action">Action</button>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                    <div id="game">
+                        <canvas id="pkmn"></canvas>
+                    </div>
+                </div>
+            </div>
+        <script src="dist/kanto.min.js?v=1.0.1"></script>
+    </body>
+</html>
+

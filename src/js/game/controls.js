@@ -1,3 +1,6 @@
+window.addEventListener("keydown", keysDown);
+window.addEventListener("keyup", keysUp);
+
 function keysDown(e) {
     if (e.keyCode == "37" || e.keyCode == "38" || e.keyCode == "39" || e.keyCode == "40") {
         e.preventDefault();
@@ -13,56 +16,59 @@ function keysUp(e) {
 function controls_loop() {
     if (!player.moving && player.can_move) {
         if (keys["87"] || keys["38"]) {
-            if (!player.playing || player.textures !== playerSheet.walkNorth) {
-                player.textures = playerSheet.walkNorth;
-                player.play();
+            if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkNorth) {
+                player.sprite.textures = player.spritesheet.walkNorth;
+                player.sprite.play();
+                player.facing = 'North';
             }
 
-            if (collision_check(player, player.game_pos.x, player.game_pos.y - 1) == false) {
+            if (collision_check(player, player.position.x, player.position.y - 1) == false) {
                 player.direction = 'North';
                 player.moving = true;
-                player.game_pos.y--;
+                player.position.y--;
             }
         } else if (keys["83"] || keys["40"]) {
-            if (!player.playing || player.textures !== playerSheet.walkSouth) {
-                player.textures = playerSheet.walkSouth;
-                player.play();
+            if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkSouth) {
+                player.sprite.textures = player.spritesheet.walkSouth;
+                player.sprite.play();
+                player.facing = 'South';
             }
 
-            if (collision_check(player, player.game_pos.x, player.game_pos.y + 1) == false) {
+            if (collision_check(player, player.position.x, player.position.y + 1) == false) {
                 player.direction = 'South';
                 player.moving = true;
-                player.game_pos.y++;
+                player.position.y++;
             }
         } else if (keys["65"] || keys["37"]) {
-            if (!player.playing  || player.textures !== playerSheet.walkWest) {
-                player.textures = playerSheet.walkWest;
-                player.play();
+            if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkWest) {
+                player.sprite.textures = player.spritesheet.walkWest;
+                player.sprite.play();
+                player.facing = 'West';
             }
 
-            if (collision_check(player, player.game_pos.x - 1, player.game_pos.y) == false) {
+            if (collision_check(player, player.position.x - 1, player.position.y) == false) {
                 player.direction = 'West';
                 player.moving = true;
-                player.game_pos.x--;
+                player.position.x--;
+                
             }
         } else if (keys["68"]|| keys["39"]) {
-            if (!player.playing || player.textures !== playerSheet.walkEast) {
-                player.textures = playerSheet.walkEast;
-                player.play();                
+            if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkEast) {
+                player.sprite.textures = player.spritesheet.walkEast;
+                player.sprite.play();       
+                player.facing = 'East';         
             }
 
-            if (collision_check(player, player.game_pos.x + 1, player.game_pos.y) == false) {
+            if (collision_check(player, player.position.x + 1, player.position.y) == false) {
                 player.direction = 'East';
                 player.moving = true;
-                player.game_pos.x++;
+                player.position.x++;
             }
         }
         
         if (keys["88"]) {
             // A Button
-
             if (player.can_check_action) {
-                console.log('A button');
                 player.check_action(player.facing);
                 player.can_check_action = false;
 
@@ -85,21 +91,25 @@ function move_loop() {
         // Up
         if (player.direction == 'North') {
             background.y++;
+            atts_container.y++;
         }
 
         // Down
         if (player.direction == 'South') {
             background.y--;
+            atts_container.y--;
         }
 
         // Left
         if (player.direction == 'West') {
             background.x++;
+            atts_container.x++;
         }
 
         // Right
         if (player.direction == 'East') {
             background.x--;
+            atts_container.x--;
         }
 
         if (player.current_move_ticker >= 15) {
@@ -108,13 +118,41 @@ function move_loop() {
             player.direction = null;
             player.can_move = false;
 
+
             setTimeout(() => {
-                console.log(player.game_pos);
+                player.position_update();
                 player.can_move = true;
                 player.current_move_ticker = 0;
+
+                console.log(player.position);
             }, 8)
         }
         
         player.current_move_ticker++;
+    }
+}
+
+
+function editor_controls_loop() {
+    if (editor.zoom_timeout == false && !player.moving && player.can_move) {
+        if (keys["189"]) {
+            app.renderer.resize(app.renderer.width + editor.zoom, app.renderer.height + editor.zoom);
+            center_stage_assets();
+
+            editor.zoom_timeout = true;
+            setTimeout(() => {
+                editor.zoom_timeout = false;
+            }, 500)
+        } 
+
+        if (keys["187"]) {
+            app.renderer.resize(app.renderer.width - editor.zoom, app.renderer.height - editor.zoom);
+            center_stage_assets();
+
+            editor.zoom_timeout = true;
+            setTimeout(() => {
+                editor.zoom_timeout = false;
+            }, 500)
+        } 
     }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>Kanto</title>
+        <link rel="stylesheet" href="dist/kanto.min.css?v=1.0.1">
+    </head>
+    <body>
+        <div id="kanto">
+            <div class="_container">
+                <div class="_grid">
+                    <div class="kanto-chat-container">
+                        <h1>Kanto.build</h1>
+                        <p>An online PKMN world building game</p>
+                        <div id="chat-feed">
+                            <div class="_well character-oak">
+                                <h3>Instructions</h3>
+                                <p>Use the arrow keys to move, press X to interact (A button)!<br><br>This map is built dynamically and will soon allow for players to build custom Kanto maps + play with others online!</p>
+                            </div>
+                            <p>Welcome to Kanto! There are 2 other players online. (Chat is currently disabled)</p>
+                        </div>
+                        <input id="chat-input" type="text">
+                    </div>
+                    <div class="kanto-game-container">
+                        <div id="gameboy">
+                            <canvas id="pkmn"></canvas>
+                            <img src="assets/images/game-boy.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="_container">
+                <div id="tile-editor">
+                    <img src="assets/images/tiles.png">
+                </div>
+            </div>
+        </div>
+        <script src="dist/kanto.min.js?v=1.0.1"></script>
+    </body>
+</html>

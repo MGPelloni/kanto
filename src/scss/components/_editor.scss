@@ -1,8 +1,110 @@
-#tile-editor {
-    display: none;
-    overflow: scroll;
-    width: 300px;
-    height: 500px;
-    background-color: #000;
-    transform: scale(2);
+#kanto-editor {
+    font-size: 1.5rem;
+    padding: 20px 0;
+    background-color: #cedae6;
+
+    ._container {
+        width: calc(480px + 15px);
+        padding: 0;
+    }
+
 }
+
+#kanto-editor nav {
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+#map-editor {
+    ol {
+        padding: 0;
+        margin: 0 0 10px;
+        list-style-type: none;
+    }
+
+    li {
+        padding: 3px 10px;
+        margin: 0 0 5px;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+
+        &.-active {
+            background-color: #cedae6;
+            border-color: #7caee0;
+        }
+
+        &:hover {
+            opacity: 0.6;
+            background-color: #cedae6;
+            border-bottom: 2px solid #7caee0;
+        }
+    }
+}
+
+#tile-editor {
+    width: 100%;
+    margin: 0 auto;
+
+    .general-editor-display {
+        padding: 0;
+        background-color: #cedae6;
+    }
+
+    img {
+        width: auto;
+        max-width: none;
+        transform: scale(2);
+        transform-origin: top left;
+    }
+}
+
+.editor {
+    display: none;
+
+    &.-active {
+        display: block;
+    }
+}
+
+.general-editor-display {
+    padding: 30px;
+    background-color: #f1f1f1;
+    height: 260px;
+    overflow-y: scroll;
+
+    h5 {
+        padding: 1rem;
+        margin: 0 0 1rem;
+        border-bottom: 2px solid black;
+    }
+}
+
+.general-editor-options {
+    padding: 10px 10px 0;
+    border-top: 2px solid black;
+}
+
+.editor-data-line {
+    margin: 0 0 1rem;
+
+    label {
+        margin: 0 1rem 0 0;
+    }
+
+    &.-well {
+        padding: 15px;
+        background-color: #e2e2e2;
+    }
+
+    input:disabled {
+        opacity: 0.5;
+    }
+}
+
+#att-editor-options {
+    padding: 30px;
+    background-color: #f1f1f1;
+    height: 260px;
+    overflow-y: scroll;
+}
+

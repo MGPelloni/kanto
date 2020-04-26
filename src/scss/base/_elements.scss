@@ -21,3 +21,37 @@ p {
     margin: 0 0 1rem;
     font-size: 1.4rem;
 }
+
+img {
+    max-width: 100%;
+}
+
+header {
+    margin: 0 0 2rem;
+    padding: 4rem 4rem;
+    background-color: #f1f1f1;
+    text-align: center;
+
+    nav a {
+        margin: 0 10px;
+    }
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    -webkit-appearance: none;
+    border: 2px solid #000;
+    background-color: #fff;
+    padding: 10px 20px;
+    font-family: pokemon_gbregular;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #949494;
+        color: #949494;
+    }
+}
