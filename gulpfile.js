@@ -32,10 +32,12 @@ let gulp = require('gulp'); // Workflow Automation
 	// The JS files that need to be compiled in order
     js = [
 		`${modules}/pixi.js/dist/pixi.min.js`, 
+		`${modules}/howler/dist/howler.min.js`, 
 		`${src}/js/**/*.js`,
 		`${src}/js/main.js`
 	];
-	
+
+	browserSync = require('browser-sync').create();
 
 gulp.task('scss', function(){
     return gulp.src(scss)
@@ -59,5 +61,16 @@ gulp.task('watch', function () {
 	gulp.watch(watch.js, gulp.series('js'));
 });
 
+gulp.task('browser-sync', function() {
+    browserSync.init({
+		port: 8000,
+		files: ["dist/*"],
+        server: {
+			baseDir: "./"
+        }
+    });
+});
+
 gulp.task('default', gulp.series('scss', 'js', 'watch'));
+gulp.task('server', gulp.series('browser-sync'));
 gulp.task('compile', gulp.series('scss', 'js'));

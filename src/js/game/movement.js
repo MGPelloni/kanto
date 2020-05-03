@@ -6,7 +6,7 @@
  * @param {number} y The y-axis value to check.
  */
 function collision_check(player, x, y) {
-    // x-axis boundary check
+    // x-axis boundary check   
     if (x < 0 || x >= map.width) {
         return true;
     }
@@ -16,11 +16,34 @@ function collision_check(player, x, y) {
         return true;
     }
 
-    // atts collision check
-    let array_pos = x + player.current_map.width * y;
-    if (player.current_map.atts[array_pos].type == 1 || player.current_map.atts[array_pos].type == 3) {
+    // attribute check
+    switch (player.current_map.atts[x + player.current_map.width * y].type) {
+        case 1: // Wall
+        case 3: // Action
+            return true;
+            break;
+        default:
+            break;
+    }
+
+    return false;
+}
+
+function exit_check() {
+    if (player.current_map.atts[player.position.index].type == 4) {  // Exiting the map
         return true;
     }
 
     return false;
 }
+
+// Disabling controls when element is clicked out of
+document.addEventListener('click', e => {
+    let game_elem = document.querySelector('#pkmn');
+
+    if (document.activeElement === game_elem) {
+        paused = false;
+    } else {
+        paused = true;
+    }
+});

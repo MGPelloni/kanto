@@ -6,9 +6,10 @@ class Player {
 
         this.facing = 'South';
         this.can_check_action = true;
+        this.frozen = false;
         this.moving = false;
-        this.current_move_ticker = 0;
         this.can_move = true;
+        this.current_move_ticker = 0;
         this.current_map = maps[0];
 
         this.set_sprite();
@@ -44,39 +45,80 @@ class Player {
 
         this.position.x = x;
         this.position.y = y;
+        this.position.index = this.position.x + this.current_map.width * this.position.y;
         this.position.tile = this.current_map.atts[x + this.current_map.width * y];
-
+        
         if (editor.enabled) {
             editor.prepare_tiles();
         }
     }
 
+    freeze(ms = 250) {
+        this.frozen = true;
+
+        setTimeout(() => {
+            this.frozen = false;
+        }, ms)
+    }
+
     check_action(direction) {
+        let map_tile;
+        let att_tile;
+        let index;
+
         switch (direction) {
             case 'North':
-                console.log(this.current_map.atts[this.position.x + this.current_map.width * (this.position.y - 1)]);
+                index = this.position.x + this.current_map.width * (this.position.y - 1);
                 break;
             case 'South':
-                console.log(this.current_map.atts[this.position.x + this.current_map.width * (this.position.y + 1)]);
+                index = this.position.x + this.current_map.width * (this.position.y + 1)
                 break;
             case 'West':
-                console.log(this.current_map.atts[(this.position.x - 1) + this.current_map.width * this.position.y]);
+                index = (this.position.x - 1) + this.current_map.width * this.position.y;
                 break;
             case 'East':
-                console.log(this.current_map.atts[(this.position.x + 1) + this.current_map.width * this.position.y]);
+                index = (this.position.x + 1) + this.current_map.width * this.position.y
                 break;
             default:
                 break;
         }
+
+        map_tile = this.current_map.tiles[index];
+        att_tile = this.current_map.atts[index];
+
+        switch (att_tile.type) {
+            case 1:
+                if (!dialogue.active) {
+                    check_sprite_tile_actions(map_tile);
+                }
+                break;
+            case 3:
+                if (!dialogue.active) {
+                    dialogue.queue_messages(att_tile.message);
+                }
+                break;
+            default:
+                break;
+        }
+
+        console.log(att_tile);
     }
 
     position_update() {
-        let array_pos = this.position.x + this.current_map.width * this.position.y;
-        this.position.tile = this.current_map.atts[array_pos];
+        this.position.index = this.position.x + this.current_map.width * this.position.y;
+        this.position.tile = this.current_map.tiles[this.position.index];
+        this.position.att = this.current_map.atts[this.position.index];
 
-        switch (this.position.tile.type) {
+        switch (this.position.att.type) {
             case 2: // Warp
-                player.place(this.position.tile.x, this.position.tile.y, this.position.tile.map);
+                if (this.position.tile == 138) { // Tile is a door
+                    sfx.play('go-inside');
+                } else {
+                    sfx.play('go-outside');
+                }
+                
+                this.place(this.position.att.x, this.position.att.y, this.position.att.map);
+                this.freeze();
                 return;
                 break;
             default:

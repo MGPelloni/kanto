@@ -8,10 +8,12 @@ class Editor {
         this.palette = document.querySelector('#tile-editor img');
         this.mode = null;
 
-        this.prepare_maps();
-        this.prepare_palette();
-        this.prepare_tiles();
-        this.prepare_atts();
+        if (this.palette) {
+            this.prepare_maps();
+            this.prepare_palette();
+            this.prepare_tiles();
+            this.prepare_atts();
+        }
     }
 
     refresh() {
@@ -85,6 +87,9 @@ class Editor {
                         case 3:
                             atts_container.children[sprite.game_position.index].tint = '0x00FF00';
                             break;
+                        case 4:
+                            atts_container.children[sprite.game_position.index].tint = '0xFFA500';
+                            break;
                         default:
                             break;
                     }
@@ -111,6 +116,9 @@ class Editor {
                             break;
                         case 3:
                             atts_container.children[sprite.game_position.index].tint = '0x00FF00';
+                            break;
+                        case 4:
+                            atts_container.children[sprite.game_position.index].tint = '0xFFA500';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -179,6 +187,8 @@ class Editor {
             case 3: 
               color = '0x00FF00';
               break;
+            case 4:
+              color = '0xFFA500';
             default:
               color = '0xEEEEEE';
               break;
@@ -249,6 +259,23 @@ function add_padding() {
     console.log(JSON.stringify(new_atts));
 }
 
+function fill_map(tile) {
+    background.removeChildren();
+    map.tiles = [];
+
+    for (let y = 0; y < map.height; y++) {
+      for (let x = 0; x < map.width; x++) {
+        let index = x + map.width * y;
+        let sprite = new PIXI.Sprite(tile_textures[tile]);
+        map.tiles.push(tile);
+        sprite.x = x * TILE_SIZE;
+        sprite.y = y * TILE_SIZE;
+        sprite.game_position = {map: map.id, x: x, y: y, index: index}; 
+        background.addChild(sprite);
+      }
+   }
+}
+
 function center_stage_assets() {
     background.origin.x = app.screen.width / 2 - TILE_SIZE / 2;
     background.origin.y = app.screen.width / 2 - TILE_SIZE / 2; 
@@ -306,7 +333,14 @@ function set_att_editor(type) {
         case 3:
             display_editor.innerHTML += '<h5>Action</h5>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="3" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><input name="message" type="text"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea>';
+            break;
+        case 4:
+            display_editor.innerHTML += '<h5>Exit</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="4" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Map:</label><input name="map" type="number"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>X:</label><input name="x" type="number"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Y:</label><input name="y" type="number"></div>';
             break;
         default:
             break;

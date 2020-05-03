@@ -2,6 +2,7 @@
     font-size: 1.5rem;
     padding: 20px 0;
     background-color: #cedae6;
+    height: 400px;
 
     ._container {
         width: calc(480px + 15px);
@@ -76,6 +77,12 @@
         padding: 1rem;
         margin: 0 0 1rem;
         border-bottom: 2px solid black;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 100px;
+        margin: 0.5rem 0 1rem 0;
     }
 }
 

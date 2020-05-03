@@ -9,7 +9,7 @@ function kanto_console(message, type) {
     var _a;
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
         var args = [
-            "\n %c %c %c Kanto.chat v1.0.0 %c  %c  " + message + "  %c \n",
+            "\n %c %c %c Kanto v" + VERSION + " %c  %c  " + message + "  %c \n",
             'background: #cedae6; padding:5px 0;',
             'background: #cedae6; padding:5px 0;',
             'color: #cedae6; background: #030307; padding:5px 0;',

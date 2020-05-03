@@ -1,16 +1,31 @@
+/**
+ * Initializes the application.
+ */
 function kanto_load() {
+    kanto_console('https://github.com/MGPelloni/kanto');
     kanto_load_assets();
 }
 
+/**
+ * Loads the game assets.
+ */
 function kanto_load_assets() {
     app.loader
-        .add('red', 'assets/images/red.png')
-        .add('tilemap', 'assets/images/tileset.png')
+        .add('red', 'assets/graphics/red.png')
+        .add('tilemap', 'assets/graphics/tileset.png')
+        .add('message', 'assets/graphics/message.jpg')
     app.loader.load(kanto_load_maps);
 }
 
+/**
+ * Fetches the JSON formatted map data and initializes the game start when complete.
+ */
 function kanto_load_maps() {
-    fetch('http://localhost:8000/src/js/maps/pallet.json').then((res) => {
+    // let selected_map = prompt('Enter the game you wish to load:');
+    let selected_map = 'pallet',
+        map_url = `${window.location.protocol}//${window.location.host}/src/js/maps/${selected_map}.json`;
+
+    fetch(map_url).then((res) => {
         return res.json();
     }).then((data) => {
         map_data = Object.entries(data);
@@ -26,11 +41,21 @@ function kanto_load_maps() {
     });
 }
 
+/**
+ * Initializes the game.
+ */
 function kanto_start() {
     prepare_background();
     prepare_atts_container();
+
     prepare_tilemap();
     prepare_spritesheets();
+    prepare_audio();
+    prepare_dialogue();
+
+
+    // Audio
+    Howler.mute(true); // Mute the volume across the game until user enables
     
     player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, spritesheets.red);
     player.current_map = map;
@@ -43,6 +68,12 @@ function kanto_start() {
         editor = new Editor();
         app.ticker.add(editor_controls_loop);
     }
+
+    // Focus on the canvas to enable the game controls
+    document.querySelector('#pkmn').focus();
+
+    // Foreground
+    prepare_messages();
 }
 
 function prepare_atts_container() {
@@ -85,6 +116,49 @@ function prepare_tilemap() {
 
 function prepare_spritesheets() {
     spritesheets.red = create_spritesheet(app.loader.resources['red'].url);
+}
+
+function prepare_audio() {
+    music = new Music();
+    sfx = new Sfx();
+}
+let message_text;
+function prepare_messages() {
+    let message_texture = new PIXI.Texture.from(app.loader.resources['message'].url);
+        message_bg = new PIXI.Sprite(message_texture);
+
+    // Message background
+    message_bg.width = app.view.width;
+    message_bg.aspect = message_texture.baseTexture.resource.width / message_texture.baseTexture.resource.height;
+    message_bg.height = 1 / message_bg.aspect * message_bg.width;
+    
+    // Message container
+    message_container.y = app.view.height - message_bg.height;
+    message_container.visible = true;
+
+    message_bounds = {
+        width: app.view.width - 20
+    };
+
+    // Message text
+    message_text = new PIXI.Text('', {fontFamily: 'pokemon_gbregular', fontSize: 16, fill : 0x000000, align : 'left', wordWrap: true, wordWrapWidth: message_bounds.width * 2});
+    message_text.x = 8;
+    message_text.y = 18;
+    message_text.style.lineHeight = 30;
+    message_text.scale.x = 0.5;
+    message_text.scale.y = 0.5;
+    message_text.resolution = 4;
+
+    // Adding to the stage
+    app.stage.addChild(message_container);
+    message_container.addChild(message_bg);
+    message_container.addChild(message_text);
+
+    message_container.visible = false;
+}
+
+function prepare_dialogue() {
+    dialogue = new Dialogue();
 }
 
 function store_data(name, object) {

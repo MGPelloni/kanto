@@ -1,3 +1,7 @@
+// Kanto Information
+const VERSION = '0.0.2';
+
+// Game Constants
 const TILE_SIZE = 16;
 const GAME_WIDTH = 160;
 const GAME_HEIGHT = 160;
@@ -12,15 +16,24 @@ const app = new PIXI.Application({
     backgroundColor: 0x000000,
 });
 
+// Game Variables
 let maps = [];
 let keys = {};
 let player;  
 let editor = {};
-let messages = [];
+let dialogue = {};
 let tile_textures = [];
 let spritesheets = {};
+let paused = false;
+let game_mode = 'Creative';
+
+// Animation Containers
 let background = new PIXI.Container();
 let atts_container = new PIXI.Container();
-let game_mode = 'Creative';
+let message_container = new PIXI.Container();
+
+// Audio
+let music;
+let sfx;
 
 kanto_load(); // game/load.js

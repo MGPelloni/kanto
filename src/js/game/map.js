@@ -75,7 +75,7 @@ class Kanto_Map {
     }
   }
 
-  build_atts() {
+  build_atts() { // Editor view
     atts_container.removeChildren();
 
     for (let y = 0; y < this.height; y++) {
@@ -99,6 +99,9 @@ class Kanto_Map {
           case 3: 
             sprite.tint = '0x00FF00';
             break;
+          case 4: 
+            sprite.tint = '0xFFA500';
+            break;
           default:
             sprite.tint = '0xEEEEEE';
             sprite.alpha = 0;
@@ -113,7 +116,27 @@ class Kanto_Map {
   build() {
     this.build_tiles();
     this.build_atts();
+    
+    if (music) {
+      music.play(this.music);
+    }
 
     player.place(this.starting_position.x, this.starting_position.y, this.id);
+  }
+}
+
+function check_sprite_tile_actions(tile) {
+  console.log('check_sprite_tile_actions:', tile);
+
+  switch (tile) {
+    case 448:
+      dialogue.add_message('A TOWN MAP.');
+      break;
+    case 975:
+    case 976:
+      dialogue.add_message('Crammed full of POKéMON books!');
+      break;
+    default:
+      break;
   }
 }
