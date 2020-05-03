@@ -51,7 +51,7 @@ function kanto_start() {
     prepare_tilemap();
     prepare_spritesheets();
     prepare_audio();
-    prepare_dialogue();
+
 
 
     // Audio
@@ -73,7 +73,7 @@ function kanto_start() {
     document.querySelector('#pkmn').focus();
 
     // Foreground
-    prepare_messages();
+    prepare_dialogue();
 }
 
 function prepare_atts_container() {
@@ -122,8 +122,8 @@ function prepare_audio() {
     music = new Music();
     sfx = new Sfx();
 }
-let message_text;
-function prepare_messages() {
+
+function prepare_dialogue() {
     let message_texture = new PIXI.Texture.from(app.loader.resources['message'].url);
         message_bg = new PIXI.Sprite(message_texture);
 
@@ -149,15 +149,24 @@ function prepare_messages() {
     message_text.scale.y = 0.5;
     message_text.resolution = 4;
 
+    // Hiding arrow
+    let message_arrow_hide = new PIXI.Sprite(PIXI.Texture.WHITE);
+    message_arrow_hide.name = "message_arrow";
+    message_arrow_hide.tint = '0xFFFBFF';
+    message_arrow_hide.x = message_bg.width - 16; //
+    message_arrow_hide.y = message_bg.height - 18;
+    message_arrow_hide.width = 7;
+    message_arrow_hide.height = 6;
+    
+
     // Adding to the stage
     app.stage.addChild(message_container);
     message_container.addChild(message_bg);
     message_container.addChild(message_text);
+    message_container.addChild(message_arrow_hide);
 
     message_container.visible = false;
-}
 
-function prepare_dialogue() {
     dialogue = new Dialogue();
 }
 

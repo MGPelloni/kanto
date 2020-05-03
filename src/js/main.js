@@ -24,6 +24,7 @@ let editor = {};
 let dialogue = {};
 let tile_textures = [];
 let spritesheets = {};
+let message_text;
 let paused = false;
 let game_mode = 'Creative';
 

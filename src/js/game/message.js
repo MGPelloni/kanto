@@ -6,6 +6,10 @@ class Dialogue {
         this.text = null;
         this.active = false;
         this.speed = 3;
+        this.arrow = {
+            animation: 0,
+            mask: message_container.getChildByName('message_arrow'),
+        }
         this.disable_next = false;
         this.awaiting_action = false;
     }
@@ -77,6 +81,7 @@ class Message {
             18,
         ],
         tick: 0,
+        arrow: time(),
       };
 
         this.generate_rows();
@@ -106,6 +111,8 @@ class Message {
         if (next_row) {
             this.read_characters += this.rows[this.current_row].length + 1;
             this.current_row++;
+            dialogue.arrow.mask.visible = true;
+            dialogue.arrow.animation = 0;
         }
     }
 
@@ -205,12 +212,9 @@ function write_game_text() {
                     dialogue.msg.next_row();
                 } else { // Await user input to move to next row
                     dialogue.awaiting_action = true; 
+                    animate_arrow(dialogue.msg.tick);
                 }
             }
-            
-            // if (dialogue.msg.index == dialogue.msg.length && dialogue.msg.current_row > 1) { // Await user input to close the window
-            //     dialogue.awaiting_action = true;
-            // }
         }    
     }
 
@@ -226,5 +230,24 @@ function animate_game_text() {
         message_text.y = dialogue.msg.animation.keyframes[1];
     } else if (dialogue.msg.animation.tick > 2) {
         message_text.y = dialogue.msg.animation.keyframes[0];
+    }
+}
+
+function animate_arrow() {
+    let cur_time = time();
+
+    if (dialogue.arrow.animation == 0) {
+        dialogue.arrow.mask.visible = false;
+        dialogue.arrow.animation = cur_time;
+    }
+
+    if (cur_time > dialogue.arrow.animation + 500) {
+        if (dialogue.arrow.mask.visible) {
+            dialogue.arrow.mask.visible = false;
+        } else {
+            dialogue.arrow.mask.visible = true;
+        }
+
+        dialogue.arrow.animation = cur_time;
     }
 }

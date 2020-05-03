@@ -23,3 +23,7 @@ function kanto_console(message, type) {
         window.console.log("Kanto.chat 1.0.0 - " + message);
     }
 }
+
+function time() {
+    return Date.now();
+}
