@@ -4,7 +4,7 @@ class Editor {
         this.selected_attribute = 1;
         this.enabled = true;
         this.zoom = 100;
-        this.zoom_timeout = false;
+        this.action_timeout = false;
         this.palette = document.querySelector('#tile-editor img');
         this.mode = null;
 
@@ -13,7 +13,18 @@ class Editor {
             this.prepare_palette();
             this.prepare_tiles();
             this.prepare_atts();
+            this.prepare_properties();
         }
+    }
+
+    update() {
+        this.prepare_maps();
+        this.prepare_palette();
+        this.prepare_tiles();
+        this.prepare_atts();
+        this.prepare_properties();
+
+        this.save();
     }
 
     refresh() {
@@ -53,6 +64,7 @@ class Editor {
                 switch (this.mode) {
                     case 'tiles':
                         this.adjust_tile(sprite);
+                        this.save();
                         break;
                     case 'atts':
                         let attribute_type = this.selected_attribute;
@@ -62,6 +74,7 @@ class Editor {
                         }
 
                         this.adjust_attribute(sprite.game_position, attribute_type);
+                        this.save();
                     default:
                         break;
                 }
@@ -141,7 +154,7 @@ class Editor {
 
         maps.forEach(map => {
             let map_single = document.createElement('li');
-            map_single.innerHTML = map.name;
+            map_single.innerHTML = `${map.id}: ${map.name}`;
             map_single.setAttribute('data-map', map.id);
             map_element.appendChild(map_single)
         });
@@ -149,15 +162,43 @@ class Editor {
         editor_display.innerHTML = '';
         editor_display.appendChild(map_element);
 
-
         document.querySelectorAll('#kanto-editor [data-map]').forEach(elem => {
             elem.addEventListener('click', e => {
                 let index = parseInt(elem.dataset.map);
                 let selected_map = maps[index];
 
                 player.place(selected_map.starting_position.x, selected_map.starting_position.y, selected_map.id);
+                this.update_editor_properties();
             });
         });
+
+        this.update_editor_properties();
+    }
+
+    prepare_properties() {
+        let editor_properties = document.querySelectorAll('[data-property]');
+
+        editor_properties.forEach(elem => {
+            elem.addEventListener('change', e => {
+                this.adjust_property(elem.dataset.property, elem.value);
+                this.update_editor_properties();
+            });
+        });
+
+        this.update_editor_properties();
+    }
+
+    update_editor_properties() {
+        let properties_editor = document.querySelector('#properties-editor');
+
+        if (properties_editor) {
+            properties_editor.querySelector('input[name=editor-map-name]').value = map.name;
+            properties_editor.querySelector('input[name=editor-map-music]').value = map.music;
+            properties_editor.querySelector('input[name=editor-start-x]').value = map.starting_position.x;
+            properties_editor.querySelector('input[name=editor-start-y]').value = map.starting_position.y;
+            properties_editor.querySelector('input[name=editor-map-width]').value = map.width;
+            properties_editor.querySelector('input[name=editor-map-height]').value = map.height;
+        }
     }
 
     adjust_tile(sprite) {
@@ -206,8 +247,40 @@ class Editor {
         return;
     }
 
+    adjust_property(key, value) {
+        switch (key) {
+            case 'name':
+                maps[map.id].name = value;
+                break;
+            case 'music':
+                maps[map.id].music = value;
+
+                if (music) {
+                    music.play(map.music);
+                }
+                break;
+            case 'start_x':
+                maps[map.id].starting_position.x = value;
+                break;
+            case 'start_y':
+                maps[map.id].starting_position.y = value;
+                break;
+            default:
+                break;
+        }
+
+        map = maps[map.id];
+        this.prepare_maps();
+        this.save();
+        return;
+    }
+
+    save() {
+        store_data(selected_game, kanto_game_export());
+    }
+
     gather_data() {
-        let inputs = document.querySelectorAll('.editor.-active input');
+        let inputs = document.querySelectorAll('.editor.-active input, .editor.-active textarea');
         let data = {};
 
         if (inputs) {
@@ -215,7 +288,11 @@ class Editor {
                 if (input.type == 'number') {
                     data[input.name] = parseInt(input.value);
                 } else {
-                    data[input.name] = input.value;
+                    if (input.name == 'message') {
+                        data[input.name] = input.value.split(/\r?\n/); // Split up the messages by line breaks within the textarea
+                    } else {
+                        data[input.name] = input.value;
+                    }
                 }
             });
 
@@ -224,11 +301,19 @@ class Editor {
 
         return false;
     }
-}
 
-function map_export() {
-    console.log(JSON.stringify(map.tiles));
-    console.log(JSON.stringify(map.atts));
+    create_new_map() {
+        let new_map = new Kanto_Map();
+        maps.push(new_map);
+        player.place(new_map.starting_position.x, new_map.starting_position.y, new_map.id);
+        this.update();
+    }
+
+    log() {
+        if (document.querySelector('#coords')) {
+            document.querySelector('#coords').innerHTML = `{${player.position.map}, ${player.position.x}, ${player.position.y}}`
+        }
+    }
 }
 
 function add_padding() {
@@ -257,6 +342,167 @@ function add_padding() {
 
     console.log(JSON.stringify(new_map));
     console.log(JSON.stringify(new_atts));
+}
+
+function expand_map(direction) {
+    if (!direction) {
+        return;
+    }
+
+    let new_width,
+        new_height,
+        splice_index;
+        
+    switch (direction) {
+        case 'North':
+            new_width = map.width;
+            new_height = map.height + 1;
+            splice_index = 0;
+            break;
+        case 'South':
+            new_width = map.width;
+            new_height = map.height + 1;
+            splice_index = new_height - 1;
+            break;
+        case 'West':
+            new_width = map.width + 1;
+            new_height = map.height;
+            splice_index = 0;
+            break;
+        case 'East':
+            new_width = map.width + 1;
+            new_height = map.height;
+            splice_index = new_width - 1;
+            break;
+        default:
+            break;
+    }
+
+    if (direction == 'North' || direction == 'South') {
+        for (let y = 0; y < new_height; y++) {
+            for (let x = 0; x < new_width; x++) {
+                let index = x + new_width * y;
+                
+                if (y == splice_index) {
+                    map.tiles.splice(index, 0, 0);
+                    map.atts.splice(index, 0, {type: 0});
+                }
+            }
+        }
+    } else {
+        for (let y = 0; y < new_height; y++) {
+            for (let x = 0; x < new_width; x++) {
+                let index = x + new_width * y;
+                
+                if (x == splice_index) {
+                    map.tiles.splice(index, 0, 0);
+                    map.atts.splice(index, 0, {type: 0});
+                }
+            }
+        }
+    }
+
+    map.width = new_width;
+    map.height = new_height;
+    map.build_tiles();
+    map.build_atts();
+    maps[map.id] = map;
+    editor.update();
+
+    // Adjusting the player's position to work with the new boundaries
+    switch (direction) {
+        case 'North':
+            player.place(player.position.x, player.position.y + 1);
+            break;
+        case 'West':
+            player.place(player.position.x + 1, player.position.y);
+            break;
+        default:
+            break;
+    }
+}
+
+
+function condense_map(direction) {
+    if (!direction) {
+        return;
+    }
+
+    let new_width,
+        new_height,
+        splice_index;
+        
+    switch (direction) {
+        case 'North':
+            new_width = map.width;
+            new_height = map.height - 1;
+            splice_index = 0;
+            break;
+        case 'South':
+            new_width = map.width;
+            new_height = map.height - 1;
+            splice_index = new_height + 1;
+            break;
+        case 'West':
+            new_width = map.width - 1;
+            new_height = map.height;
+            splice_index = 0;
+            break;
+        case 'East':
+            new_width = map.width - 1;
+            new_height = map.height;
+            splice_index = new_width;
+            break;
+        default:
+            break;
+    }
+
+    let offset = 0;
+
+    if (direction == 'North' || direction == 'South') {
+        for (let y = 0; y < map.height; y++) {
+            for (let x = 0; x < map.width; x++) {
+                let index = x + map.width * y;
+                
+                if (y == splice_index) {
+                    map.tiles.splice(index + offset, 1);
+                    map.atts.splice(index + offset, 1);
+                    offset--;
+                }
+            }
+        }
+    } else {
+        for (let y = 0; y < map.height; y++) {
+            for (let x = 0; x < map.width; x++) {
+                let index = x + map.width * y;
+                
+                if (x == splice_index) {
+                    map.tiles.splice(index + offset, 1);
+                    map.atts.splice(index + offset, 1);
+                    offset--;
+                }
+            }
+        }
+    }
+
+    map.width = new_width;
+    map.height = new_height;
+    map.build_tiles();
+    map.build_atts();
+    maps[map.id] = map;
+    editor.update();
+
+    // Adjusting the player's position to work with the new boundaries
+    switch (direction) {
+        case 'North':
+            player.place(player.position.x, player.position.y - 1);
+            break;
+        case 'West':
+            player.place(player.position.x - 1, player.position.y);
+            break;
+        default:
+            break;
+    }
 }
 
 function fill_map(tile) {
@@ -312,6 +558,12 @@ document.querySelectorAll('#kanto-editor [data-att]').forEach(elem => {
     });
 });
 
+if (document.querySelector('#editor-new-map')) {
+    document.querySelector('#editor-new-map').addEventListener('click', e => {
+        editor.create_new_map();
+    });
+}
+
 
 function set_att_editor(type) {
     let att_editor = document.querySelector('#att-editor');
@@ -333,7 +585,7 @@ function set_att_editor(type) {
         case 3:
             display_editor.innerHTML += '<h5>Action</h5>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="3" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea><p>You can use <code>;</code> to manually break up lines.</p>';
             break;
         case 4:
             display_editor.innerHTML += '<h5>Exit</h5>';

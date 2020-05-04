@@ -174,8 +174,6 @@ function move_loop() {
                 player.position_update();
                 player.can_move = true;
                 player.current_move_ticker = 0;
-
-                console.log(player.position);
             }, 8)
         }
         
@@ -185,14 +183,14 @@ function move_loop() {
 
 
 function editor_controls_loop() {
-    if (editor.zoom_timeout == false && !player.moving && player.can_move) {
+    if (!editor.action_timeout && !player.moving && player.can_move) {
         if (keys["189"]) {
             app.renderer.resize(app.renderer.width + editor.zoom, app.renderer.height + editor.zoom);
             center_stage_assets();
 
-            editor.zoom_timeout = true;
+            editor.action_timeout = true;
             setTimeout(() => {
-                editor.zoom_timeout = false;
+                editor.action_timeout = false;
             }, 500)
         } 
 
@@ -200,10 +198,34 @@ function editor_controls_loop() {
             app.renderer.resize(app.renderer.width - editor.zoom, app.renderer.height - editor.zoom);
             center_stage_assets();
 
-            editor.zoom_timeout = true;
+            editor.action_timeout  = true;
             setTimeout(() => {
-                editor.zoom_timeout = false;
+                editor.action_timeout  = false;
             }, 500)
         } 
+    }
+
+    if (keys["69"]) { // E
+        if (!editor.action_timeout && !player.moving) {
+            
+            expand_map(player.facing);
+
+            editor.action_timeout = true;
+            setTimeout(() => {
+                editor.action_timeout = false;
+            }, 250)
+        }        
+    }
+
+    if (keys["84"]) { // T
+        if (!editor.action_timeout && !player.moving) {
+            
+            condense_map(player.facing);
+
+            editor.action_timeout = true;
+            setTimeout(() => {
+                editor.action_timeout = false;
+            }, 250)
+        }        
     }
 }

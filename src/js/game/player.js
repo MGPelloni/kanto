@@ -50,6 +50,11 @@ class Player {
         
         if (editor.enabled) {
             editor.prepare_tiles();
+            editor.prepare_properties();
+
+            if (editor.enabled) {
+                editor.log();
+            }
         }
     }
 
@@ -119,10 +124,13 @@ class Player {
                 
                 this.place(this.position.att.x, this.position.att.y, this.position.att.map);
                 this.freeze();
-                return;
                 break;
             default:
                 break;
+        }
+
+        if (editor.enabled) {
+            editor.log();
         }
     }
 }

@@ -17,6 +17,10 @@ class Music {
             return;
         }
 
+        if (!num || num == 0) { // No track selected
+            this.current_track.howl.fade(this.current_track.howl.volume(), 0, 1500);
+        }
+
         let track = new Howl({
             src: [`${this.path}/${num}.mp3`],
             loop: true,

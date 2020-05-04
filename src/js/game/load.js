@@ -21,24 +21,55 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_maps() {
-    // let selected_map = prompt('Enter the game you wish to load:');
-    let selected_map = 'pallet',
-        map_url = `${window.location.protocol}//${window.location.host}/src/js/maps/${selected_map}.json`;
+    let game_json = retrieve_data(selected_game);
 
-    fetch(map_url).then((res) => {
-        return res.json();
-    }).then((data) => {
-        map_data = Object.entries(data);
-        map_data.forEach(([key, map]) => {
-          map.id = parseInt(key);
-          kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.npcs, map.music, map.starting_position);
-          maps.push(kanto_map);
+    if (!game_json) { // The data is not on the player's machine and we must retrieve it
+        let map_url = `${window.location.protocol}//${window.location.host}/src/js/maps/${selected_game}.json`;
+
+        fetch(map_url).then((res) => {
+            return res.text();
+        }).then((data) => {
+            game_json = data;
+            store_data(selected_game, game_json);
+            maps = kanto_game_import(game_json);
+            map = maps[0];
+            kanto_start();
         });
-        
+    } else { // Loading the data from localStorage
+        maps = kanto_game_import(game_json);
         map = maps[0];
-
         kanto_start();
+    }
+}
+
+function kanto_game_export() {
+    let exported_data = maps.map(object => ({ ...object })) // clone the maps data without object references
+    exported_data.forEach(exported_map => {
+        // Format the data by deleting added properties
+        delete exported_map.id;
+        delete exported_map.x;
+        delete exported_map.y;
+    });   
+
+    return JSON.stringify(exported_data);
+}
+
+function kanto_game_import(game_json) {
+    let data = JSON.parse(game_json),
+        res = [],
+        maps_data = Object.entries(data);
+
+    maps_data.forEach(([key, map]) => {
+        map.id = parseInt(key);
+        kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.music, map.starting_position);
+        res.push(kanto_map);
     });
+
+    return res;
+}
+
+function kanto_editor_upload() {
+    console.log(kanto_game_export());
 }
 
 /**
@@ -51,8 +82,6 @@ function kanto_start() {
     prepare_tilemap();
     prepare_spritesheets();
     prepare_audio();
-
-
 
     // Audio
     Howler.mute(true); // Mute the volume across the game until user enables
@@ -170,8 +199,8 @@ function prepare_dialogue() {
     dialogue = new Dialogue();
 }
 
-function store_data(name, object) {
-    localStorage.setItem(name, JSON.stringify(object));
+function store_data(name, json) {
+    localStorage.setItem(name, json);
 }
 
 function retrieve_data(name) {

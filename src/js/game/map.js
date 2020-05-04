@@ -12,9 +12,9 @@ class Kanto_Map {
    * @param {number} music The ID number of the music to be played.
    * @param {object} starting_position The X and Y starting position of the player.
    */
-  constructor(id = null, name = 'Untitled Map', width = 5, height = 5, tiles = [], atts = [], npcs = [], music = false, starting_position = {x: 0, y: 0}) {
+  constructor(id = null, name = 'Untitled Map', width = 5, height = 5, tiles = [], atts = [], music = 0, starting_position = {x: 0, y: 0}) {
     if (id == null) {
-      return null;
+      id = maps.length;
     }
 
     this.id = id;
@@ -27,7 +27,6 @@ class Kanto_Map {
     this.starting_position = starting_position;
     this.tiles = tiles;
     this.atts = atts;
-    this.npcs = npcs;
     this.music = music;
 
     if (this.tiles.length == 0 || !this.tiles) {
@@ -126,8 +125,6 @@ class Kanto_Map {
 }
 
 function check_sprite_tile_actions(tile) {
-  console.log('check_sprite_tile_actions:', tile);
-
   switch (tile) {
     case 448:
       dialogue.add_message('A TOWN MAP.');
