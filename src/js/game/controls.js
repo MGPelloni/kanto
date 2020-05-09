@@ -183,49 +183,51 @@ function move_loop() {
 
 
 function editor_controls_loop() {
-    if (!editor.action_timeout && !player.moving && player.can_move) {
-        if (keys["189"]) {
-            app.renderer.resize(app.renderer.width + editor.zoom, app.renderer.height + editor.zoom);
-            center_stage_assets();
+    if (!paused) {
+        if (!editor.action_timeout && !player.moving && player.can_move) {
+            if (keys["189"]) {
+                app.renderer.resize(app.renderer.width + editor.zoom, app.renderer.height + editor.zoom);
+                center_stage_assets();
 
-            editor.action_timeout = true;
-            setTimeout(() => {
-                editor.action_timeout = false;
-            }, 500)
-        } 
+                editor.action_timeout = true;
+                setTimeout(() => {
+                    editor.action_timeout = false;
+                }, 500)
+            } 
 
-        if (keys["187"]) {
-            app.renderer.resize(app.renderer.width - editor.zoom, app.renderer.height - editor.zoom);
-            center_stage_assets();
+            if (keys["187"]) {
+                app.renderer.resize(app.renderer.width - editor.zoom, app.renderer.height - editor.zoom);
+                center_stage_assets();
 
-            editor.action_timeout  = true;
-            setTimeout(() => {
-                editor.action_timeout  = false;
-            }, 500)
-        } 
-    }
+                editor.action_timeout  = true;
+                setTimeout(() => {
+                    editor.action_timeout  = false;
+                }, 500)
+            } 
+        }
 
-    if (keys["69"]) { // E
-        if (!editor.action_timeout && !player.moving) {
-            
-            expand_map(player.facing);
+        if (keys["69"]) { // E
+            if (!editor.action_timeout && !player.moving) {
+                
+                expand_map(player.facing);
 
-            editor.action_timeout = true;
-            setTimeout(() => {
-                editor.action_timeout = false;
-            }, 250)
-        }        
-    }
+                editor.action_timeout = true;
+                setTimeout(() => {
+                    editor.action_timeout = false;
+                }, 250)
+            }        
+        }
 
-    if (keys["84"]) { // T
-        if (!editor.action_timeout && !player.moving) {
-            
-            condense_map(player.facing);
+        if (keys["84"]) { // T
+            if (!editor.action_timeout && !player.moving) {
+                
+                condense_map(player.facing);
 
-            editor.action_timeout = true;
-            setTimeout(() => {
-                editor.action_timeout = false;
-            }, 250)
-        }        
+                editor.action_timeout = true;
+                setTimeout(() => {
+                    editor.action_timeout = false;
+                }, 250)
+            }        
+        }
     }
 }

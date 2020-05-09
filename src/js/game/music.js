@@ -24,7 +24,7 @@ class Music {
         let track = new Howl({
             src: [`${this.path}/${num}.mp3`],
             loop: true,
-            volume: 1
+            volume: 0.5
         });
         
         if (this.current_track.id === null) {

@@ -50,7 +50,28 @@ class Editor {
             tile_editor_click.tile = tile_editor_click.x + tilemap_width * tile_editor_click.y;
             this.selected_texture = tile_editor_click.tile;
             console.log(tile_editor_click);
+            document.querySelector('#pkmn').focus();
         });
+    }
+
+    edit_tile(sprite) {
+        switch (this.mode) {
+            case 'tiles':
+                this.adjust_tile(sprite);
+                this.save();
+                break;
+            case 'atts':
+                let attribute_type = this.selected_attribute;
+
+                if (editor.mouse_event == 3) {
+                    attribute_type = 0;
+                }
+
+                this.adjust_attribute(sprite.game_position, attribute_type);
+                this.save();
+            default:
+                break;
+        }
     }
 
     prepare_tiles() {
@@ -61,26 +82,22 @@ class Editor {
             }
         
             sprite.on('pointerdown', (e) => {
-                switch (this.mode) {
-                    case 'tiles':
-                        this.adjust_tile(sprite);
-                        this.save();
-                        break;
-                    case 'atts':
-                        let attribute_type = this.selected_attribute;
-
-                        if (e.data.originalEvent.which == 3) {
-                            attribute_type = 0;
-                        }
-
-                        this.adjust_attribute(sprite.game_position, attribute_type);
-                        this.save();
-                    default:
-                        break;
-                }
+                editor.pointer_down = true;
+                editor.mouse_event = e.data.originalEvent.which;
+                this.edit_tile(sprite);
             });
+
+            sprite.on('pointerup', (e) => {
+                editor.pointer_down = false;
+                editor.mouse_event = null;
+            });
+
         
             sprite.on('mouseover', (e) => {
+                if (editor.pointer_down) {
+                    this.edit_tile(sprite);
+                }
+
                 if (this.mode == 'tiles') {
                     sprite.alpha = 0.8;
                     sprite.texture = tile_textures[this.selected_texture];
@@ -253,17 +270,17 @@ class Editor {
                 maps[map.id].name = value;
                 break;
             case 'music':
-                maps[map.id].music = value;
+                maps[map.id].music = parseInt(value);
 
                 if (music) {
                     music.play(map.music);
                 }
                 break;
             case 'start_x':
-                maps[map.id].starting_position.x = value;
+                maps[map.id].starting_position.x = parseInt(value);
                 break;
             case 'start_y':
-                maps[map.id].starting_position.y = value;
+                maps[map.id].starting_position.y = parseInt(value);
                 break;
             default:
                 break;

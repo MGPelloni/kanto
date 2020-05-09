@@ -18,7 +18,7 @@ const app = new PIXI.Application({
 
 // Game Variables
 let maps = [];
-let selected_game = 'pallet';
+let selected_game = 'pallet-enhanced';
 let keys = {};
 let player;  
 let editor = {};
