@@ -10,55 +10,62 @@ function kanto_load() {
  * Loads the game assets.
  */
 function kanto_load_assets() {
+
+    // Sprites
+    let sprite_path = 'assets/graphics/sprites/';
+    for (let i = 0; i < ss_amount; i++) {
+        app.loader.add(`mobile-sprite-${i}`, sprite_path + `${i}.png`);
+    }
+
     app.loader
-        .add('red', 'assets/graphics/red.png')
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('message', 'assets/graphics/message.jpg')
-    app.loader.load(kanto_load_maps);
+    app.loader.load(kanto_load_game);
 }
 
 /**
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
-function kanto_load_maps() {
-    let game_json = retrieve_data(selected_game);
+function kanto_load_game() {
+    let selected_game = 'pallet-enhanced';
+    let stored_data = retrieve_data(selected_game);
 
-    if (!game_json) { // The data is not on the player's machine and we must retrieve it
+    if (!stored_data) { // The data is not on the player's machine and we must retrieve it
         let map_url = `${window.location.protocol}//${window.location.host}/src/js/maps/${selected_game}.json`;
 
         fetch(map_url).then((res) => {
             return res.text();
         }).then((data) => {
-            game_json = data;
-            store_data(selected_game, game_json);
-            maps = kanto_game_import(game_json);
-            map = maps[0];
-            kanto_start();
+            store_data(selected_game, game_json); // Store the fetched data on the user's machine
+            kanto_process_import(data);
         });
     } else { // Loading the data from localStorage
-        maps = kanto_game_import(game_json);
-        map = maps[0];
-        kanto_start();
+        kanto_process_import(stored_data);
     }
 }
 
-function kanto_game_export() {
-    let exported_data = maps.map(object => ({ ...object })) // clone the maps data without object references
-    exported_data.forEach(exported_map => {
-        // Format the data by deleting added properties
-        delete exported_map.id;
-        delete exported_map.x;
-        delete exported_map.y;
-    });   
+function kanto_process_import(data) {
+    // Set global import data
+    import_data = JSON.parse(data);
 
-    return JSON.stringify(exported_data);
+    // Load Meta
+    meta = {
+        name: import_data.meta.name
+    };
+
+    // Load Maps
+    maps = kanto_load_maps();
+    map = maps[0];
+
+    // Loading is complete, start the game
+    kanto_start();
 }
 
-function kanto_game_import(game_json) {
-    let data = JSON.parse(game_json),
-        res = [],
-        maps_data = Object.entries(data);
-
+function kanto_load_maps() {
+    let res = [];
+        
+    // Create maps
+    let maps_data = Object.entries(import_data.maps);
     maps_data.forEach(([key, map]) => {
         map.id = parseInt(key);
         kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.music, map.starting_position);
@@ -67,6 +74,33 @@ function kanto_game_import(game_json) {
 
     return res;
 }
+
+function kanto_game_export() {
+    let exported_meta = meta;
+
+    let exported_maps = maps.map(object => ({ ...object })) // clone the maps data without object references
+    exported_maps.forEach(exported_map => {
+        // Format the data by deleting added properties
+        delete exported_map.id;
+        delete exported_map.x;
+        delete exported_map.y;
+    });   
+
+    let exported_player = {
+        spritesheet_id: player.spritesheet_id,
+        pokemon: player.pokemon,
+        inventory: player.inventory,
+    };
+
+    let game_data = {
+        meta: exported_meta,
+        player: exported_player,
+        maps: exported_maps
+    };
+
+    return JSON.stringify(game_data);
+}
+
 
 function kanto_editor_upload() {
     console.log(kanto_game_export());
@@ -86,13 +120,18 @@ function kanto_start() {
     // Audio
     Howler.mute(true); // Mute the volume across the game until user enables
     
-    player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, spritesheets.red);
+    // Create player
+    player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.spritesheet_id);
     player.current_map = map;
 
+    // Build the first map
     map.build();
+
+    // Prepare animation tickers
     app.ticker.add(move_loop);
     app.ticker.add(controls_loop);
 
+    // Create editor
     if (game_mode == 'Creative') {
         editor = new Editor();
         app.ticker.add(editor_controls_loop);
@@ -144,7 +183,9 @@ function prepare_tilemap() {
 }
 
 function prepare_spritesheets() {
-    spritesheets.red = create_spritesheet(app.loader.resources['red'].url);
+    for (let i = 0; i < ss_amount; i++) {
+        spritesheets[i] = create_spritesheet_v2(app.loader.resources[`mobile-sprite-${i}`].url);
+    }
 }
 
 function prepare_audio() {

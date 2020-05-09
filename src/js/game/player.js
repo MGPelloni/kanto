@@ -1,9 +1,11 @@
 class Player {
-    constructor(name = '', position = {map: 0, x: 0, y: 0}, spritesheet = false) {
+    constructor(name = '', position = {map: 0, x: 0, y: 0}, spritesheet_id = 0) {
         this.name = name;
         this.position = position;
-        this.spritesheet = spritesheet;
 
+        this.spritesheet_id = spritesheet_id;
+        this.spritesheet = spritesheets[spritesheet_id];
+ 
         this.facing = 'South';
         this.can_check_action = true;
         this.frozen = false;
@@ -12,10 +14,12 @@ class Player {
         this.current_move_ticker = 0;
         this.current_map = maps[0];
 
+        this.pokemon = [];
+        this.inventory = [];
+
         this.set_sprite();
         app.stage.addChild(this.sprite);
         this.place(position.x, position.y);
-       
     }
 
     set_sprite() {
@@ -107,6 +111,28 @@ class Player {
         }
 
         console.log(att_tile);
+    }
+
+    change_spritesheet(num) {
+        this.spritesheet_id = num;
+        this.spritesheet = spritesheets[num];
+
+        switch (this.facing) {
+            case 'North':
+                this.sprite.textures = this.spritesheet.standNorth;
+                break;
+            case 'South':
+                this.sprite.textures = this.spritesheet.standSouth;
+                break;
+            case 'West':
+                this.sprite.textures = this.spritesheet.standWest;
+                break;
+            case 'East':
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            default:
+                break;
+        }
     }
 
     position_update() {

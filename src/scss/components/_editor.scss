@@ -73,6 +73,12 @@
     height: 260px;
     overflow-y: scroll;
 
+    h3 {
+        margin: 0 0 1.5rem 0;
+        border-bottom: 2px solid #bbbbbb;
+        padding: 0 0 1rem;
+    }
+
     h5 {
         padding: 1rem;
         margin: 0 0 1rem;

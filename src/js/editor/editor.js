@@ -215,6 +215,9 @@ class Editor {
             properties_editor.querySelector('input[name=editor-start-y]').value = map.starting_position.y;
             properties_editor.querySelector('input[name=editor-map-width]').value = map.width;
             properties_editor.querySelector('input[name=editor-map-height]').value = map.height;
+
+            properties_editor.querySelector('input[name=editor-game-name]').value = meta.name;
+            properties_editor.querySelector('input[name=editor-game-sprite]').value = player.spritesheet_id;
         }
     }
 
@@ -282,6 +285,12 @@ class Editor {
             case 'start_y':
                 maps[map.id].starting_position.y = parseInt(value);
                 break;
+            case 'game_name':
+                meta.name = value;
+                break;
+            case 'game_sprite':
+                player.change_spritesheet(parseInt(value));
+                break;
             default:
                 break;
         }
@@ -293,7 +302,7 @@ class Editor {
     }
 
     save() {
-        store_data(selected_game, kanto_game_export());
+        store_data(meta.name, kanto_game_export());
     }
 
     gather_data() {
