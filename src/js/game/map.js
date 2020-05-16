@@ -65,7 +65,159 @@ class Kanto_Map {
       for (let x = 0; x < this.width; x++) {
         let index = x + this.width * y;
         let tile = this.tiles[index];
-        let sprite = new PIXI.Sprite(tile_textures[tile]);
+        let sprite;
+
+        let tilemap = new PIXI.BaseTexture.from(app.loader.resources['tilemap'].url);
+        let w = TILE_SIZE;
+        let h = TILE_SIZE;
+        let spritesheet = null;
+
+        switch (tile) {
+          case 38: // Top Flower
+            sprite = new PIXI.AnimatedSprite(create_flower_top_spritesheet());
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 23: // Bottom Flower
+            sprite = new PIXI.AnimatedSprite(create_flower_bottom_spritesheet());
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 109: // Water
+            spritesheet = [
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 77 * h, w, h)),
+              new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 77 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 124: // Water [Top]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 78 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 78 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 95: // Water [Top Left]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 79 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 79 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 110: // Water [Left]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 80 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 80 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 125: // Water [Bottom Left]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 81 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 81 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 93: // Water [Top Right Border]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 82 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 82 * h, w, h)),
+            ];
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 108: // Water [Right Border]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 83 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 83 * h, w, h)),
+            ];
+
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          case 123: // Water [Corner Right Border]
+            spritesheet = [
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(0 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(4 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(3 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(2 * w, 84 * h, w, h)),
+                new PIXI.Texture(tilemap, new PIXI.Rectangle(1 * w, 84 * h, w, h)),
+            ];
+
+
+            sprite = new PIXI.AnimatedSprite(spritesheet);
+            sprite.animationSpeed = 0.05;
+            sprite.play();
+            break;
+          default: // Non-animated
+            sprite = new PIXI.Sprite(tile_textures[tile]);
+            break;
+        }
+
         sprite.x = x * TILE_SIZE;
         sprite.y = y * TILE_SIZE;
         sprite.game_position = {map: this.id, x: x, y: y, index: index}; 

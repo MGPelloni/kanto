@@ -12,7 +12,8 @@
 }
 
 #game {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     margin: 0 auto;
 }
 
@@ -51,11 +52,37 @@ canvas {
 }
 
 .game-footer {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     p {
         margin: 0;
+    }
+}
+
+#kanto-controls-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    transform: translateY(-100%);
+    width: calc(100% - 1rem);
+    opacity: 0;
+    transition: 0.6s;
+    pointer-events: none;
+}
+
+#kanto-view-controls-info {
+    padding-right: 0;
+    outline: none; 
+    
+    &:hover,
+    &:focus {
+        &+#kanto-controls-info {
+            opacity: 1;
+        }
     }
 }

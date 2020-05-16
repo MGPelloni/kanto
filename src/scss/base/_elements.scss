@@ -54,6 +54,14 @@ button {
         border-color: #949494;
         color: #949494;
     }
+
+    &.-sans-uppercase {
+        font-family: sans-serif;
+        text-transform: uppercase;
+        border: none;
+        font-size: 1.3rem;
+        letter-spacing: 0.2rem;
+    }
 }
 
 textarea {

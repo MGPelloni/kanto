@@ -27,7 +27,7 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_game() {
-    let selected_game = 'pallet-enhanced';
+    let selected_game = 'pallet';
     let stored_data = retrieve_data(selected_game);
 
     if (!stored_data) { // The data is not on the player's machine and we must retrieve it
@@ -36,7 +36,7 @@ function kanto_load_game() {
         fetch(map_url).then((res) => {
             return res.text();
         }).then((data) => {
-            store_data(selected_game, game_json); // Store the fetched data on the user's machine
+            store_data(selected_game, data); // Store the fetched data on the user's machine
             kanto_process_import(data);
         });
     } else { // Loading the data from localStorage
@@ -184,7 +184,7 @@ function prepare_tilemap() {
 
 function prepare_spritesheets() {
     for (let i = 0; i < ss_amount; i++) {
-        spritesheets[i] = create_spritesheet_v2(app.loader.resources[`mobile-sprite-${i}`].url);
+        spritesheets[i] = create_spritesheet(app.loader.resources[`mobile-sprite-${i}`].url);
     }
 }
 

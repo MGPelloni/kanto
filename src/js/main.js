@@ -1,5 +1,5 @@
 // Kanto Information
-const VERSION = '0.0.2';
+const VERSION = '0.0.4';
 
 // Game Constants
 const TILE_SIZE = 16;
