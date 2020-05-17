@@ -17,7 +17,7 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')))
 
 
 // Server
-server.listen(8000);
+server.listen(process.env.PORT || 8000);
 
 // Endpoints
 app.get('/', (req, res) => { // Gallery View
@@ -95,19 +95,3 @@ app.post('/upload', (req, res) => { // Upload Endpoint
 
     res.json({success: true});
 });
-
-function wtf() {
-    db.query('select * from games;', function(err, result){
-        if (err){
-            console.error('Game db error: ' + err.toString());
-            return;
-        }
-
-        console.log(result.rows);
-        
-        var row = result.rows[0];
-        console.log(row.game_data);
-    });
-}
-
-// wtf();

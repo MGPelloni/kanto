@@ -7,10 +7,7 @@
     "url": "https://github.com/MGPelloni/kanto.git"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "gulp",
-    "server": "gulp server",
-    "compile": "gulp compile"
+    "start": "node index.js"
   },
   "author": "Marco Pelloni",
   "license": "ISC",
