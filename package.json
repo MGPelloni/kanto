@@ -7,7 +7,8 @@
     "url": "https://github.com/MGPelloni/kanto.git"
   },
   "scripts": {
-    "start": "gulp",
+    "start": "node index.js",
+    "build": "gulp",
     "server": "gulp server",
     "compile": "gulp compile"
   },

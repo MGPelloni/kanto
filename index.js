@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 // Postgres
 const { Client } = require('pg');
-const db = new Client('postgres://marcopelloni@localhost/kanto');
+const db = new Client(process.env.DATABASE_URL);
 db.connect();
 
 // Static assets
