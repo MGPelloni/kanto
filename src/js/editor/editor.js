@@ -14,15 +14,22 @@ class Editor {
             this.prepare_tiles();
             this.prepare_atts();
             this.prepare_properties();
+            this.saved_games_list();
+
+            // Async
+            kanto_get_templates().then(data => {
+                this.templates = data;
+                editor.prepare_template_list(data);
+            });
         }
     }
 
     update() {
         this.prepare_maps();
-        this.prepare_palette();
         this.prepare_tiles();
         this.prepare_atts();
         this.prepare_properties();
+        this.saved_games_list();
 
         this.save();
     }
@@ -186,6 +193,7 @@ class Editor {
 
                 player.place(selected_map.starting_position.x, selected_map.starting_position.y, selected_map.id);
                 this.update_editor_properties();
+                document.querySelector('#pkmn').focus(); // Shift focus to viewport
             });
         });
 
@@ -206,18 +214,18 @@ class Editor {
     }
 
     update_editor_properties() {
-        let properties_editor = document.querySelector('#properties-editor');
+        let editor = document.querySelector('#kanto-editor');
 
-        if (properties_editor) {
-            properties_editor.querySelector('input[name=editor-map-name]').value = map.name;
-            properties_editor.querySelector('input[name=editor-map-music]').value = map.music;
-            properties_editor.querySelector('input[name=editor-start-x]').value = map.starting_position.x;
-            properties_editor.querySelector('input[name=editor-start-y]').value = map.starting_position.y;
-            properties_editor.querySelector('input[name=editor-map-width]').value = map.width;
-            properties_editor.querySelector('input[name=editor-map-height]').value = map.height;
+        if (editor) {
+            editor.querySelector('input[name=editor-map-name]').value = map.name;
+            editor.querySelector('input[name=editor-map-music]').value = map.music;
+            editor.querySelector('input[name=editor-start-x]').value = map.starting_position.x;
+            editor.querySelector('input[name=editor-start-y]').value = map.starting_position.y;
+            editor.querySelector('input[name=editor-map-width]').value = map.width;
+            editor.querySelector('input[name=editor-map-height]').value = map.height;
 
-            properties_editor.querySelector('input[name=editor-game-name]').value = meta.name;
-            properties_editor.querySelector('input[name=editor-game-sprite]').value = player.spritesheet_id;
+            editor.querySelector('input[name=editor-game-name]').value = meta.name;
+            editor.querySelector('input[name=editor-game-sprite]').value = player.spritesheet_id;
         }
     }
 
@@ -286,7 +294,9 @@ class Editor {
                 maps[map.id].starting_position.y = parseInt(value);
                 break;
             case 'game_name':
+                localStorage.removeItem(meta.name);
                 meta.name = value;
+                
                 break;
             case 'game_sprite':
                 player.change_spritesheet(parseInt(value));
@@ -338,6 +348,51 @@ class Editor {
     log() {
         if (document.querySelector('#coords')) {
             document.querySelector('#coords').innerHTML = `{${player.position.map}, ${player.position.x}, ${player.position.y}}`
+        }
+    }
+
+    prepare_template_list(data) {
+        if (document.querySelector('#editor-game-templates')) {
+            let game_templates_ul = document.querySelector('#editor-game-templates');
+            game_templates_ul.innerHTML = '';
+
+            data.forEach(row => {
+                let template_single = document.createElement('li');
+                template_single.innerHTML = row.template_name;
+                template_single.setAttribute('data-game-template', row.template_name);
+                game_templates_ul.appendChild(template_single);
+            });
+
+            if (document.querySelector('#editor-game-templates')) {
+                document.querySelectorAll('#editor-game-templates li').forEach(elem => {
+                    elem.addEventListener('click', e => {
+                        kanto_quickload_game(elem.getAttribute('data-game-template'), 'template');
+                    });
+                }); 
+            }
+        }
+    }
+
+    saved_games_list() {
+        if (document.querySelector('#editor-saved-games-list')) {
+            let saved_games_ul = document.querySelector('#editor-saved-games-list');
+            saved_games_ul.innerHTML = '';
+
+            Object.keys(localStorage).forEach(function(key){
+                let game_single = document.createElement('li');
+                game_single.innerHTML = `${key}`;
+                game_single.setAttribute('data-game', key);
+                saved_games_ul.appendChild(game_single);
+            });
+
+
+            if (document.querySelector('#editor-saved-games-list')) {
+                document.querySelectorAll('#editor-saved-games-list li').forEach(elem => {
+                    elem.addEventListener('click', e => {
+                        kanto_quickload_game(elem.getAttribute('data-game'));
+                    });
+                }); 
+            }
         }
     }
 }
@@ -590,7 +645,6 @@ if (document.querySelector('#editor-new-map')) {
     });
 }
 
-
 function set_att_editor(type) {
     let att_editor = document.querySelector('#att-editor');
     let display_editor = att_editor.querySelector('.general-editor-display');
@@ -623,4 +677,18 @@ function set_att_editor(type) {
         default:
             break;
     }
+}
+
+async function kanto_get_templates() {
+    let res = await fetch(`${window.location.protocol}//${window.location.host}/templates`, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    let templates = await res.json();
+    return templates;
 }

@@ -12,28 +12,50 @@
             <div class="_container">
                 <header>
                     <h1>Kanto</h1>
-                    <p>v0.0.3</p>
+                    <p>v0.1.0</p>
                     <nav>
-                        <a href="index.html">Play</a>
-                        <a href="create.html">Create</a>
+                        <a href="/play">Play</a>
+                        <a href="/create">Create</a>
                     </nav>
                 </header>
-                <div class="_grid">
+                <main class="_grid">
                     <div id="kanto-editor">
                         <div class="_container">
                             <nav>
+                                <button data-open="#game-editor">Game</button>
                                 <button data-open="#map-editor">Maps</button>
                                 <button data-open="#tile-editor" data-mode="tiles">Tiles</button>
-                                <button data-open="#att-editor" data-mode="atts">Attributes</button>
+                                <button data-open="#att-editor" data-mode="atts">Atts</button>
                                 <button data-open="#properties-editor">Properties</button>
                             </nav>
-                            <div id="map-editor" class="editor -active">
+                            <div id="game-editor" class="editor -active">
+                                <div class="general-editor-display">
+                                    <h3>Game Properties</h3>
+                                    <div class="editor-data-line">
+                                        <span>Game Name: </span>
+                                        <input type="text" name="editor-game-name" data-property="game_name" class="editor-map-property">
+                                    </div>
+                                    <div class="editor-data-line">
+                                        <span>Player Sprite: </span>
+                                        <input type="number" name="editor-game-sprite" data-property="game_sprite" class="editor-map-property">
+                                    </div>
+                                    <div class="editor-data-line">
+                                        <span>Game Description: </span>
+                                        <textarea name="editor-game-description" data-property="game_description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="general-editor-options">
+                                    <button data-open="#editor-saved-games">Load Game</button>
+                                    <button data-open="#editor-publish-game">Publish Game</button>
+                                </div>
+                            </div>
+                            <div id="map-editor" class="editor">
                                 <div class="general-editor-display">
                                     <ol></ol>
                                 </div>
                                 <div class="general-editor-options">
                                     <button id="editor-new-map">New Map</button>
-                                    <button id="editor-clear-game">Clear Saved Data</button>
+                                    <button id="editor-new-map">Load Template</button>
                                 </div>
                             </div>
                             <div id="tile-editor" class="editor">
@@ -41,9 +63,7 @@
                                     <img src="assets/graphics/tileset.png">
                                 </div>
                                 <div class="general-editor-options">
-                                    <button>Background</button>
-                                    <button>Foreground</button>
-                                    <button>Animate Tile</button>
+
                                 </div>
                             </div>
                             <div id="att-editor" class="editor">
@@ -78,19 +98,39 @@
                                         <span>W: </span><input type="number" disabled name="editor-map-width">
                                         <span>H: </span><input type="number" disabled name="editor-map-height">
                                     </div>
-                                    <br>
-                                    <h3>Game Properties</h3>
-                                    <div class="editor-data-line">
-                                        <span>Game Name: </span>
-                                        <input type="text" name="editor-game-name" data-property="game_name" class="editor-map-property">
-                                    </div>
-                                    <div class="editor-data-line">
-                                        <span>Player Sprite: </span>
-                                        <input type="number" name="editor-game-sprite" data-property="game_sprite" class="editor-map-property">
+                                </div>
+                                <div class="general-editor-options">
+
+                                </div>                           
+                            </div>
+                            <div id="editor-saved-games" class="editor">
+                                <div class="general-editor-display">
+                                    <div class="_grid -col-2 -gap-15">
+                                        <div>
+                                            <h3>Saved Games</h3>
+                                            <ul id="editor-saved-games-list"></ul>
+                                        </div>
+                                        <div>
+                                            <h3>Templates</h3>
+                                            <ul id="editor-game-templates"></ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="general-editor-options">
-                                </div>                           
+                                </div>
+                            </div>
+
+                            <div id="editor-publish-game" class="editor">
+                                <div class="general-editor-display">
+                                    <div>
+                                        <h3>Publish Game</h3>
+                                        <p>If you would like to publish your game for others to play, click "Publish to Kanto" below.<br><br>This will upload your game and generate a URL for your game to live on that you'll be able to send to others.</p>
+                                        <br>
+                                        <button id="editor-publish-game">Publish to Kanto</button>
+                                    </div>
+                                </div>
+                                <div class="general-editor-options">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +148,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
             </div>
         <script src="dist/kanto.min.js?v=1.0.1"></script>
     </body>

@@ -5,6 +5,33 @@
 }
 
 ._grid {
-    display: grid;
-    width: 100%;
+	display: grid;
+	
+	&.-col-2 {
+        @include grid_columns(2);
+    }
+    
+	&.-col-3 {
+        @include grid_columns(3);
+    }
+
+	&.-col-4 {
+        @include grid_columns(4);
+	}
+
+	&.-col-5 {
+        @include grid_columns(5);
+	}
+
+	&.-gap-15 {
+		grid-gap: 15px;
+	}
+
+	&.-gap-25 {
+		grid-gap: 25px;
+	}
+
+	&.-gap-35 {
+		grid-gap: 35px;
+    }
 }

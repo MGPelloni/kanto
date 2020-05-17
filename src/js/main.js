@@ -19,13 +19,18 @@ const app = new PIXI.Application({
 });
 
 // Import data
-let import_data;
+let import_data = {
+    maps: [],
+    meta: {},
+    player: {}
+};
 
 // Game Variables
 let meta = {};
 let maps = [];
 let player; 
 
+let initialized = false;
 let keys = {}; 
 let editor = {};
 let dialogue = {};
@@ -33,8 +38,7 @@ let tile_textures = [];
 let spritesheets = [];
 let message_text;
 let paused = false;
-let game_mode = 'Creative';
-
+let game_mode = window.location.pathname.slice(1);
 
 // Node.JS Variables
 let ss_amount = 39 // This will check how many sprites are available through node.js FS
