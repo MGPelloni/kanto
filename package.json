@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "gulp",
+    "dev": "gulp",
     "server": "gulp server",
     "compile": "gulp compile"
   },
