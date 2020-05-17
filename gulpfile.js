@@ -56,6 +56,15 @@ gulp.task('js', function(done){
         .pipe(gulp.dest(`${dest}`))
 });
 
+gulp.task('production-js', function(done){
+    return gulp.src(js)
+		.pipe(concat('kanto.min.js'))
+		.pipe(babel())
+		.pipe(uglify())
+        .pipe(gulp.dest(`${dest}`))
+});
+
+
 gulp.task('watch', function () {
     gulp.watch(watch.scss, gulp.series('scss'));
 	gulp.watch(watch.js, gulp.series('js'));
@@ -73,4 +82,4 @@ gulp.task('browser-sync', function() {
 
 gulp.task('default', gulp.series('scss', 'js', 'watch'));
 gulp.task('server', gulp.series('browser-sync'));
-gulp.task('compile', gulp.series('scss', 'js'));
+gulp.task('compile', gulp.series('scss', 'production-js'));

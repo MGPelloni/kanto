@@ -1,3 +1,5 @@
+console.log('Starting server..');
+
 // Express
 const express = require('express');
 const app = express();
@@ -15,9 +17,10 @@ db.connect();
 app.use('/assets', express.static(path.join(__dirname, 'assets')))
 app.use('/dist', express.static(path.join(__dirname, 'dist')))
 
-
 // Server
 server.listen(process.env.PORT || 8000);
+
+console.log('Server has been succesfully initialized, listening on port:', process.env.PORT);
 
 // Endpoints
 app.get('/', (req, res) => { // Gallery View
