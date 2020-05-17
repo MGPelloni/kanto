@@ -7,9 +7,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // Postgres
-const { Client } = require('pg');
-const db = new Client(process.env.DATABASE_URL);
-db.connect();
+// const { Client } = require('pg');
+// const db = new Client(process.env.DATABASE_URL);
+// db.connect();
 
 // Static assets
 app.use('/assets', express.static(path.join(__dirname, 'assets')))
