@@ -62,4 +62,8 @@ let kanto_gamepad = {
     back: false
 }
 
+window.addEventListener('contextmenu', e => {
+    e.preventDefault();
+});
+
 kanto_load(); // game/load.js
