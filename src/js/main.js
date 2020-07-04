@@ -66,4 +66,7 @@ window.addEventListener('contextmenu', e => {
     e.preventDefault();
 });
 
+document.getElementsByTagName("body")[0].addEventListener("touchstart",
+ function(e) { e.returnValue = false });
+
 kanto_load(); // game/load.js
