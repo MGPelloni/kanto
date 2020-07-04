@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "gulp",
     "compile": "gulp compile"
   },
   "author": "Marco Pelloni",
