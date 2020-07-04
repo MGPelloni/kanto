@@ -1,8 +1,8 @@
 window.addEventListener("keydown", keysDown);
 window.addEventListener("keyup", keysUp);
 
-window.addEventListener("mousedown", keysDown);
-window.addEventListener("mouseup", keysUp);
+window.addEventListener("pointerdown", keysDown);
+window.addEventListener("pointerup", keysUp);
 
 function keysDown(e) {
     if (e.keyCode == "37" || e.keyCode == "38" || e.keyCode == "39" || e.keyCode == "40") {
@@ -33,8 +33,6 @@ function keysDown(e) {
         }
     }
 
-    console.log(e.keyCode);
-
     keys[e.keyCode] = true;
 }
 
@@ -60,7 +58,7 @@ function keysUp(e) {
                 break;
         }
     }
-    
+
     keys[e.keyCode] = false;
 }
 

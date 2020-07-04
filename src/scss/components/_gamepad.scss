@@ -5,7 +5,11 @@
     width: 100%;
     bottom: 0;
     left: 0;
+    display: none;
 
+    @include breakpoint('sm') {
+        display: block;
+    }
 }
 
 #gamepad-movement {
