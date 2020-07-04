@@ -15,6 +15,11 @@
     bottom: 0;
     left: 0;
     display: none;
+    touch-action: none;
+
+    * {
+        touch-action: none;
+    }
 
     @include breakpoint('sm') {
         display: block;
