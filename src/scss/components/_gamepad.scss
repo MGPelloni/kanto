@@ -1,0 +1,75 @@
+#gamepad {
+    background-color: #f1f1f1;
+    padding: 70px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+
+}
+
+#gamepad-movement {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+
+    button {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        text-align: center;
+    }
+
+    #gamepad-up {
+        left: 40px;
+        top: 0;
+    }
+
+
+    #gamepad-left {
+        left: 0;
+        top: 40px;
+    }
+
+    #gamepad-right {
+        left: 80px;
+        top: 40px;
+    }
+
+    #gamepad-down {
+        left: 40px;
+        top: 80px;
+    }
+}
+
+#gamepad-action-back {
+    position: absolute;
+    right: 100px;
+    top: 25px;
+
+    button {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        padding: 0;
+        text-align: center;
+        border-radius: 100%;
+    }
+
+    #gamepad-back {
+        left: 0;
+        top: 40px;
+    }
+
+    #gamepad-action {
+        top: 0;
+        left: 40px;
+    }
+}
+
+#gamepad-inner {
+    position: relative;
+    margin: 0 auto;
+
+}

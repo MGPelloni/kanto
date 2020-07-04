@@ -15,6 +15,10 @@
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+
+    @include breakpoint('sm') {
+        max-width: none;
+    }
 }
 
 canvas {
@@ -23,9 +27,9 @@ canvas {
     height: 400px;
     outline: none;
 
-    @media (max-width: 400px) {
+    @include breakpoint('sm') {
         width: 100%;
-        height: auto;
+        height: 100vw;
     }
 }
 
@@ -65,6 +69,10 @@ canvas {
     p {
         margin: 0;
     }
+
+    @include breakpoint('sm') {
+        padding: 0 5vw;
+    }
 }
 
 #kanto-controls-info {
@@ -89,6 +97,10 @@ canvas {
         &+#kanto-controls-info {
             opacity: 1;
         }
+    }
+
+    @include breakpoint('sm') {
+        display: none;
     }
 }
 

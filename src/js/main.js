@@ -1,5 +1,5 @@
 // Kanto Information
-const VERSION = '0.0.4';
+const VERSION = '0.1.1';
 
 // Game Constants
 const TILE_SIZE = 16;
@@ -51,5 +51,15 @@ let message_container = new PIXI.Container();
 // Audio
 let music;
 let sfx;
+
+// Gamepad
+let kanto_gamepad = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    action: false,
+    back: false
+}
 
 kanto_load(); // game/load.js

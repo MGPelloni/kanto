@@ -1,3 +1,23 @@
+@mixin breakpoint($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    // If the key doesn't exist in the map
+    @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        +"Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}
+
+@mixin grid_breakpoint($breakpoint) {
+    @media (max-width: $breakpoint) {
+        grid-template-columns: 100%;
+    }
+}
+
 @mixin grid_columns($columns) {
     grid-template-columns: repeat($columns, 1fr);
 }

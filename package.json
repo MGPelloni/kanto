@@ -1,6 +1,6 @@
 {
   "name": "kanto",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Telling the stories of the Kanto region.",
   "repository": {
     "type": "git",
@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "build": "gulp",
     "compile": "gulp compile"
   },
   "author": "Marco Pelloni",

@@ -35,6 +35,10 @@ header {
     nav a {
         margin: 0 10px;
     }
+
+	@include breakpoint('sm') {
+		display: none;
+	}
 }
 
 button {

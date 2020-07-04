@@ -1,6 +1,9 @@
 window.addEventListener("keydown", keysDown);
 window.addEventListener("keyup", keysUp);
 
+window.addEventListener("mousedown", keysDown);
+window.addEventListener("mouseup", keysUp);
+
 function keysDown(e) {
     if (e.keyCode == "37" || e.keyCode == "38" || e.keyCode == "39" || e.keyCode == "40") {
         if (!paused) {
@@ -8,14 +11,61 @@ function keysDown(e) {
         }
     }
 
+    if (e.target.getAttribute('data-action')) { // On screen gamepad
+        switch (e.target.getAttribute('data-action')) {
+            case 'up':
+                e.keyCode = 38;
+                break;
+            case 'down':
+                e.keyCode = 40;
+                break;
+            case 'left':
+                e.keyCode = 37;
+                break;
+            case 'right':
+                e.keyCode = 39;
+                break;
+            case 'action':
+                e.keyCode = 88;
+                break;
+            default:
+                break;
+        }
+    }
+
+    console.log(e.keyCode);
+
     keys[e.keyCode] = true;
 }
 
 function keysUp(e) {
+    if (e.target.getAttribute('data-action')) { // On screen gamepad
+        switch (e.target.getAttribute('data-action')) {
+            case 'up':
+                e.keyCode = 38;
+                break;
+            case 'down':
+                e.keyCode = 40;
+                break;
+            case 'left':
+                e.keyCode = 37;
+                break;
+            case 'right':
+                e.keyCode = 39;
+                break;
+            case 'action':
+                e.keyCode = 88;
+                break;
+            default:
+                break;
+        }
+    }
+    
     keys[e.keyCode] = false;
 }
 
 function controls_loop() {
+    // console.log(keys);
     if (!player.moving && player.can_move && !paused) {
         if (!player.frozen) {
             let next_position = {
