@@ -55,7 +55,7 @@ app.get('/templates', (req, res) => { // Create View
 });
 
 app.post('/game', (req, res) => { // Create View
-    db.query('SELECT * FROM templates WHERE (template_name)=($1);', [req.body.game], function(err, result){
+    db.query('SELECT * FROM games WHERE (name)=($1);', [req.body.game], function(err, result){
         if (err){
             console.log(err.toString());
             return;
@@ -64,7 +64,16 @@ app.post('/game', (req, res) => { // Create View
         if (result.rows.length > 0) {
             res.json(result.rows[0]);
             return;
-        }     
+        } else {
+            db.query('SELECT * FROM templates WHERE name=$1;', ['Pallet Town'], function(err, result){
+                if (err) {
+                    console.log(err.toString());
+                }
+
+                res.json(result.rows[0]);
+                return;
+            });
+        }
     });
 });
 
@@ -74,20 +83,20 @@ app.post('/upload', (req, res) => { // Upload Endpoint
 
     console.log('Got body:', req.body);
 
-    db.query('SELECT * FROM templates where (template_name)=($1);', [req.body.template_name], function(err, result){
+    db.query('SELECT * FROM games where (name)=($1);', [req.body.game_name], function(err, result){
         if (err){
             console.log(err.toString());
             return;
         }
 
         if (result.rows.length > 0){
-            db.query('UPDATE templates SET game_data=$2 WHERE template_name=$1;', [req.body.template_name, req.body.game_data], function(err, result){
+            db.query('UPDATE games SET game_data=$2 WHERE name=$1;', [req.body.game_name, req.body.game_data], function(err, result){
                 if (err){
                     console.log(err.toString());
                 }
             });
         } else {
-            db.query('INSERT INTO templates (template_name, game_data) values ($1, $2);', [req.body.template_name, req.body.game_data], function(err, result){
+            db.query('INSERT INTO games (name, game_data) values ($1, $2);', [req.body.game_name, req.body.game_data], function(err, result){
                 if (err){
                     console.log(err.toString());
                 }
@@ -106,7 +115,7 @@ app.post('/upload', (req, res) => { // Upload Endpoint
 function kanto_server_install() {
     console.log('Running Kanto installation..');
 
-    db.query('CREATE TABLE templates (template_name text, game_data text);', function(err, result){
+    db.query('CREATE TABLE templates (name text, game_data text);', function(err, result){
         if (err){
             console.log(err.toString());
             return;
@@ -117,7 +126,7 @@ function kanto_server_install() {
             files.forEach(file => {
                 let game_data = JSON.parse(fs.readFileSync('src/js/maps/' + file, 'utf8'));
 
-                db.query('INSERT INTO templates (template_name, game_data) values ($1, $2);', [game_data.meta.name, JSON.stringify(game_data)], function(err, result){
+                db.query('INSERT INTO templates (name, game_data) values ($1, $2);', [game_data.meta.name, JSON.stringify(game_data)], function(err, result){
                     if (err){
                         console.log(err.toString());
                     }
@@ -128,6 +137,20 @@ function kanto_server_install() {
         });
     });
 
+    db.query('CREATE TABLE games (game_id serial PRIMARY KEY, name text, author_id bigint, game_data text);', function(err, result){
+        if (err){
+            console.log(err.toString());
+            return;
+        }  
+    });
+    
+    db.query('CREATE TABLE users ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
+        if (err){
+            console.log(err.toString());
+            return;
+        }  
+    });
+
     console.log('Successfully installed Kanto into the database.');
 }
 
@@ -135,7 +158,7 @@ function kanto_server_install() {
  * Drop the Kanto tables from the database.
  */
 function kanto_server_drop() {
-    db.query('DROP TABLE templates;', function(err, result){
+    db.query('DROP TABLE templates, users, games;', function(err, result){
         if (err){
             console.log(err.toString());
         }
