@@ -316,6 +316,10 @@ class Editor {
         store_data(meta.name, kanto_game_export());
     }
 
+    publish() {
+        kanto_upload_template();
+    }
+
     gather_data() {
         let inputs = document.querySelectorAll('.editor.-active input, .editor.-active textarea');
         let data = {};
@@ -640,11 +644,18 @@ document.querySelectorAll('#kanto-editor [data-att]').forEach(elem => {
     });
 });
 
+if (document.querySelector('#editor-publish-game')) {
+    document.querySelector('#editor-publish-game').addEventListener('click', e => {
+        editor.publish();
+    });
+}
+
 if (document.querySelector('#editor-new-map')) {
     document.querySelector('#editor-new-map').addEventListener('click', e => {
         editor.create_new_map();
     });
 }
+
 
 function set_att_editor(type) {
     let att_editor = document.querySelector('#att-editor');

@@ -54,7 +54,7 @@ function kanto_load_game() {
 
 function kanto_upload_template() {
     let req_body = {
-        template_name: meta.name,
+        game_name: meta.name,
         game_data: kanto_game_export()
     };
 
@@ -72,7 +72,11 @@ function kanto_upload_template() {
     }).then((res) => {
         return res.json();
     }).then((data) => {
-        console.log(data);
+        if (data.success) {
+            alert('Game upload successful.');
+        } else {
+            alert('Game upload failed! Please try again later.');
+        }
     });
 }
 
@@ -202,7 +206,7 @@ function kanto_game_export() {
     });   
 
     let exported_player = {
-        spritesheet_id: player.spritesheet_id,
+        sprite: player.spritesheet_id,
         pokemon: player.pokemon,
         inventory: player.inventory,
     };
