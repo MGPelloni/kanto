@@ -26,7 +26,7 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_game() {
-    let selected_game = 'pallet';
+    let selected_game = 'Pallet Town';
 
     if (game_mode == 'create') {
         kanto_new_game();
@@ -35,10 +35,15 @@ function kanto_load_game() {
 
     let stored_data = retrieve_data(selected_game);
     if (!stored_data) { // The data is not on the player's machine and we must retrieve it
-        fetch(`${window.location.protocol}//${window.location.host}/game`).then((res) => {
+        fetch(`${window.location.protocol}//${window.location.host}/game`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({'game': selected_game}),
+        }).then((res) => {
             return res.json();
         }).then((data) => {
-            console.log(data);
             store_data(selected_game, data.game_data); // Store the fetched data on the user's machine
             kanto_process_import(data.game_data);
         });
@@ -111,7 +116,7 @@ function kanto_quickload_game(selected_game, type = 'game') {
     player.position.map = map.id;
     player.position.x = map.starting_position.x;
     player.position.y = map.starting_position.y;
-    player.change_spritesheet(import_data.player.spritesheet_id);
+    player.change_spritesheet(import_data.player.sprite);
 
     // Build the new map
     map.build();
@@ -231,7 +236,7 @@ function kanto_start() {
     Howler.mute(true); // Mute the volume across the game until user enables
     
     // Create player
-    player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.spritesheet_id);
+    player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
     player.current_map = map;
 
     // Build the first map
