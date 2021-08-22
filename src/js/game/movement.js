@@ -38,12 +38,14 @@ function exit_check() {
 }
 
 // Disabling controls when element is clicked out of
-// document.addEventListener('click', e => {
-//     let game_elem = document.querySelector('#pkmn');
+if (game_mode == 'create') {
+    document.addEventListener('click', e => {
+        let game_elem = document.querySelector('#pkmn');
 
-//     if (document.activeElement === game_elem) {
-//         paused = false;
-//     } else {
-//         paused = true;
-//     }
-// });
+        if (document.activeElement === game_elem) {
+            paused = false;
+        } else {
+            paused = true;
+        }
+    });
+}
