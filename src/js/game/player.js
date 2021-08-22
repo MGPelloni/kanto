@@ -113,7 +113,7 @@ class Player {
         console.log(att_tile);
     }
 
-    change_spritesheet(num) {
+    change_spritesheet(num = 0) {
         this.spritesheet_id = num;
         this.spritesheet = spritesheets[num];
 
