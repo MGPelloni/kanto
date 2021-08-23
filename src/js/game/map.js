@@ -285,6 +285,10 @@ function check_sprite_tile_actions(tile) {
     case 976:
       dialogue.add_message('Crammed full of POKéMON books!');
       break;
+    case 819:
+    case 820:
+      dialogue.add_message('Wow! Tons of POKéMON stuff!');
+      break;
     default:
       break;
   }
