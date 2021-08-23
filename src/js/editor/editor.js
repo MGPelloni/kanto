@@ -363,8 +363,8 @@ class Editor {
 
             data.forEach(row => {
                 let template_single = document.createElement('li');
-                template_single.innerHTML = row.template_name;
-                template_single.setAttribute('data-game-template', row.template_name);
+                template_single.innerHTML = row.name;
+                template_single.setAttribute('data-game-template', row.name);
                 game_templates_ul.appendChild(template_single);
             });
 
