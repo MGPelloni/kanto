@@ -21,6 +21,7 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')))
 
 // Server
 server.listen(process.env.PORT || 8000);
+// kanto_server_drop();
 kanto_server_initialize();
 
 // Endpoints
@@ -55,56 +56,82 @@ app.get('/templates', (req, res) => { // Create View
 });
 
 app.post('/game', (req, res) => { // Create View
-    db.query('SELECT * FROM games WHERE (name)=($1);', [req.body.game], function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }
+    let game_id = req.body.game;
 
-        if (result.rows.length > 0) {
-            res.json(result.rows[0]);
-            return;
-        } else {
-            db.query('SELECT * FROM templates WHERE name=$1;', ['Pallet Town'], function(err, result){
-                if (err) {
-                    console.log(err.toString());
-                }
-
+    if (game_id) {
+        db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result){
+            if (err){
+                console.log(err.toString());
+                return;
+            }
+    
+            if (result.rows.length > 0) {
                 res.json(result.rows[0]);
                 return;
-            });
-        }
-    });
+            } else {
+                db.query('SELECT * FROM templates WHERE name=$1;', ['Pallet Town'], function(err, result){
+                    if (err) {
+                        console.log(err.toString());
+                    }
+    
+                    res.json(result.rows[0]);
+                    return;
+                });
+            }
+        });
+    } else {
+        db.query('SELECT * FROM templates WHERE name=$1;', ['Pallet Town'], function(err, result){
+            if (err) {
+                console.log(err.toString());
+            }
+
+            res.json(result.rows[0]);
+            return;
+        });
+    }
+   
 });
 
 app.post('/upload', (req, res) => { // Upload Endpoint
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Upload attempt from ' + requesting_ip + " accepted.");
 
-    console.log('Got body:', req.body);
+    // console.log('Got body:', req.body);
 
-    db.query('SELECT * FROM games where (name)=($1);', [req.body.game_name], function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }
+    let game_id = null;
+  
+    if (req.body.meta.game_id) {
+        game_id = req.body.meta.game_id;
+    }
 
-        if (result.rows.length > 0){
-            db.query('UPDATE games SET game_data=$2 WHERE name=$1;', [req.body.game_name, req.body.game_data], function(err, result){
-                if (err){
-                    console.log(err.toString());
-                }
-            });
-        } else {
-            db.query('INSERT INTO games (name, game_data) values ($1, $2);', [req.body.game_name, req.body.game_data], function(err, result){
-                if (err){
-                    console.log(err.toString());
-                }
-            });
-        }
-    });
+    console.log(game_id);
 
-    res.json({success: true});
+    if (game_id) {
+        db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result) { // TODO: Add author check here
+            if (err){
+                console.log(err.toString());
+                return;
+            }
+    
+            if (result.rows.length > 0){
+                db.query('UPDATE games SET game_data=$2 WHERE game_id=$1;', [game_id, req.body], function(err, result){
+                    if (err){
+                        console.log(err.toString());
+                    }
+                });
+            }
+        });
+    } else {
+        game_id = generate_game_id();
+        db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [req.body.meta.name, game_id, req.body], function(err, result){
+            if (err){
+                console.log(err.toString());
+            }
+        });
+    }
+   
+
+    res.json({success: true, game_id: game_id});
 });
 
 // Functions
@@ -115,7 +142,7 @@ app.post('/upload', (req, res) => { // Upload Endpoint
 function kanto_server_install() {
     console.log('Running Kanto installation..');
 
-    db.query('CREATE TABLE templates (name text, game_data text);', function(err, result){
+    db.query('CREATE TABLE templates (id SERIAL PRIMARY KEY, name TEXT, game_data TEXT);', function(err, result){
         if (err){
             console.log(err.toString());
             return;
@@ -137,14 +164,14 @@ function kanto_server_install() {
         });
     });
 
-    db.query('CREATE TABLE games (game_id serial PRIMARY KEY, name text, author_id bigint, game_data text);', function(err, result){
+    db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
         if (err){
             console.log(err.toString());
             return;
         }  
     });
     
-    db.query('CREATE TABLE users ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
+    db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
         if (err){
             console.log(err.toString());
             return;
@@ -180,4 +207,17 @@ function kanto_server_initialize() {
         
         console.log('Server has been succesfully initialized, listening on port:', process.env.PORT);
     });
+}
+
+function generate_game_id(length = 11) {
+    // Declare all characters
+    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
+
+    // Pick characers randomly
+    let str = '';
+    for (let i = 0; i < length; i++) {
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    return str;    
 }
