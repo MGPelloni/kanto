@@ -289,6 +289,11 @@ function check_sprite_tile_actions(tile) {
     case 820:
       dialogue.add_message('Wow! Tons of POKéMON stuff!');
       break;
+    case 808:
+    case 977:
+      sfx.play('turn-on-pc');
+      dialogue.queue_messages(["RED turned on the PC.", "...", "It doesn't seem to be working.."]);
+      break;
     default:
       break;
   }
