@@ -27,3 +27,10 @@ function kanto_console(message, type) {
 function time() {
     return Date.now();
 }
+
+function parse_query_string() {
+    const url = window.location.search;
+    const paramsString = url.split('?')[1];
+    const searchParams = new URLSearchParams(paramsString);
+    return searchParams;
+}
