@@ -26,15 +26,21 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_game() {
-    let selected_game = 'Pallet Town';
 
     if (game_mode == 'create') {
         kanto_new_game();
         return;
     }
 
-    let stored_data = retrieve_data(selected_game);
-    if (!stored_data) { // The data is not on the player's machine and we must retrieve it
+    let query_string = parse_query_string(),
+        selected_game = query_string.get('g');
+
+    // let stored_data = retrieve_data(selected_game); // Caching
+    let stored_data = false;
+
+    if (stored_data) {  // Loading the data from localStorage
+        kanto_process_import(stored_data);
+    } else { // The data is not on the player's machine and we must retrieve it from the server
         fetch(`${window.location.protocol}//${window.location.host}/game`, {
             method: 'POST',
             headers: {
@@ -44,19 +50,16 @@ function kanto_load_game() {
         }).then((res) => {
             return res.json();
         }).then((data) => {
-            store_data(selected_game, data.game_data); // Store the fetched data on the user's machine
+            // store_data(selected_game, data.game_data); // Store the fetched data on the user's machine
             kanto_process_import(data.game_data);
         });
-    } else { // Loading the data from localStorage
-        kanto_process_import(stored_data);
     }
 }
 
 function kanto_upload_template() {
-    let req_body = {
-        game_name: meta.name,
-        game_data: kanto_game_export()
-    };
+    let req_body = kanto_game_export();
+
+    console.log(req_body);
 
     fetch(`${window.location.protocol}//${window.location.host}/upload`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -68,12 +71,14 @@ function kanto_upload_template() {
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(req_body) // body data type must match "Content-Type" header
+        body: req_body // body data type must match "Content-Type" header
     }).then((res) => {
         return res.json();
     }).then((data) => {
         if (data.success) {
-            alert('Game upload successful.');
+            alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/?g=${data.game_id}`);
+            meta.game_id = data.game_id;
+            store_data(meta.name, kanto_game_export());
         } else {
             alert('Game upload failed! Please try again later.');
         }
@@ -96,21 +101,30 @@ function kanto_new_game() {
 function kanto_quickload_game(selected_game, type = 'game') {
     let game_data = retrieve_data(selected_game);
 
+    console.log(game_data);
+
     if (type == 'template') {
         editor.templates.forEach(template => {
-            if (template.template_name == selected_game) {
+            if (template.name == selected_game) {
                 game_data = template.game_data;
             }
+
+            meta = {
+                name: template.name,
+                game_id: null,
+            };
         });
     }
 
     import_data = JSON.parse(game_data);
 
-    // Load Meta
-    meta = {
-        name: import_data.meta.name
-    };
-
+    if (type != 'template') {
+        meta = {
+            name: import_data.meta.name,
+            game_id: import_data.meta.game_id
+        };
+    }
+    
     // Load Maps
     maps = kanto_load_maps();
     map = maps[0];
@@ -164,6 +178,9 @@ function kanto_quickload_import(game_data, type) {
 }
 
 function kanto_process_import(data) {
+    // Mutate data
+    data = data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
+
     // Set global import data
     import_data = JSON.parse(data);
 
