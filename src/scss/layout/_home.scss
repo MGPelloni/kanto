@@ -33,8 +33,19 @@ canvas {
     }
 }
 
-.kanto-play {
-    text-align: center;
+.kanto-home,
+.kanto-play,
+.kanto-create {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+}
+
+.kanto-play,
+.kanto-create {
+    @include breakpoint('sm') {
+        align-items: flex-start;
+    }
 }
 
 .toggle-volume {

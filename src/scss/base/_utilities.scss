@@ -1,7 +1,7 @@
 ._container {
+	width: 100%;
     max-width: 950px;
     margin: 0 auto;
-	padding: 6rem 1.5rem;
 
 	@include breakpoint('sm') {
 		padding: 0;

@@ -1,0 +1,51 @@
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #000;
+    }
+
+    button {
+
+        color: #626262;
+    }
+    
+    canvas {
+        outline: 2px solid #626262;
+    }
+
+    ._well {
+        background-color: #000;
+        color: #b7b7b7;
+        border: 2px solid #404040;
+    }
+
+    #kanto-editor {
+        background-color: #191919;
+        
+        button {
+            color: #fff;
+            background-color: transparent;
+            border-color: #484848;
+        }
+
+        li:hover {
+            background-color: #000000;
+            border-bottom: 2px solid #484848;
+        }
+    }
+
+    .general-editor-display {
+        color: #fff;
+        background-color: #191919;
+    }
+
+    .editor-data-line.-well {
+        background-color: #191919;
+        border: 2px solid #484848;
+    }
+
+    input, optgroup, select, textarea {
+        background-color: #212121;
+        color: #fff;
+    }
+}

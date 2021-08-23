@@ -6,9 +6,12 @@
 
     ._container {
         width: calc(480px + 15px);
-        padding: 0;
     }
 
+    button {
+        border: 2px solid #000;
+        background-color: #fff;
+    }
 }
 
 #kanto-editor nav {
@@ -49,7 +52,7 @@
 
     .general-editor-display {
         padding: 0;
-        background-color: #cedae6;
+        background-color: #191919;
     }
 
     img {
@@ -122,8 +125,6 @@
     height: 260px;
     overflow-y: scroll;
 }
-
-
 
 #coords {
     text-align: right;

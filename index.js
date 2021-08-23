@@ -28,7 +28,7 @@ kanto_server_initialize();
 app.get('/', (req, res) => { // Gallery View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/src/views/play.html'));
+    res.sendFile(path.join(__dirname + '/src/views/home.html'));
 });
 
 app.get('/play', (req, res) => {  // Play View
