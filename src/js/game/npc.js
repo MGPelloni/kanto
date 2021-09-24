@@ -158,7 +158,7 @@ class Npc {
     }
 
     wander(index) {
-        let movement_roll = Math.floor(Math.random() * 2) + 1, // 20% chance to move
+        let movement_roll = Math.floor(Math.random() * 5) + 1, // 20% chance to move
             direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
             directions = ['North', 'South', 'East', 'West'];
         

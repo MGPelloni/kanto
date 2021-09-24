@@ -269,6 +269,11 @@ class Kanto_Map {
   }
 
   build_npcs() { // Editor view
+    // Remove intervals
+    npcs.forEach(npc => {
+      clearInterval(npc.wander_interval);
+    });
+
     npcs = []; // clear array
     npc_container.removeChildren();
 
