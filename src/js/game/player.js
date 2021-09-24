@@ -47,6 +47,9 @@ class Player {
         atts_container.x = atts_container.origin.x + ((x * TILE_SIZE) * -1);
         atts_container.y = atts_container.origin.y + ((y * TILE_SIZE) * -1);
 
+        npc_container.x = npc_container.origin.x + ((x * TILE_SIZE) * -1);
+        npc_container.y = npc_container.origin.y + ((y * TILE_SIZE) * -1);
+
         this.position.x = x;
         this.position.y = y;
         this.position.index = this.position.x + this.current_map.width * this.position.y;
@@ -109,6 +112,15 @@ class Player {
             default:
                 break;
         }
+
+        npcs.forEach((npc, i) => {
+            if (index == npc.position.index) {
+                if (!dialogue.active) {
+                    npc.face_player();
+                    dialogue.queue_messages(npc.message);
+                }
+            };
+        });
 
         console.log(att_tile);
     }

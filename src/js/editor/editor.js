@@ -76,6 +76,7 @@ class Editor {
                 }
 
                 this.adjust_attribute(sprite.game_position, attribute_type);
+                map.build_npcs(); // reset npcs
                 this.save();
             default:
                 break;
@@ -128,6 +129,9 @@ class Editor {
                         case 4:
                             atts_container.children[sprite.game_position.index].tint = '0xFFA500';
                             break;
+                        case 5:
+                            atts_container.children[sprite.game_position.index].tint = '0x000000';
+                            break;
                         default:
                             break;
                     }
@@ -157,6 +161,9 @@ class Editor {
                             break;
                         case 4:
                             atts_container.children[sprite.game_position.index].tint = '0xFFA500';
+                            break;
+                        case 5:
+                            atts_container.children[sprite.game_position.index].tint = '0x000000';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -259,6 +266,10 @@ class Editor {
               break;
             case 4:
               color = '0xFFA500';
+              break;
+            case 5:
+              color = '0x000000';
+              break;
             default:
               color = '0xEEEEEE';
               break;
@@ -685,6 +696,12 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line"><label>Map:</label><input name="map" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>X:</label><input name="x" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Y:</label><input name="y" type="number"></div>';
+            break;
+        case 5:
+            display_editor.innerHTML += '<h5>NPC</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="5" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea><p>You can use <code>;</code> to manually break up lines.</p>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             break;
         default:
             break;

@@ -46,6 +46,10 @@ class Dialogue {
                 message_container.visible = false;
                 message_text.text = '';
                 player.frozen = false;
+                npcs.forEach(npc => {
+                    npc.frozen = false;
+                });
+                
                 setTimeout(() => {
                     this.active = false;
                 }, 600);

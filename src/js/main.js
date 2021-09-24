@@ -29,6 +29,7 @@ let import_data = {
 let meta = {};
 let maps = [];
 let player; 
+let npcs = [];
 
 let initialized = false;
 let keys = {}; 
@@ -46,6 +47,7 @@ let ss_amount = 39 // This will check how many sprites are available through nod
 // Animation Containers
 let background = new PIXI.Container();
 let atts_container = new PIXI.Container();
+let npc_container = new PIXI.Container();
 let message_container = new PIXI.Container();
 
 // Audio

@@ -253,6 +253,10 @@ class Kanto_Map {
           case 4: 
             sprite.tint = '0xFFA500';
             break;
+          case 5: 
+            sprite.tint = '0x000000';
+            sprite.alpha = 0.5;
+            break;
           default:
             sprite.tint = '0xEEEEEE';
             sprite.alpha = 0;
@@ -264,8 +268,30 @@ class Kanto_Map {
     }
   }
 
+  build_npcs() { // Editor view
+    npcs = []; // clear array
+    npc_container.removeChildren();
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        let index = x + this.width * y;
+        let att = this.atts[index];
+
+        switch (att.type) {
+          case 5: 
+            let npc = new Npc({x: x, y: y}, att.sprite, att.message, npcs.length)
+            npcs.push(npc);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
   build() {
     this.build_tiles();
+    this.build_npcs();
     this.build_atts();
     
     if (music) {

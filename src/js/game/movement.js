@@ -1,11 +1,10 @@
 /**
- * Check a tile to see if it is walled or if the player is escaping the boundary.
+ * Check a tile to see if it is walled or if the next position is escaping the boundary.
  * 
- * @param {Player} player The current player.
  * @param {number} x The x-axis value to check.
  * @param {number} y The y-axis value to check.
  */
-function collision_check(player, x, y) {
+function collision_check(x, y) {
     // x-axis boundary check   
     if (x < 0 || x >= map.width) {
         return true;
@@ -17,13 +16,30 @@ function collision_check(player, x, y) {
     }
 
     // attribute check
-    switch (player.current_map.atts[x + player.current_map.width * y].type) {
+    switch (map.atts[x + map.width * y].type) {
         case 1: // Wall
         case 3: // Action
             return true;
             break;
         default:
             break;
+    }
+
+    // player check
+    if (x == player.position.x && y == player.position.y) {
+        return true;
+    }
+
+    // npc check
+    let npc_collision = false;
+    npcs.forEach(npc => {
+        if (x == npc.position.x && y == npc.position.y) {
+            npc_collision = true;
+        }
+    });
+
+    if (npc_collision) { 
+        return true;
     }
 
     return false;

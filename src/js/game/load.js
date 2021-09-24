@@ -76,7 +76,7 @@ function kanto_upload_template() {
         return res.json();
     }).then((data) => {
         if (data.success) {
-            alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/?g=${data.game_id}`);
+            alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/play?g=${data.game_id}`);
             meta.game_id = data.game_id;
             store_data(meta.name, kanto_game_export());
         } else {
@@ -247,6 +247,7 @@ function kanto_editor_upload() {
  */
 function kanto_start() {
     prepare_background();
+    prepare_npc_container();
     prepare_atts_container();
 
     prepare_tilemap();
@@ -291,6 +292,19 @@ function prepare_atts_container() {
     atts_container.visible = false;
 
     app.stage.addChild(atts_container);
+}
+
+function prepare_npc_container() {
+    npc_container.origin = {
+        x: app.view.width / 2 - TILE_SIZE / 2,
+        y: app.view.width / 2 - TILE_SIZE / 2,
+    }
+
+    npc_container.x = npc_container.origin.x;
+    npc_container.y = npc_container.origin.y;
+    npc_container.visible = true;
+
+    app.stage.addChild(npc_container);
 }
 
 function prepare_background() {

@@ -4,5 +4,6 @@
  * 2: Warp [Map, X, Y]
  * 3: Action [Message]
  * 4: Exit [Map, X, Y]
+ * 5: NPC [Map, X, Y]
  * ?: Force Direction
  */
