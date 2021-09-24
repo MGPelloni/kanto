@@ -236,22 +236,22 @@ function move_loop() {
         if (npc.moving) {
             switch (npc.facing) {
                 case 'North':
-                    npc.sprite.y--; 
+                    npc.sprite.y -= 0.5; 
                     break;
                 case 'South':
-                    npc.sprite.y++; 
+                    npc.sprite.y += 0.5; 
                     break;  
                 case 'West':
-                    npc.sprite.x--; 
+                    npc.sprite.x -= 0.5; 
                     break;      
                 case 'East':
-                    npc.sprite.x++; 
+                    npc.sprite.x += 0.5; 
                     break;        
                 default:
                     break;
             }
 
-            if (npc.current_move_ticker >= 15) {
+            if (npc.current_move_ticker >= 31) {
                 npc.moving = false;
                 npc.can_move = false;
 
