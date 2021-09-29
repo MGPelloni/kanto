@@ -332,8 +332,10 @@ class Editor {
     }
 
     gather_data() {
-        let inputs = document.querySelectorAll('.editor.-active input, .editor.-active textarea');
+        let inputs = document.querySelectorAll('.editor.-active input, .editor.-active textarea, .editor.-active select');
         let data = {};
+
+        // console.log(inputs);
 
         if (inputs) {
             inputs.forEach(input => {
@@ -702,6 +704,8 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="5" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea><p>You can use <code>;</code> to manually break up lines.</p>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Facing:</label><select name="facing"><option>North</option><option>South</option><option>West</option><option>East</option></select></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Movement State:</label><select name="movement_state"><option>Active</option><option>Static</option><option>Frozen</option></select></div>';
             break;
         default:
             break;
