@@ -28,7 +28,7 @@ class Player {
         this.sprite.animationSpeed = 0.125;
         this.sprite.loop = false;
         this.sprite.x = app.view.width / 2;
-        this.sprite.y = app.view.height / 2;
+        this.sprite.y = (app.view.height / 2) - 4;
         this.sprite.width = TILE_SIZE;
         this.sprite.height = TILE_SIZE;
     }
