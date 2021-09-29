@@ -1,15 +1,24 @@
 class Npc {
-    constructor(position = {x: 0, y: 0}, spritesheet_id = 0, message = '', index = 0) {
+    constructor(position = {x: 0, y: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {
         this.position = position;
         this.message = message;
 
         this.spritesheet_id = spritesheet_id;
         this.spritesheet = spritesheets[spritesheet_id];
  
-        this.facing = 'South';
+        this.initial_properties = {
+            facing: facing
+        };
+
+        this.facing = facing;
         this.frozen = false;
         this.moving = false;
         this.can_move = true;
+
+        if (movement_state != 'Active') {
+            this.can_move = false;
+        }
+
         this.current_move_ticker = 0;
         
         this.pokemon = [];
@@ -19,13 +28,39 @@ class Npc {
         npc_container.addChild(this.sprite);
         this.place(position.x, position.y);
 
-        if (this.can_move) {
-            this.wander_interval = setInterval(this.wander, 1000, index);
+        switch (movement_state) {
+            case 'Active':
+                this.wander_interval = setInterval(this.wander, 1000, index);
+                break;
+            case 'Static':
+                this.wander_interval = setInterval(this.look_around, 1000, index);
+                break;
+            case 'Frozen':
+                this.wander_interval = setInterval(this.return_to_original_facing, 3000, index);
+                break;
+            default:
+                break;
         }
     }
 
     set_sprite() {
-        this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standSouth);
+        switch (this.facing) {
+            case 'North':
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standNorth);
+                break;
+            case 'West':
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standWest);
+                break;
+            case 'South':
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standSouth);
+                break;
+            case 'East':
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standEast);
+                break;       
+            default:
+                break;
+        }
+        
         // this.sprite.anchor.set(0.5);
         this.sprite.animationSpeed = 0.125;
         this.sprite.loop = false;
@@ -49,8 +84,6 @@ class Npc {
     }
 
     face_player() {
-        this.frozen = true;
-
         switch (player.facing) {
             case 'North':
                 this.sprite.textures = this.spritesheet.standSouth;
@@ -158,13 +191,61 @@ class Npc {
     }
 
     wander(index) {
-        let movement_roll = Math.floor(Math.random() * 5) + 1, // 20% chance to move
-            direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
-            directions = ['North', 'South', 'East', 'West'];
-        
-        if (movement_roll == 1) {
-            if (npcs[index] && !npcs[index].frozen) {
+        if (npcs[index] && !npcs[index].frozen) {
+            let movement_roll = Math.floor(Math.random() * 5) + 1, // 20% chance to move
+                direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
+                directions = ['North', 'South', 'East', 'West'];
+            
+            if (movement_roll == 1) {
                 npcs[index].move(directions[direction_roll]);
+            }
+        }
+    }
+
+    look_around(index) {
+        if (npcs[index] && !npcs[index].frozen) {
+            let movement_roll = Math.floor(Math.random() * 3) + 1, // 33% chance to move
+                direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
+                directions = ['North', 'South', 'East', 'West'];
+            
+            if (movement_roll == 1) {
+                switch (directions[direction_roll]) {
+                    case 'North':
+                        npcs[index].sprite.textures = npcs[index].spritesheet.standNorth;
+                        break;
+                    case 'South':
+                        npcs[index].sprite.textures = npcs[index].spritesheet.standSouth;
+                        break;
+                    case 'West':
+                        npcs[index].sprite.textures = npcs[index].spritesheet.standWest;
+                        break;
+                    case 'East':
+                        npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    return_to_original_facing(index) {
+        if (npcs[index] && !npcs[index].frozen) {
+            switch (npcs[index].initial_properties.facing) {
+                case 'North':
+                    npcs[index].sprite.textures = npcs[index].spritesheet.standNorth;
+                    break;
+                case 'South':
+                    npcs[index].sprite.textures = npcs[index].spritesheet.standSouth;
+                    break;
+                case 'West':
+                    npcs[index].sprite.textures = npcs[index].spritesheet.standWest;
+                    break;
+                case 'East':
+                    npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
+                    break;
+                default:
+                    break;
             }
         }
     }

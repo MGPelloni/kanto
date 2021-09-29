@@ -281,10 +281,10 @@ class Kanto_Map {
       for (let x = 0; x < this.width; x++) {
         let index = x + this.width * y;
         let att = this.atts[index];
-
+        
         switch (att.type) {
           case 5: 
-            let npc = new Npc({x: x, y: y}, att.sprite, att.message, npcs.length)
+            let npc = new Npc({x: x, y: y}, att.sprite, att.message, att.facing, att.movement_state, npcs.length); // npc.js
             npcs.push(npc);
             break;
           default:

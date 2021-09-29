@@ -116,6 +116,7 @@ class Player {
         npcs.forEach((npc, i) => {
             if (index == npc.position.index) {
                 if (!dialogue.active) {
+                    npc.frozen = true;
                     npc.face_player();
                     dialogue.queue_messages(npc.message);
                 }
