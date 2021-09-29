@@ -26,15 +26,14 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_game() {
-
-    if (game_mode == 'create') {
-        kanto_new_game();
-        return;
-    }
-
     let query_string = parse_query_string(),
         selected_game = query_string.get('g');
 
+    if (game_mode == 'create' && !selected_game) { // No game has been selected, and we are in create mode
+        kanto_new_game();
+        return;
+    }
+    
     // let stored_data = retrieve_data(selected_game); // Caching
     let stored_data = false;
 
@@ -183,16 +182,16 @@ function kanto_process_import(data) {
 
     // Set global import data
     import_data = JSON.parse(data);
+    console.log(import_data);
 
     // Load Meta
-    meta = {
-        name: import_data.meta.name
-    };
+    meta = import_data.meta;
 
     // Load Maps
     maps = kanto_load_maps();
     map = maps[0];
 
+    
     // Loading is complete, start the game
     kanto_start();
 }
@@ -297,7 +296,7 @@ function prepare_atts_container() {
 function prepare_npc_container() {
     npc_container.origin = {
         x: app.view.width / 2 - TILE_SIZE / 2,
-        y: app.view.width / 2 - TILE_SIZE / 2,
+        y: (app.view.width / 2 - TILE_SIZE / 2)  - 4,
     }
 
     npc_container.x = npc_container.origin.x;
