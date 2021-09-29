@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require('fs');
 
 // app.use(bodyParser.json());
-app.use(express.bodyParser({limit: '50mb'}));
+app.use(express.json({limit: '50mb'}));
 
 // Postgres
 const { Client } = require('pg');
