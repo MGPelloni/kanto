@@ -5,10 +5,10 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const path = require("path");
-const bodyParser = require('body-parser');
 const fs = require('fs');
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.bodyParser({limit: '50mb'}));
 
 // Postgres
 const { Client } = require('pg');
