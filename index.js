@@ -9,16 +9,16 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb'}));  // TODO: body-parser deprecated undefined extended: provide extended option
 
 // Postgres
 const { Client } = require('pg');
 
 const db = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    // ssl: { // TODO: Causes error "UnhandledPromiseRejectionWarning: Error: The server does not support SSL connections"
+    //     rejectUnauthorized: false
+    // }
 });
 
 db.connect();
