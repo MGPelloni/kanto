@@ -19,6 +19,7 @@ function kanto_load_assets() {
     app.loader
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('message', 'assets/graphics/message.jpg')
+        .add('start-menu', 'assets/graphics/start-menu.png')
     app.loader.load(kanto_load_game);
 }
 
@@ -277,6 +278,7 @@ function kanto_start() {
     document.querySelector('#pkmn').focus();
 
     // Foreground
+    prepare_menus();
     prepare_dialogue();
 }
 
@@ -387,6 +389,82 @@ function prepare_dialogue() {
     message_container.visible = false;
 
     dialogue = new Dialogue();
+}
+
+function open_pokedex() {
+    console.log('Open pokedex');
+}
+
+function prepare_menus() {
+    menu_container.visible = false;
+    app.stage.addChild(menu_container);
+
+    prepare_start_menu();
+}
+
+function prepare_start_menu() {
+    let start_menu = new PIXI.Container();
+
+    let menu_texture = new PIXI.Texture.from(app.loader.resources['start-menu'].url),
+    menu_bg = new PIXI.Sprite(menu_texture),
+    menu_margin = 17, // Starting margin for top of menu options
+    menu_option_margin = 15, // Each menu option margin
+    menu_options = [
+    {
+        name: 'POKéDEX',
+        callback: open_pokedex
+    }, 
+    {
+        name: 'POKéMON'
+    }, 
+    {
+        name: 'ITEM'
+    }, 
+    { 
+        name: 'RED'
+    }, 
+    { 
+        name: 'SAVE'
+    }, 
+    {
+        name: 'OPTION'
+    }, 
+    {
+        name: 'EXIT'
+    }];
+
+    // Start Menu
+    menu_bg.width = TILE_SIZE * 4 + (TILE_SIZE / 2) + 8;
+    menu_bg.height = TILE_SIZE * 8;
+    menu_bg.x = TILE_SIZE * 5 + (TILE_SIZE / 2) - 8;
+    menu_bg.y = 0;
+
+
+    menu_container.addChild(start_menu);
+    start_menu.addChild(menu_bg);
+
+    // Menu items
+    menu_options.forEach((elem, i) => {
+        let menu_text = new PIXI.Text(elem.name, {fontFamily: 'pokemon_gbregular', fontSize: 8, fill : 0x000000, align : 'left'});
+        menu_text.x = menu_bg.x + 16;
+        menu_text.y = menu_bg.y + (menu_option_margin * i) + menu_margin;
+        menu_text.resolution = 4;
+        start_menu.addChild(menu_text);
+    });
+    
+    // create a new graphics object
+    let menu_cursor = new PIXI.Graphics();
+    menu_cursor.beginFill(0x000000);
+    menu_cursor.moveTo(0, 0);
+    menu_cursor.lineTo(4, 4);
+    menu_cursor.lineTo(0, 9);
+    menu_cursor.endFill();
+
+    menu_cursor.x = menu_bg.x + 8;
+    menu_cursor.y = menu_margin;
+
+    start_menu.addChild(menu_cursor);
+    menus.push(new Menu('Start Menu', menu_options, start_menu, menu_cursor));
 }
 
 function store_data(name, json) {

@@ -66,6 +66,9 @@ document.querySelector('.toggle-volume').addEventListener('click', e => {
         Howler.mute(true)
         document.querySelector('.toggle-volume').classList.add('-muted');
     }
+
+    // Refocus on canvas
+    document.querySelector('#pkmn').focus();
 });
 
 function enable_audio() {

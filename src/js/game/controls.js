@@ -71,92 +71,122 @@ function controls_loop() {
                 y: player.position.y
             };
 
-            if (keys["87"] || keys["38"]) {
-                if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkNorth) {
-                    player.sprite.textures = player.spritesheet.walkNorth;
-                    player.sprite.play();
-                    player.facing = 'North';
+            if (keys["87"] || keys["38"]) { // Up, W
+                switch (player.controls) {
+                    case 'menu':
+                        menus[0].move_cursor('North');
+                        break;
+                    default: // Walking
+                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkNorth) {
+                            player.sprite.textures = player.spritesheet.walkNorth;
+                            player.sprite.play();
+                            player.facing = 'North';
+                        }
+        
+                        next_position.y--;
+        
+                        if (collision_check(next_position.x, next_position.y) == false) {
+                            player.direction = 'North';
+                            player.moving = true;
+                            player.position.y--;
+                        } else {
+                            if (exit_check()) { // Check if the player is at an exit
+                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                sfx.play('go-outside');
+                            } else { // Collision into a barrier
+                                sfx.play('collision');
+                            }
+                        }
+                        break;
+                }
+            } else if (keys["83"] || keys["40"]) { // Down, S  
+                switch (player.controls) {
+                    case 'menu':
+                        menus[0].move_cursor('South');
+                        break;
+                
+                    default: // Walking
+                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkSouth) {
+                            player.sprite.textures = player.spritesheet.walkSouth;
+                            player.sprite.play();
+                            player.facing = 'South';
+                        }
+        
+                        next_position.y++;
+        
+                        if (collision_check(next_position.x, next_position.y) == false) {
+                            player.direction = 'South';
+                            player.moving = true;
+                            player.position.y++;
+                        } else {
+                            if (exit_check()) { // Check if the player is at an exit
+                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                sfx.play('go-outside');
+                            } else { // Collision into a barrier
+                                sfx.play('collision');
+                            }
+                        }
+                        break;
+                }
+            } else if (keys["65"] || keys["37"]) { // Left, A
+                switch (player.controls) {
+                    case 'menu':
+                        console.log('Left');
+                        break;
+                
+                    default:
+                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkWest) {
+                            player.sprite.textures = player.spritesheet.walkWest;
+                            player.sprite.play();
+                            player.facing = 'West';
+                        }
+        
+                        next_position.x--;
+        
+                        if (collision_check(next_position.x, next_position.y) == false) {
+                            player.direction = 'West';
+                            player.moving = true;
+                            player.position.x--;
+                        } else {
+                            if (exit_check()) { // Check if the player is at an exit
+                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                sfx.play('go-outside');
+                            } else { // Collision into a barrier
+                                sfx.play('collision');
+                            }
+                        }        
+                        break;
                 }
 
-                next_position.y--;
-
-                if (collision_check(next_position.x, next_position.y) == false) {
-                    player.direction = 'North';
-                    player.moving = true;
-                    player.position.y--;
-                } else {
-                    if (exit_check()) { // Check if the player is at an exit
-                        player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                        sfx.play('go-outside');
-                    } else { // Collision into a barrier
-                        sfx.play('collision');
-                    }
-                }
-
-
-            } else if (keys["83"] || keys["40"]) {
-                if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkSouth) {
-                    player.sprite.textures = player.spritesheet.walkSouth;
-                    player.sprite.play();
-                    player.facing = 'South';
-                }
-
-                next_position.y++;
-
-                if (collision_check(next_position.x, next_position.y) == false) {
-                    player.direction = 'South';
-                    player.moving = true;
-                    player.position.y++;
-                } else {
-                    if (exit_check()) { // Check if the player is at an exit
-                        player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                        sfx.play('go-outside');
-                    } else { // Collision into a barrier
-                        sfx.play('collision');
-                    }
-                }
-            } else if (keys["65"] || keys["37"]) {
-                if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkWest) {
-                    player.sprite.textures = player.spritesheet.walkWest;
-                    player.sprite.play();
-                    player.facing = 'West';
-                }
-
-                next_position.x--;
-
-                if (collision_check(next_position.x, next_position.y) == false) {
-                    player.direction = 'West';
-                    player.moving = true;
-                    player.position.x--;
-                } else {
-                    if (exit_check()) { // Check if the player is at an exit
-                        player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                        sfx.play('go-outside');
-                    } else { // Collision into a barrier
-                        sfx.play('collision');
-                    }
-                }
-
-            } else if (keys["68"]|| keys["39"]) {
-                if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkEast) {
-                    player.sprite.textures = player.spritesheet.walkEast;
-                    player.sprite.play();       
-                    player.facing = 'East';         
-                }
-
-                next_position.x++;
-
-                if (collision_check(next_position.x, next_position.y) == false) {
-                    player.direction = 'East';
-                    player.moving = true;
-                    player.position.x++;
-                } else {
-                    if (exit_check()) { // Check if the player is at an exit
-                        player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                        sfx.play('go-outside');
-                    } else { // Collision into a barrier
-                        sfx.play('collision');
-                    }
+                
+            } else if (keys["68"]|| keys["39"]) { // Right, D
+                switch (player.controls) {
+                    case 'menu':
+                        console.log('Right');
+                        break;
+                
+                    default: // Walking
+                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkEast) {
+                            player.sprite.textures = player.spritesheet.walkEast;
+                            player.sprite.play();       
+                            player.facing = 'East';         
+                        }
+        
+                        next_position.x++;
+        
+                        if (collision_check(next_position.x, next_position.y) == false) {
+                            player.direction = 'East';
+                            player.moving = true;
+                            player.position.x++;
+                        } else {
+                            if (exit_check()) { // Check if the player is at an exit
+                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                sfx.play('go-outside');
+                            } else { // Collision into a barrier
+                                sfx.play('collision');
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -179,7 +209,26 @@ function controls_loop() {
 
         if (keys["90"]) {
             // B Button
+        }
 
+        if (keys["13"]) { // Enter
+            if (!player.menu_control_cooldown) {
+                if (menu_container.visible) {
+                    menu_container.visible = false;
+                    player.controls = 'walking';
+                    menus[0].reset();
+                } else {
+                    sfx.play('start-menu');
+                    menu_container.visible = true;
+                    player.controls = 'menu';
+                }
+
+                setTimeout(() => {
+                    player.menu_control_cooldown = false;
+                }, 300);
+
+                player.menu_control_cooldown = true;
+            }
         }
     }
 }

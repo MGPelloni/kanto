@@ -11,6 +11,7 @@ class Player {
         this.frozen = false;
         this.moving = false;
         this.can_move = true;
+        this.controls = 'walking' // walking, menu, battle
         this.current_move_ticker = 0;
         this.current_map = maps[0];
 

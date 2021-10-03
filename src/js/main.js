@@ -30,7 +30,7 @@ let meta = {};
 let maps = [];
 let player; 
 let npcs = [];
-
+let menus = [];
 let initialized = false;
 let keys = {}; 
 let editor = {};
@@ -49,6 +49,7 @@ let background = new PIXI.Container();
 let atts_container = new PIXI.Container();
 let npc_container = new PIXI.Container();
 let message_container = new PIXI.Container();
+let menu_container = new PIXI.Container();
 
 // Audio
 let music;
