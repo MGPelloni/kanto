@@ -33,6 +33,7 @@ let gulp = require('gulp'); // Workflow Automation
     js = [
 		`${modules}/pixi.js/dist/pixi.min.js`, 
 		`${modules}/howler/dist/howler.min.js`, 
+		`${modules}/socket.io/client-dist/socket.io.js`,
 		`${src}/js/**/*.js`,
 		`${src}/js/main.js`
 	];

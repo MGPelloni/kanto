@@ -8,6 +8,13 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+// Socket.io
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// Multiplayer
+let lobbies = [];
+
 app.use(express.json({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));  // TODO: body-parser deprecated undefined extended: provide extended option
 
@@ -228,4 +235,116 @@ function generate_game_id(length = 11) {
     }
 
     return str;    
+}
+
+// Socket.io
+io.on("connection", (socket) => { 
+    console.log('New socket: ', socket.id);
+
+    socket.on("join_lobby", (data) => {
+        let trainer = new Trainer(socket.id, data.trainer.position, data.trainer.spritesheet_id);
+        let targeted_lobby_index = null;
+        
+        lobbies.forEach((lobby, i) => {
+            if (data.lobby_id == lobby.id) {
+                targeted_lobby_index = i;
+            }
+        });
+
+        if (targeted_lobby_index === null) {
+            lobbies.push(new Lobby(data.lobby_id, [trainer]))
+        } else {
+            socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
+            lobbies[targeted_lobby_index].trainers.push(trainer);
+        }
+
+        // const clients = io.sockets.adapter.rooms.get(data.lobby_id);
+        
+        // Rooms
+        socket.join(data.lobby_id);
+        socket.to(data.lobby_id).emit('trainer_joined', {
+            name: 'BLUE',
+            position: trainer.position,
+            facing: trainer.facing,
+            spritesheet_id: data.trainer.spritesheet_id, 
+            socket_id: socket.id
+        });
+
+        // console.log(io.sockets.adapter.rooms);
+    });
+
+    socket.on("position_update", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
+        lobbies[lobby_index].trainers[trainer_index].facing = data.trainer.facing;
+
+        console.log(lobbies[lobby_index].trainers[trainer_index].position);
+
+        socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
+            socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+            position: lobbies[lobby_index].trainers[trainer_index].position,
+            facing: lobbies[lobby_index].trainers[trainer_index].facing
+        });
+    });
+
+    socket.on("disconnecting", (reason) => {
+        let targeted_room = null;
+
+        socket.rooms.forEach(room => {
+            if (room !== socket.id) {
+                targeted_room = room;
+            }
+        });
+
+        if (targeted_room) {
+            let lobby_index = find_lobby_index(targeted_room),
+                trainer_index = find_trainer_index(lobby_index, socket.id);
+
+            lobbies[lobby_index].trainers.splice(trainer_index, 1);
+        }
+
+        io.to(targeted_room).emit('trainer_disconnected', socket.id); // broadcast to everyone in the room    
+    });
+});
+
+class Lobby {
+    constructor(id = null, trainers = []) {
+        this.id = id;
+        this.trainers = trainers
+    }
+}
+
+class Trainer {
+    constructor(socket_id = null, position = {map: 1, x: 5, y: 5}, spritesheet_id = 0) {
+        this.socket_id = socket_id;
+        this.position = position;
+        this.spritesheet_id = spritesheet_id;
+        this.facing = 'South';
+    }
+}
+
+function find_lobby_index(id) {
+    let targeted_lobby_index = null;
+        
+    lobbies.forEach((lobby, i) => {
+        if (lobby.id == id) {
+            targeted_lobby_index = i;
+        }
+    });
+
+    return targeted_lobby_index;
+}
+
+function find_trainer_index(lobby_index, trainer_socket) {
+    let targeted_trainer_index = null;
+        
+    lobbies[lobby_index].trainers.forEach((trainer, i) => {
+        if (trainer_socket == trainer.socket_id) {
+            targeted_trainer_index = i;
+        }
+    });
+
+    return targeted_trainer_index;
 }

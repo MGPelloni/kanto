@@ -248,6 +248,7 @@ function kanto_editor_upload() {
 function kanto_start() {
     prepare_background();
     prepare_npc_container();
+    prepare_multiplayer_container();
     prepare_atts_container();
 
     prepare_tilemap();
@@ -280,6 +281,9 @@ function kanto_start() {
     // Foreground
     prepare_menus();
     prepare_dialogue();
+
+    // Multiplayer
+    prepare_multiplayer();
 }
 
 function prepare_atts_container() {
@@ -306,6 +310,20 @@ function prepare_npc_container() {
     npc_container.visible = true;
 
     app.stage.addChild(npc_container);
+}
+
+
+function prepare_multiplayer_container() {
+    multiplayer_container.origin = {
+        x: app.view.width / 2 - TILE_SIZE / 2,
+        y: (app.view.width / 2 - TILE_SIZE / 2)  - 4,
+    }
+
+    multiplayer_container.x = multiplayer_container.origin.x;
+    multiplayer_container.y = multiplayer_container.origin.y;
+    multiplayer_container.visible = true;
+
+    app.stage.addChild(multiplayer_container);
 }
 
 function prepare_background() {
@@ -465,6 +483,18 @@ function prepare_start_menu() {
 
     start_menu.addChild(menu_cursor);
     menus.push(new Menu('Start Menu', menu_options, start_menu, menu_cursor));
+}
+
+function prepare_multiplayer() {
+    let query_string = parse_query_string(),
+        lobby_id = query_string.get('l');
+
+    if (lobby_id) {
+        multiplayer.enabled = true;
+        meta.lobby_id = lobby_id;
+
+        multiplayer_join_lobby(lobby_id);
+    }
 }
 
 function store_data(name, json) {

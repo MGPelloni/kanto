@@ -241,6 +241,7 @@ function move_loop() {
             background.y++;
             atts_container.y++;
             npc_container.y++;
+            multiplayer_container.y++;
         }
 
         // Down
@@ -248,6 +249,7 @@ function move_loop() {
             background.y--;
             atts_container.y--;
             npc_container.y--;
+            multiplayer_container.y--;
         }
 
         // Left
@@ -255,6 +257,7 @@ function move_loop() {
             background.x++;
             atts_container.x++;
             npc_container.x++;
+            multiplayer_container.x++;
         }
 
         // Right
@@ -262,6 +265,7 @@ function move_loop() {
             background.x--;
             atts_container.x--;
             npc_container.x--;
+            multiplayer_container.x--;
         }
 
         if (player.current_move_ticker >= 15) {
@@ -312,6 +316,39 @@ function move_loop() {
             }
 
             npc.current_move_ticker++;
+        }        
+    });
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.moving) {
+            switch (trainer.facing) {
+                case 'North':
+                    trainer.sprite.y--; 
+                    break;
+                case 'South':
+                    trainer.sprite.y++;
+                    break;  
+                case 'West':
+                    trainer.sprite.x--;
+                    break;      
+                case 'East':
+                    trainer.sprite.x++;
+                    break;        
+                default:
+                    break;
+            }
+
+            if (trainer.current_move_ticker >= 15) {
+                trainer.moving = false;
+                trainer.can_move = false;
+
+                setTimeout(() => {
+                    multiplayer.trainers[i].can_move = true;
+                    multiplayer.trainers[i].current_move_ticker = 0;
+                }, 8)
+            }
+
+            trainer.current_move_ticker++;
         }        
     });
 }

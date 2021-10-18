@@ -41,6 +41,14 @@ let message_text;
 let paused = false;
 let game_mode = window.location.pathname.slice(1);
 
+// Multiplayer
+let multiplayer = {
+    enabled: false,
+    trainers: []
+};
+
+let socket = io();
+
 // Node.JS Variables
 let ss_amount = 42 // This will check how many sprites are available through node.js FS
 
@@ -48,6 +56,7 @@ let ss_amount = 42 // This will check how many sprites are available through nod
 let background = new PIXI.Container();
 let atts_container = new PIXI.Container();
 let npc_container = new PIXI.Container();
+let multiplayer_container = new PIXI.Container();
 let message_container = new PIXI.Container();
 let menu_container = new PIXI.Container();
 

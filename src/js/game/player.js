@@ -51,6 +51,9 @@ class Player {
         npc_container.x = npc_container.origin.x + ((x * TILE_SIZE) * -1);
         npc_container.y = npc_container.origin.y + ((y * TILE_SIZE) * -1);
 
+        multiplayer_container.x = multiplayer_container.origin.x + ((x * TILE_SIZE) * -1);
+        multiplayer_container.y = multiplayer_container.origin.y + ((y * TILE_SIZE) * -1);
+
         this.position.x = x;
         this.position.y = y;
         this.position.index = this.position.x + this.current_map.width * this.position.y;
@@ -171,6 +174,10 @@ class Player {
 
         if (editor.enabled) {
             editor.log();
+        }
+
+        if (multiplayer.enabled) {
+            multiplayer_update_position();
         }
     }
 }
