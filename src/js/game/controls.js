@@ -63,7 +63,6 @@ function keysUp(e) {
 }
 
 function controls_loop() {
-    // console.log(keys);
     if (!player.moving && player.can_move && !paused) {
         if (!player.frozen) {
             let next_position = {
@@ -81,6 +80,7 @@ function controls_loop() {
                             player.sprite.textures = player.spritesheet.walkNorth;
                             player.sprite.play();
                             player.facing = 'North';
+                            multiplayer_update_position();
                         }
         
                         next_position.y--;
@@ -89,9 +89,11 @@ function controls_loop() {
                             player.direction = 'North';
                             player.moving = true;
                             player.position.y--;
+                            multiplayer_update_position();
                         } else {
                             if (exit_check()) { // Check if the player is at an exit
                                 player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                multiplayer_update_position();
                                 sfx.play('go-outside');
                             } else { // Collision into a barrier
                                 sfx.play('collision');
@@ -110,6 +112,7 @@ function controls_loop() {
                             player.sprite.textures = player.spritesheet.walkSouth;
                             player.sprite.play();
                             player.facing = 'South';
+                            multiplayer_update_position();
                         }
         
                         next_position.y++;
@@ -118,9 +121,11 @@ function controls_loop() {
                             player.direction = 'South';
                             player.moving = true;
                             player.position.y++;
+                            multiplayer_update_position();
                         } else {
                             if (exit_check()) { // Check if the player is at an exit
                                 player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                multiplayer_update_position();
                                 sfx.play('go-outside');
                             } else { // Collision into a barrier
                                 sfx.play('collision');
@@ -139,6 +144,7 @@ function controls_loop() {
                             player.sprite.textures = player.spritesheet.walkWest;
                             player.sprite.play();
                             player.facing = 'West';
+                            multiplayer_update_position();
                         }
         
                         next_position.x--;
@@ -147,9 +153,11 @@ function controls_loop() {
                             player.direction = 'West';
                             player.moving = true;
                             player.position.x--;
+                            multiplayer_update_position();
                         } else {
                             if (exit_check()) { // Check if the player is at an exit
                                 player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
+                                multiplayer_update_position();
                                 sfx.play('go-outside');
                             } else { // Collision into a barrier
                                 sfx.play('collision');
@@ -157,8 +165,6 @@ function controls_loop() {
                         }        
                         break;
                 }
-
-                
             } else if (keys["68"]|| keys["39"]) { // Right, D
                 switch (player.controls) {
                     case 'menu':
@@ -169,7 +175,8 @@ function controls_loop() {
                         if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkEast) {
                             player.sprite.textures = player.spritesheet.walkEast;
                             player.sprite.play();       
-                            player.facing = 'East';         
+                            player.facing = 'East';    
+                            multiplayer_update_position();     
                         }
         
                         next_position.x++;
@@ -178,10 +185,12 @@ function controls_loop() {
                             player.direction = 'East';
                             player.moving = true;
                             player.position.x++;
+                            multiplayer_update_position();
                         } else {
                             if (exit_check()) { // Check if the player is at an exit
                                 player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
                                 sfx.play('go-outside');
+                                multiplayer_update_position();
                             } else { // Collision into a barrier
                                 sfx.play('collision');
                             }

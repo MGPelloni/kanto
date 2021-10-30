@@ -12,12 +12,11 @@ socket.on('create_current_trainers', function(data){
 });
 
 socket.on('trainer_moved', function(data){
-    console.log('Socket.io [trainer_moved]', data.position);
+    console.log('Socket.io [trainer_moved]', data.position, data.facing);
 
     multiplayer.trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
-            multiplayer.trainers[i].position_update(data.position);
-            multiplayer.trainers[i].move(data.facing);
+            multiplayer.trainers[i].position_update(data.position, data.facing);
         }
     });
 });

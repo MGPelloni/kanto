@@ -119,7 +119,7 @@ app.post('/upload', (req, res) => { // Upload Endpoint
         game_id = req.body.meta.game_id;
     }
 
-    console.log(game_id);
+    console.log(game_id, req.body);
 
     if (game_id) {
         db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result) { // TODO: Add author check here
@@ -277,16 +277,18 @@ io.on("connection", (socket) => {
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
-        lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
-        lobbies[lobby_index].trainers[trainer_index].facing = data.trainer.facing;
-
-        console.log(lobbies[lobby_index].trainers[trainer_index].position);
-
-        socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
-            socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
-            position: lobbies[lobby_index].trainers[trainer_index].position,
-            facing: lobbies[lobby_index].trainers[trainer_index].facing
-        });
+        if (lobby_index) {
+            lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
+            lobbies[lobby_index].trainers[trainer_index].facing = data.trainer.facing;
+    
+            console.log(lobbies[lobby_index].trainers[trainer_index].position);
+    
+            socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
+                socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+                position: lobbies[lobby_index].trainers[trainer_index].position,
+                facing: lobbies[lobby_index].trainers[trainer_index].facing
+            });
+        }
     });
 
     socket.on("disconnecting", (reason) => {
@@ -340,11 +342,13 @@ function find_lobby_index(id) {
 function find_trainer_index(lobby_index, trainer_socket) {
     let targeted_trainer_index = null;
         
-    lobbies[lobby_index].trainers.forEach((trainer, i) => {
-        if (trainer_socket == trainer.socket_id) {
-            targeted_trainer_index = i;
-        }
-    });
+    if (lobbies[lobby_index]) {
+        lobbies[lobby_index].trainers.forEach((trainer, i) => {
+            if (trainer_socket == trainer.socket_id) {
+                targeted_trainer_index = i;
+            }
+        });
+    }
 
     return targeted_trainer_index;
 }

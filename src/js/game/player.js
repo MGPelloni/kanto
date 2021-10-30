@@ -40,6 +40,15 @@ class Player {
             this.current_map = maps[map_id];
             map.build();
             this.position.map = map_id;
+
+            multiplayer.trainers.forEach((trainer, i) => {
+                if (trainer.position.map == this.position.map) {
+                    multiplayer.trainers[i].sprite.visible = true;
+                    multiplayer.trainers[i].change_facing();
+                } else {
+                    multiplayer.trainers[i].sprite.visible = false;
+                }
+            });
         }
 
         background.x = background.origin.x + ((x * TILE_SIZE) * -1);
@@ -176,8 +185,8 @@ class Player {
             editor.log();
         }
 
-        if (multiplayer.enabled) {
-            multiplayer_update_position();
-        }
+        // if (multiplayer.enabled) {
+        //     multiplayer_update_position();
+        // }
     }
 }

@@ -87,6 +87,25 @@ class Trainer {
         }
     }
 
+    change_facing() {
+        switch (this.facing) {
+            case 'North':
+                this.sprite.textures = this.spritesheet.standNorth;
+                break;
+            case 'South':
+                this.sprite.textures = this.spritesheet.standSouth;
+                break;
+            case 'West':
+                this.sprite.textures = this.spritesheet.standWest;
+                break;
+            case 'East':
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            default:
+                break;
+        }
+    }
+
     move(direction) {
         let next_position = {
             x: this.position.x,
@@ -143,16 +162,29 @@ class Trainer {
         }
     }
 
-    position_update(position) {
-        this.position = position;
-        
-        if (player.position.map == this.position.map) {
-            this.sprite.visible = true;
-        } else {
+    position_update(next_position, facing) {
+        this.facing = facing;
+
+        if (next_position.map !== player.position.map) { // Trainer has changed maps
             this.sprite.visible = false;
+            this.sprite.x = next_position.x * TILE_SIZE;
+            this.sprite.y = next_position.y * TILE_SIZE;
+        } else if (this.position.map !== player.position.map && next_position.map == player.position.map) { // Trainer is changing to player's map
+            this.sprite.visible = true;
+            this.sprite.x = next_position.x * TILE_SIZE;
+            this.sprite.y = next_position.y * TILE_SIZE;
+            this.change_facing();
+        } else { // Trainer is on player's map
+            this.sprite.visible = true;
+            if (next_position.x == this.position.x && next_position.y == this.position.y) { // Trainer is running into a wall
+                this.change_facing();
+            } else {
+                this.move(this.facing);
+            }
         }
 
-        console.log('trainer -> position_update', position);
+        this.place(next_position.map, next_position.x, next_position.y);
+        console.log('trainer -> position_update', next_position);
         return;
     }
 
