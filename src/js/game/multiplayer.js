@@ -66,7 +66,7 @@ function multiplayer_update_position() {
         facing: player.facing
     };
 
-    console.log(trainer);
+    console.log('multiplayer_update_position', trainer);
 
     socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
 }
