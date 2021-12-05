@@ -21,7 +21,7 @@ class Trainer {
 
         this.set_sprite();
         multiplayer_container.addChild(this.sprite);
-        this.place(position.map, position.x, position.y);
+        this.position_update(position);
     }
 
     set_sprite() {
@@ -136,26 +136,22 @@ class Trainer {
             case 'East':
                 this.sprite.textures = this.spritesheet.walkEast;
                 this.sprite.play();
-                this.facing = 'East'; 
-                this.position.x++;  
+                this.facing = 'East';  
                 break;
             case 'West':
                 this.sprite.textures = this.spritesheet.walkWest;
                 this.sprite.play();
                 this.facing = 'West'; 
-                this.position.x--;   
                 break;
             case 'North':
                 this.sprite.textures = this.spritesheet.walkNorth;
                 this.sprite.play();
                 this.facing = 'North'; 
-                this.position.y--;   
                 break;
             case 'South':
                 this.sprite.textures = this.spritesheet.walkSouth;
                 this.sprite.play();
                 this.facing = 'South'; 
-                this.position.y++;   
                 break;
             default:
                 break;
@@ -165,26 +161,23 @@ class Trainer {
     position_update(next_position, facing) {
         this.facing = facing;
 
-        if (next_position.map !== player.position.map) { // Trainer has changed maps
+        if (next_position.map !== player.position.map) { // Trainer is not on player\'s map
+            // console.log('Trainer is not on player\'s map', next_position);
             this.sprite.visible = false;
             this.sprite.x = next_position.x * TILE_SIZE;
             this.sprite.y = next_position.y * TILE_SIZE;
         } else if (this.position.map !== player.position.map && next_position.map == player.position.map) { // Trainer is changing to player's map
+            // console.log('Trainer is changing to player\'s map', next_position);
             this.sprite.visible = true;
             this.sprite.x = next_position.x * TILE_SIZE;
             this.sprite.y = next_position.y * TILE_SIZE;
-            this.change_facing();
         } else { // Trainer is on player's map
+            // console.log('Trainer is on player\'s map', next_position);
             this.sprite.visible = true;
-            if (next_position.x == this.position.x && next_position.y == this.position.y) { // Trainer is running into a wall
-                this.change_facing();
-            } else {
-                this.move(this.facing);
-            }
         }
 
         this.place(next_position.map, next_position.x, next_position.y);
-        console.log('trainer -> position_update', next_position);
+        // console.log('trainer -> position_update', next_position);
         return;
     }
 

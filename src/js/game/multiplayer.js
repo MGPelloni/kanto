@@ -12,11 +12,23 @@ socket.on('create_current_trainers', function(data){
 });
 
 socket.on('trainer_moved', function(data){
-    console.log('Socket.io [trainer_moved]', data.position, data.facing);
+    // console.log('Socket.io [trainer_moved]', data.position, data.facing);
 
     multiplayer.trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
-            multiplayer.trainers[i].position_update(data.position, data.facing);
+            multiplayer.trainers[i].move(data.facing);     
+            multiplayer.trainers[i].next_position = data.position;
+
+            if (data.exiting) {
+                console.log('Exiting', data.position);
+                if (data.position.map == player.position.map) {
+                    multiplayer.trainers[i].sprite.visible = false;
+                } else {
+                    multiplayer.trainers[i].sprite.x = data.position.x * TILE_SIZE;
+                    multiplayer.trainers[i].sprite.y = data.position.y * TILE_SIZE;
+                    multiplayer.trainers[i].sprite.visible = true;
+                }
+            }
         }
     });
 });
@@ -56,7 +68,10 @@ function multiplayer_join_lobby() {
     socket.emit('join_lobby', {lobby_id: meta.lobby_id, trainer: trainer});
 }
 
-function multiplayer_update_position() {
+function multiplayer_update_position(is_exiting = false) {
+    let index = player.position.x + player.current_map.width * player.position.y;
+    let att = player.current_map.atts[index];
+
     let trainer = {
         position: {
             map: player.position.map,
@@ -65,8 +80,20 @@ function multiplayer_update_position() {
         },
         facing: player.facing
     };
+    
+    switch (att.type) {
+        case 2: // Warp
+            trainer.position = {
+                map: att.map,
+                x: att.x,
+                y: att.y
+            }
+            break;
+        default:
+            break;
+    }
 
-    console.log('multiplayer_update_position', trainer);
+    trainer.exiting = is_exiting;
 
     socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
 }

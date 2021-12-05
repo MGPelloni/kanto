@@ -286,7 +286,8 @@ io.on("connection", (socket) => {
             socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
                 socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
                 position: lobbies[lobby_index].trainers[trainer_index].position,
-                facing: lobbies[lobby_index].trainers[trainer_index].facing
+                facing: lobbies[lobby_index].trainers[trainer_index].facing,
+                exiting: data.trainer.exiting
             });
         }
     });
