@@ -2,6 +2,7 @@ console.log('Starting server..');
 
 // Express
 const express = require('express');
+const ejs = require('ejs');
 const app = express();
 const server = require('http').Server(app);
 const path = require("path");
@@ -15,6 +16,7 @@ const io = new Server(server);
 // Multiplayer
 let lobbies = [];
 
+app.set('view engine', 'ejs');
 app.use(express.json({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));  // TODO: body-parser deprecated undefined extended: provide extended option
 
@@ -43,19 +45,33 @@ kanto_server_initialize();
 app.get('/', (req, res) => { // Gallery View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/src/views/home.html'));
+    res.sendFile(path.join(__dirname + '/views/home.html'));
 });
 
 app.get('/play', (req, res) => {  // Play View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/src/views/play.html'));
+    res.sendFile(path.join(__dirname + '/views/play.html'));
 });
 
 app.get('/create', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/src/views/create.html'));
+    res.sendFile(path.join(__dirname + '/views/create.html'));
+});
+
+app.get('/library', function (req, res) {
+    db.query('SELECT * FROM games;', function(err, result){
+        if (err){
+            console.log(err.toString());
+            return;
+        }
+        
+        res.render('library', {
+            // EJS variable and server-side variable
+            games: result.rows
+        });
+    });
 });
 
 app.get('/reset', (req, res) => { // Create View
@@ -65,6 +81,17 @@ app.get('/reset', (req, res) => { // Create View
     res.send('Success');
 });
 
+app.get('/games', (req, res) => { // Create View
+    let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+    db.query('SELECT * FROM games;', function(err, result){
+        if (err){
+            console.log(err.toString());
+            return;
+        }
+
+        res.json(result.rows);
+    });
+});
 
 app.get('/templates', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>Kanto</title>
+        <link rel="stylesheet" href="dist/kanto.min.css">
+    </head>
+    <body>
+        <div id="kanto" class="kanto-games">
+            <div class="_container">
+                <table>
+                    <thead>
+                        <th>Game Name</th>
+                        <th>Author</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <% games.forEach(function(game) { %>
+                            <tr>
+                                <td><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>
+                                <td>Marco</td>  
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="dist/kanto.min.js"></script>
+    </body>
+</html>

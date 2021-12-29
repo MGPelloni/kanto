@@ -5,7 +5,6 @@
     }
 
     button {
-
         color: #626262;
     }
     
@@ -47,5 +46,13 @@
     input, optgroup, select, textarea {
         background-color: #212121;
         color: #fff;
+    }
+
+    table {
+        background-color: #212121;
+        border: 2px solid #484848;
+        color: #fff;
+        width: 100%;
+        text-align: left;
     }
 }
