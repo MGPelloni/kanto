@@ -12,6 +12,8 @@ function keysDown(e) {
     }
 
     if (e.target.getAttribute('data-action')) { // On screen gamepad
+        e.preventDefault();
+
         switch (e.target.getAttribute('data-action')) {
             case 'up':
                 e.keyCode = 38;
@@ -38,6 +40,8 @@ function keysDown(e) {
 
 function keysUp(e) {
     if (e.target.getAttribute('data-action')) { // On screen gamepad
+        e.preventDefault();
+        
         switch (e.target.getAttribute('data-action')) {
             case 'up':
                 e.keyCode = 38;
