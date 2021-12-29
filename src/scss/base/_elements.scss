@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     word-wrap: break-word;
+    -webkit-touch-callout: none;
 }
 
 :root {
@@ -18,7 +19,7 @@ h1, h2, h3, h4, h5 {
 }
 
 p {
-    margin: 0 0 1rem;
+    margin: 0 0 1rem; 
     font-size: 1.4rem;
 }
 
@@ -88,7 +89,7 @@ table {
     border: 1px solid #cccccc; /* Change the border-color of cells here */
     padding: 8px;
   }
-  
+
   tr {
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
