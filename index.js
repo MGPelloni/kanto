@@ -36,7 +36,7 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')))
 
 // Server
 server.listen(process.env.PORT || 8000);
-// kanto_server_drop();
+
 kanto_server_initialize();
 
 // Endpoints
@@ -57,6 +57,12 @@ app.get('/create', (req, res) => { // Create View
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
     res.sendFile(path.join(__dirname + '/src/views/create.html'));
 });
+
+app.get('/reset', (req, res) => { // Create View
+    kanto_server_drop();
+    kanto_server_install();
+});
+
 
 app.get('/templates', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
