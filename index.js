@@ -61,6 +61,8 @@ app.get('/create', (req, res) => { // Create View
 app.get('/reset', (req, res) => { // Create View
     kanto_server_drop();
     kanto_server_install();
+
+    res.send('Success');
 });
 
 
