@@ -39,8 +39,6 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')))
 // Server
 server.listen(process.env.PORT || 8000);
 
-kanto_server_initialize();
-
 // Endpoints
 app.get('/', (req, res) => { // Gallery View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
@@ -75,7 +73,6 @@ app.get('/library', function (req, res) {
 });
 
 app.get('/reset', (req, res) => { // Create View
-    kanto_server_drop();
     kanto_server_install();
 
     res.send('Success');
@@ -190,6 +187,14 @@ app.post('/upload', (req, res) => { // Upload Endpoint
  * Install the Kanto tables into the database.
  */
 function kanto_server_install() {
+    db.query('DROP TABLE templates, users, games;', function(err, result){
+        if (err){
+            console.log(err.toString());
+        }
+
+        console.log('Successfully uninstalled Kanto.');
+    });
+
     console.log('Running Kanto installation..');
 
     db.query('CREATE TABLE templates (id SERIAL PRIMARY KEY, name TEXT, game_data TEXT);', function(err, result){
@@ -212,36 +217,46 @@ function kanto_server_install() {
                 console.log('Inserted template:', game_data.meta.name);
             });
         });
+
+        db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
+            if (err){
+                console.log(err.toString());
+                return;
+            }  
+
+            db.query('SELECT * FROM templates;', function(err, result){
+                if (err){
+                    console.log(err.toString());
+                    return;
+                }
+        
+                let templates = result.rows;
+                console.log(templates);
+        
+                templates.forEach(template => {
+                    let game_id = generate_game_id();
+                    db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [template.name, game_id, template.game_data], function(err, result){
+                        console.log('Inserted template into games:', template.name);
+                        if (err){
+                            console.log(err.toString());
+                        }
+                    });
+                });
+            });
+        });
+        
+        db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
+            if (err){
+                console.log(err.toString());
+                return;
+            }  
+        });
     });
 
-    db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }  
-    });
     
-    db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }  
-    });
+
 
     console.log('Successfully installed Kanto into the database.');
-}
-
-/**
- * Drop the Kanto tables from the database.
- */
-function kanto_server_drop() {
-    db.query('DROP TABLE templates, users, games;', function(err, result){
-        if (err){
-            console.log(err.toString());
-        }
-
-        console.log('Successfully uninstalled Kanto.');
-    });
 }
 
 /**
