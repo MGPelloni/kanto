@@ -193,70 +193,66 @@ function kanto_server_install() {
         }
 
         console.log('Successfully uninstalled Kanto.');
-    });
+        console.log('Running Kanto installation..');
 
-    console.log('Running Kanto installation..');
-
-    db.query('CREATE TABLE templates (id SERIAL PRIMARY KEY, name TEXT, game_data TEXT);', function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }  
-    
-        // Add default templates
-        fs.readdir('src/js/maps/', (err, files) => {
-            files.forEach(file => {
-                let game_data = JSON.parse(fs.readFileSync('src/js/maps/' + file, 'utf8'));
-
-                db.query('INSERT INTO templates (name, game_data) values ($1, $2);', [game_data.meta.name, JSON.stringify(game_data)], function(err, result){
-                    if (err){
-                        console.log(err.toString());
-                    }
-                });
-
-                console.log('Inserted template:', game_data.meta.name);
-            });
-        });
-
-        db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
+        db.query('CREATE TABLE templates (id SERIAL PRIMARY KEY, name TEXT, game_data TEXT);', function(err, result){
             if (err){
                 console.log(err.toString());
                 return;
             }  
-
-            db.query('SELECT * FROM templates;', function(err, result){
-                if (err){
-                    console.log(err.toString());
-                    return;
-                }
         
-                let templates = result.rows;
-                console.log(templates);
-        
-                templates.forEach(template => {
-                    let game_id = generate_game_id();
-                    db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [template.name, game_id, template.game_data], function(err, result){
-                        console.log('Inserted template into games:', template.name);
+            // Add default templates
+            fs.readdir('src/js/maps/', (err, files) => {
+                files.forEach(file => {
+                    let game_data = JSON.parse(fs.readFileSync('src/js/maps/' + file, 'utf8'));
+    
+                    db.query('INSERT INTO templates (name, game_data) values ($1, $2);', [game_data.meta.name, JSON.stringify(game_data)], function(err, result){
                         if (err){
                             console.log(err.toString());
                         }
                     });
+    
+                    console.log('Inserted template:', game_data.meta.name);
                 });
             });
-        });
-        
-        db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
-            if (err){
-                console.log(err.toString());
-                return;
-            }  
+    
+            db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
+                if (err){
+                    console.log(err.toString());
+                    return;
+                }  
+    
+                db.query('SELECT * FROM templates;', function(err, result){
+                    if (err){
+                        console.log(err.toString());
+                        return;
+                    }
+            
+                    let templates = result.rows;
+                    console.log(templates);
+            
+                    templates.forEach(template => {
+                        let game_id = generate_game_id();
+                        db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [template.name, game_id, template.game_data], function(err, result){
+                            console.log('Inserted template into games:', template.name);
+                            if (err){
+                                console.log(err.toString());
+                            }
+                        });
+                    });
+
+                    console.log('Successfully installed Kanto into the database.');
+                });
+            });
+            
+            db.query('CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP );', function(err, result){
+                if (err){
+                    console.log(err.toString());
+                    return;
+                }  
+            });
         });
     });
-
-    
-
-
-    console.log('Successfully installed Kanto into the database.');
 }
 
 /**
