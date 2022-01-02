@@ -9,7 +9,7 @@ function kanto_console(message, type) {
     var _a;
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
         var args = [
-            "\n %c %c %c Kanto v" + VERSION + " %c  %c  " + message + "  %c \n",
+            "\n %c %c %c Kanto Engine v" + VERSION + " %c  %c  " + message + "  %c \n",
             'background: #cedae6; padding:5px 0;',
             'background: #cedae6; padding:5px 0;',
             'color: #cedae6; background: #030307; padding:5px 0;',
@@ -20,7 +20,7 @@ function kanto_console(message, type) {
         (_a = window.console).log.apply(_a, args);
     }
     else if (window.console) {
-        window.console.log("Kanto.chat 1.0.0 - " + message);
+        window.console.log("Kanto Engine - " + message);
     }
 }
 

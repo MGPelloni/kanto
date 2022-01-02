@@ -164,17 +164,16 @@ class Trainer {
         if (next_position.map !== player.position.map) { // Trainer is not on player\'s map
             // console.log('Trainer is not on player\'s map', next_position);
             this.sprite.visible = false;
-            this.sprite.x = next_position.x * TILE_SIZE;
-            this.sprite.y = next_position.y * TILE_SIZE;
         } else if (this.position.map !== player.position.map && next_position.map == player.position.map) { // Trainer is changing to player's map
             // console.log('Trainer is changing to player\'s map', next_position);
             this.sprite.visible = true;
-            this.sprite.x = next_position.x * TILE_SIZE;
-            this.sprite.y = next_position.y * TILE_SIZE;
         } else { // Trainer is on player's map
             // console.log('Trainer is on player\'s map', next_position);
             this.sprite.visible = true;
         }
+
+        this.sprite.x = next_position.x * TILE_SIZE;
+        this.sprite.y = next_position.y * TILE_SIZE;
 
         this.place(next_position.map, next_position.x, next_position.y);
         // console.log('trainer -> position_update', next_position);

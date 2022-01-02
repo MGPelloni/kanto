@@ -246,7 +246,7 @@ function controls_loop() {
     }
 }
 
-
+// Main animation loop
 function move_loop() {
     if (player.moving) {
         // Up
