@@ -489,6 +489,11 @@ function prepare_multiplayer() {
     let query_string = parse_query_string(),
         lobby_id = query_string.get('l');
 
+    // Auto join lobby
+    if (!lobby_id) {
+        lobby_id = query_string.get('g');
+    }
+
     if (lobby_id) {
         multiplayer.enabled = true;
         meta.lobby_id = lobby_id;
