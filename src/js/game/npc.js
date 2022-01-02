@@ -127,6 +127,9 @@ class Npc {
         this.position.tile = map.tiles[this.position.index];
         this.position.att = map.atts[this.position.index];
 
+        this.sprite.x = this.position.x * TILE_SIZE;
+        this.sprite.y = this.position.y * TILE_SIZE;
+
         if (editor.enabled) {
             editor.log();
         }

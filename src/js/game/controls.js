@@ -299,7 +299,7 @@ function move_loop() {
     }
 
     npcs.forEach((npc, i) => {
-        if (npc.moving) {
+        if (npc.moving && npc.can_move) {
             switch (npc.facing) {
                 case 'North':
                     npc.sprite.y -= 0.5; 
