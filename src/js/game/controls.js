@@ -333,7 +333,7 @@ function move_loop() {
     });
 
     multiplayer.trainers.forEach((trainer, i) => {
-        if (trainer.moving) {
+        if (trainer.moving && trainer.can_move) {
             switch (trainer.facing) {
                 case 'North':
                     trainer.sprite.y--; 
