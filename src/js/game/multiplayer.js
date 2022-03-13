@@ -50,6 +50,28 @@ socket.on('trainer_disconnected', function(data){
     });
 });
 
+socket.on('npc_moved', function(data){
+    // console.log('Socket.io [npc_moved]', data.uid, data.moving);
+
+    npcs.forEach((npc) => {
+        if (npc.uid == data.uid) {
+            npc.move(data.moving);
+        }
+    });
+});
+
+socket.on('map_server_sync', function(data){
+    console.log('Socket.io [map_server_sync]', data);
+    
+    data.npcs.forEach(npc_server_data => {
+        npcs.forEach(npc => {
+            if (npc_server_data.uid == npc.uid) {
+                npc.place(npc_server_data.position.x, npc_server_data.position.y, npc_server_data.facing);
+            }
+        })
+    });
+});
+
 socket.on('join_lobby_success', function(data){
     console.log('Socket.io [join_lobby_success', data);
 });
@@ -65,7 +87,7 @@ function multiplayer_join_lobby() {
         spritesheet_id: player.spritesheet_id,
     };
 
-    socket.emit('join_lobby', {lobby_id: meta.lobby_id, trainer: trainer});
+    socket.emit('join_lobby', {lobby_id: meta.lobby_id, game_id: meta.game_id, trainer: trainer});
 }
 
 function multiplayer_update_position(is_exiting = false) {

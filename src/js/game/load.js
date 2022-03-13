@@ -35,25 +35,17 @@ function kanto_load_game() {
         return;
     }
     
-    // let stored_data = retrieve_data(selected_game); // Caching
-    let stored_data = false;
-
-    if (stored_data) {  // Loading the data from localStorage
-        kanto_process_import(stored_data);
-    } else { // The data is not on the player's machine and we must retrieve it from the server
-        fetch(`${window.location.protocol}//${window.location.host}/game`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'game': selected_game}),
-        }).then((res) => {
-            return res.json();
-        }).then((data) => {
-            // store_data(selected_game, data.game_data); // Store the fetched data on the user's machine
-            kanto_process_import(data.game_data);
-        });
-    }
+    fetch(`${window.location.protocol}//${window.location.host}/game`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'game': selected_game}),
+    }).then((res) => {
+        return res.json();
+    }).then((data) => {
+        kanto_process_import(data);
+    });
 }
 
 function kanto_upload_template() {
@@ -179,12 +171,13 @@ function kanto_quickload_import(game_data, type) {
 
 function kanto_process_import(data) {
     // Mutate data
-    data = data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
+    data.game_data = data.game_data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
 
-    // Set global import data
-    import_data = JSON.parse(data);
-    console.log(import_data);
+    // Set global import game data [meta, maps, player]
+    import_data = JSON.parse(data.game_data);
+    // console.log(import_data);
 
+    
     // Load Meta
     meta = import_data.meta;
 

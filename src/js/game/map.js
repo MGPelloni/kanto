@@ -284,7 +284,7 @@ class Kanto_Map {
         
         switch (att.type) {
           case 5: 
-            let npc = new Npc({x: x, y: y}, att.sprite, att.message, att.facing, att.movement_state, npcs.length); // npc.js
+            let npc = new Npc({map: this.id, x: x, y: y}, att.sprite, att.message, att.facing, att.movement_state, npcs.length); // npc.js
             npcs.push(npc);
             break;
           default:
@@ -294,10 +294,16 @@ class Kanto_Map {
     }
   }
 
+  server_sync() {
+    console.log('map_server_sync', {lobby_id: meta.lobby_id, map: this.id});
+    socket.emit('map_server_sync', {lobby_id: meta.lobby_id, map: this.id});
+  }
+
   build() {
     this.build_tiles();
     this.build_npcs();
     this.build_atts();
+    this.server_sync();
     
     if (music) {
       music.play(this.music);

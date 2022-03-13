@@ -1,14 +1,16 @@
 class Npc {
-    constructor(position = {x: 0, y: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {
+    constructor(position = {map: 0, x: 0, y: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {
         this.position = position;
         this.message = message;
-
         this.spritesheet_id = spritesheet_id;
         this.spritesheet = spritesheets[spritesheet_id];
  
         this.initial_properties = {
+            position: position,
             facing: facing
         };
+
+        this.uid = `M${this.position.map}X${this.position.x}Y${this.position.y}`;
 
         this.facing = facing;
         this.frozen = false;
@@ -29,9 +31,9 @@ class Npc {
         this.place(position.x, position.y);
 
         switch (movement_state) {
-            case 'Active':
-                this.wander_interval = setInterval(this.wander, 1000, index);
-                break;
+            // case 'Active':
+            //     this.wander_interval = setInterval(this.wander, 1000, index);
+            //     break;
             case 'Static':
                 this.wander_interval = setInterval(this.look_around, 1000, index);
                 break;
@@ -70,9 +72,14 @@ class Npc {
         this.sprite.height = TILE_SIZE;
     }
 
-    place(x, y) {
-        this.position.index = this.position.x + map.width * this.position.y;
+    place(x, y, facing) {
+        this.position.x = x;
+        this.position.y = y;
+        this.position.index = x + map.width * y;
         this.position.tile = map.atts[x + map.width * y];
+        this.sprite.x = x * TILE_SIZE;
+        this.sprite.y = y * TILE_SIZE;
+        this.face_sprite(facing);
     }
 
     freeze(ms = 250) {
@@ -136,29 +143,29 @@ class Npc {
     }
 
     move(direction) {
-        let next_position = {
-            x: this.position.x,
-            y: this.position.y
-        };
+        // let next_position = {
+        //     x: this.position.x,
+        //     y: this.position.y
+        // };
 
-        switch (direction) {
-            case 'East':
-                next_position.x++;  
-                break;
-            case 'West':
-                next_position.x--;   
-                break;
-            case 'North':
-                next_position.y--;   
-                break;
-            case 'South':
-                next_position.y++;   
-                break;
-            default:
-                break;
-        }
+        // switch (direction) {
+        //     case 'East':
+        //         next_position.x++;  
+        //         break;
+        //     case 'West':
+        //         next_position.x--;   
+        //         break;
+        //     case 'North':
+        //         next_position.y--;   
+        //         break;
+        //     case 'South':
+        //         next_position.y++;   
+        //         break;
+        //     default:
+        //         break;
+        // }
 
-        if (!collision_check(next_position.x, next_position.y)) {
+        // if (!collision_check(next_position.x, next_position.y)) {
             this.moving = true;
             this.current_move_ticker = 0;
             
@@ -190,7 +197,7 @@ class Npc {
                 default:
                     break;
             }
-        }
+        // }
     }
 
     wander(index) {
@@ -250,6 +257,25 @@ class Npc {
                 default:
                     break;
             }
+        }
+    }
+
+    face_sprite(direction) {
+        switch (direction) {
+            case 'North':
+                this.sprite.textures = this.spritesheet.standNorth;
+                break;
+            case 'South':
+                this.sprite.textures = this.spritesheet.standSouth;
+                break;
+            case 'West':
+                this.sprite.textures = this.spritesheet.standWest;
+                break;
+            case 'East':
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            default:
+                break;
         }
     }
 }

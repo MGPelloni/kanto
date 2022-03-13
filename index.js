@@ -170,6 +170,8 @@ app.post('/upload', (req, res) => { // Upload Endpoint
         });
     } else {
         game_id = generate_game_id();
+        req.body.meta.game_id = game_id;
+
         db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [req.body.meta.name, game_id, req.body], function(err, result){
             if (err){
                 console.log(err.toString());
@@ -177,7 +179,6 @@ app.post('/upload', (req, res) => { // Upload Endpoint
         });
     }
    
-
     res.json({success: true, game_id: game_id});
 });
 
@@ -297,9 +298,9 @@ io.on("connection", (socket) => {
             }
         });
 
-        if (targeted_lobby_index === null) {
-            lobbies.push(new Lobby(data.lobby_id, [trainer]))
-        } else {
+        if (targeted_lobby_index === null) { // Creating a new lobby
+            lobbies.push(new Lobby(data.lobby_id, data.game_id, [trainer]))
+        } else { // Lobby ID exists, joining current lobby
             socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
             lobbies[targeted_lobby_index].trainers.push(trainer);
         }
@@ -316,6 +317,8 @@ io.on("connection", (socket) => {
             socket_id: socket.id
         });
 
+        let lobby_index = find_lobby_index(data.lobby_id);
+        // console.log(lobbies[lobby_index].game.maps);
         // console.log(io.sockets.adapter.rooms);
     });
 
@@ -335,6 +338,28 @@ io.on("connection", (socket) => {
                 facing: lobbies[lobby_index].trainers[trainer_index].facing,
                 exiting: data.trainer.exiting
             });
+        }
+    });
+
+    socket.on("map_server_sync", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+        let targeted_npcs = [];
+
+        console.log('map_server_sync', data);
+
+        if (lobbies[lobby_index]) {
+            lobbies[lobby_index].npcs.forEach(npc => {
+                if (npc.position.map == data.map) {
+                    targeted_npcs.push({
+                        uid: npc.uid,
+                        position: npc.position,
+                        facing: npc.facing
+                    });
+                }
+            });
+            
+            // console.log(targeted_npcs);
+            socket.emit('map_server_sync', {npcs: targeted_npcs});
         }
     });
 
@@ -359,9 +384,63 @@ io.on("connection", (socket) => {
 });
 
 class Lobby {
-    constructor(id = null, trainers = []) {
+    constructor(id = null, game_id = null, trainers = []) {
         this.id = id;
-        this.trainers = trainers
+        this.game_id = game_id;
+        this.trainers = trainers;
+        
+        this.game = false;
+        this.import_data = this.retrieve_game(game_id);
+        this.loaded = false;
+        
+        this.import_data.then(
+            result => this.generate_game(result), 
+            error => console.log('Error importing game:', game_id)
+        );
+    }
+
+    async retrieve_game(game_id) {
+        console.log('Retrieving game..', game_id);
+        let res = await db.query('SELECT * FROM games WHERE game_id=$1;', [game_id]);
+        return res.rows[0];
+    }
+
+    /**
+     * Generate NPCs, items, and other misc game data
+     */
+    generate_game(res) {
+        this.game = JSON.parse(res.game_data);
+        this.npcs = [];
+        this.items = [];
+        
+        this.game.maps.forEach((map, i) => {
+            map.id = i;
+            this.build_npcs(map);
+        });
+
+        this.loaded = true;
+        // console.log(this.npcs);
+    }
+
+    build_npcs(map) {
+        let npc_index = 0;
+
+        for (let y = 0; y < map.height; y++) {
+            for (let x = 0; x < map.width; x++) {
+                let index = x + map.width * y;
+                let att = map.atts[index];
+                
+                if (att.type == 5) {
+                    this.npcs.push(new Npc({map: map.id, x: x, y: y}, att.facing, att.movement_state, map, this.id, npc_index));
+                    npc_index++;           
+                }
+            }
+        }
+    }
+
+    // Closes the current lobby
+    close() {
+
     }
 }
 
@@ -371,6 +450,149 @@ class Trainer {
         this.position = position;
         this.spritesheet_id = spritesheet_id;
         this.facing = 'South';
+    }
+}
+
+class Npc {
+    constructor(position = {map: 0, x: 0, y: 0}, facing = 'South', movement_state = 'Active', map = null, lobby_id = 0, index = 0) {
+        this.position = position;
+        this.facing = facing;
+        this.map = map;
+        this.movement_state = movement_state;
+        this.index = index;
+        this.lobby_id = lobby_id;
+
+        this.initial_properties = {
+            position: position,
+            facing: facing
+        };
+
+        this.uid = `M${this.position.map}X${this.position.x}Y${this.position.y}`;
+
+        if (this.movement_state == 'Active') {
+            let that = this;
+            this.wander_interval = setInterval(this.wander, 1000, that);
+        }
+    }
+    
+    place(x, y) {
+        this.position.index = this.position.x + this.map.width * this.position.y;
+        this.position.tile = map.atts[x + this.map.width * y];
+    }
+
+    position_update() {
+        this.position.index = this.position.x + this.map.width * this.position.y;
+        this.position.tile = this.map.tiles[this.position.index];
+        this.position.att = this.map.atts[this.position.index];
+    }
+
+    move(direction) {
+        let next_position = {
+            x: this.position.x,
+            y: this.position.y
+        };
+
+        switch (direction) {
+            case 'East':
+                next_position.x++;  
+                break;
+            case 'West':
+                next_position.x--;   
+                break;
+            case 'North':
+                next_position.y--;   
+                break;
+            case 'South':
+                next_position.y++;   
+                break;
+            default:
+                break;
+        }
+
+        if (!this.collision_check(next_position.x, next_position.y)) {
+            this.moving = true;
+            this.current_move_ticker = 0;
+            
+            switch (direction) {
+                case 'East':
+                    this.facing = 'East'; 
+                    this.position.x++;  
+                    break;
+                case 'West':
+                    this.facing = 'West'; 
+                    this.position.x--;   
+                    break;
+                case 'North':
+                    this.facing = 'North'; 
+                    this.position.y--;   
+                    break;
+                case 'South':
+                    this.facing = 'South'; 
+                    this.position.y++;   
+                    break;
+                default:
+                    break;
+            }
+            // console.log(`Moving (NPC ${this.index}):`, direction, this.position);
+            
+            // broadcast NPC movement to everyone in the room    
+            io.to(this.lobby_id).emit('npc_moved', {
+                uid: this.uid,
+                moving: direction,
+            }); 
+        } else {
+            // console.log(`Collision (NPC ${this.index}):`, direction, this.position);
+        }
+
+    }
+
+    wander(that) {
+        let movement_roll = Math.floor(Math.random() * 5) + 1, // 20% chance to move
+            direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
+            directions = ['North', 'South', 'East', 'West'];
+        
+        if (movement_roll == 1) {
+           that.move(directions[direction_roll]);
+        }
+    }
+
+    collision_check(x, y) {
+        let lobby_index = find_lobby_index(this.lobby_id);
+
+        // x-axis boundary check   
+        if (x < 0 || x >= this.map.width) {
+            return true;
+        }
+    
+        // y-axis boundary check
+        if (y < 0 || y >= this.map.height) {
+            return true;
+        }
+    
+        // attribute check
+        switch (this.map.atts[x + this.map.width * y].type) {
+            case 1: // Wall
+            case 3: // Action
+                return true;
+                break;
+            default:
+                break;
+        }
+    
+        // Player checks
+        lobbies[lobby_index].trainers.forEach(trainer => {
+            if (x == trainer.position.x && y == trainer.position.y) {
+                return true;
+            }       
+        });
+    
+        lobbies[lobby_index].npcs.forEach(npc => {
+            if (this.position.map == npc.position.map && x == npc.position.x && y == npc.position.y) {
+                return true;
+            }
+        });
+    
+        return false;
     }
 }
 
