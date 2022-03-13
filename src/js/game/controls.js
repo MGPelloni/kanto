@@ -300,19 +300,19 @@ function move_loop() {
 
     npcs.forEach((npc, i) => {
         if (npc.moving && npc.can_move) {
-            switch (npc.facing) {
-                case 'North':
+            switch (npc.position.f) {
+                case 0:
                     npc.sprite.y -= 0.5; 
-                    break;
-                case 'South':
-                    npc.sprite.y += 0.5; 
-                    break;  
-                case 'West':
-                    npc.sprite.x -= 0.5; 
-                    break;      
-                case 'East':
+                    break;    
+                case 1:
                     npc.sprite.x += 0.5; 
-                    break;        
+                    break;   
+                case 2:
+                    npc.sprite.y += 0.5; 
+                    break;
+                case 3:
+                    npc.sprite.x -= 0.5; 
+                    break;  
                 default:
                     break;
             }

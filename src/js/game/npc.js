@@ -1,18 +1,34 @@
 class Npc {
-    constructor(position = {map: 0, x: 0, y: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {
+    constructor(position = {map: 0, x: 0, y: 0, f: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {        
+        // Setting position based on attribute
         this.position = position;
-        this.message = message;
-        this.spritesheet_id = spritesheet_id;
-        this.spritesheet = spritesheets[spritesheet_id];
- 
+        
+        switch (facing) {
+            case 'North':
+                this.position.f = 0;
+                break;
+            case 'East':
+                this.position.f = 1;
+                break;
+            case 'South':
+                this.position.f = 2;
+                break;
+            case 'West':
+                this.position.f = 3;
+                break;
+            default:
+                break;
+        }
+
+        // Log initial properties
         this.initial_properties = {
             position: position,
-            facing: facing
         };
 
         this.uid = `M${this.position.map}X${this.position.x}Y${this.position.y}`;
-
-        this.facing = facing;
+        this.message = message;
+        this.spritesheet_id = spritesheet_id;
+        this.spritesheet = spritesheets[spritesheet_id]; 
         this.frozen = false;
         this.moving = false;
         this.can_move = true;
@@ -22,18 +38,15 @@ class Npc {
         }
 
         this.current_move_ticker = 0;
-        
         this.pokemon = [];
         this.inventory = [];
 
         this.set_sprite();
         npc_container.addChild(this.sprite);
-        this.place(position.x, position.y);
+        this.place(position.x, position.y, position.f);
 
+        // "Active" states are controlled by the server
         switch (movement_state) {
-            // case 'Active':
-            //     this.wander_interval = setInterval(this.wander, 1000, index);
-            //     break;
             case 'Static':
                 this.wander_interval = setInterval(this.look_around, 1000, index);
                 break;
@@ -46,19 +59,20 @@ class Npc {
     }
 
     set_sprite() {
-        switch (this.facing) {
-            case 'North':
+        console.log(this.position.f);
+        switch (this.position.f) {
+            case 0:
                 this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standNorth);
                 break;
-            case 'West':
-                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standWest);
-                break;
-            case 'South':
+            case 1:
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standEast);
+                break; 
+            case 2:
                 this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standSouth);
                 break;
-            case 'East':
-                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standEast);
-                break;       
+            case 3:
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standWest);
+                break;
             default:
                 break;
         }
@@ -72,14 +86,15 @@ class Npc {
         this.sprite.height = TILE_SIZE;
     }
 
-    place(x, y, facing) {
+    place(x, y, f) {
         this.position.x = x;
         this.position.y = y;
+        this.position.f = f;
         this.position.index = x + map.width * y;
         this.position.tile = map.atts[x + map.width * y];
         this.sprite.x = x * TILE_SIZE;
         this.sprite.y = y * TILE_SIZE;
-        this.face_sprite(facing);
+        this.face_sprite(f);
     }
 
     freeze(ms = 250) {
@@ -111,18 +126,18 @@ class Npc {
         this.spritesheet_id = num;
         this.spritesheet = spritesheets[num];
 
-        switch (this.facing) {
-            case 'North':
+        switch (this.position.f) {
+            case 0:
                 this.sprite.textures = this.spritesheet.standNorth;
                 break;
-            case 'South':
+            case 1:
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            case 2:
                 this.sprite.textures = this.spritesheet.standSouth;
                 break;
-            case 'West':
+            case 3:
                 this.sprite.textures = this.spritesheet.standWest;
-                break;
-            case 'East':
-                this.sprite.textures = this.spritesheet.standEast;
                 break;
             default:
                 break;
@@ -143,94 +158,57 @@ class Npc {
     }
 
     move(direction) {
-        // let next_position = {
-        //     x: this.position.x,
-        //     y: this.position.y
-        // };
-
-        // switch (direction) {
-        //     case 'East':
-        //         next_position.x++;  
-        //         break;
-        //     case 'West':
-        //         next_position.x--;   
-        //         break;
-        //     case 'North':
-        //         next_position.y--;   
-        //         break;
-        //     case 'South':
-        //         next_position.y++;   
-        //         break;
-        //     default:
-        //         break;
-        // }
-
-        // if (!collision_check(next_position.x, next_position.y)) {
-            this.moving = true;
-            this.current_move_ticker = 0;
-            
-            switch (direction) {
-                case 'East':
-                    this.sprite.textures = this.spritesheet.walkEast;
-                    this.sprite.play();
-                    this.facing = 'East'; 
-                    this.position.x++;  
-                    break;
-                case 'West':
-                    this.sprite.textures = this.spritesheet.walkWest;
-                    this.sprite.play();
-                    this.facing = 'West'; 
-                    this.position.x--;   
-                    break;
-                case 'North':
-                    this.sprite.textures = this.spritesheet.walkNorth;
-                    this.sprite.play();
-                    this.facing = 'North'; 
-                    this.position.y--;   
-                    break;
-                case 'South':
-                    this.sprite.textures = this.spritesheet.walkSouth;
-                    this.sprite.play();
-                    this.facing = 'South'; 
-                    this.position.y++;   
-                    break;
-                default:
-                    break;
-            }
-        // }
-    }
-
-    wander(index) {
-        if (npcs[index] && !npcs[index].frozen) {
-            let movement_roll = Math.floor(Math.random() * 5) + 1, // 20% chance to move
-                direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
-                directions = ['North', 'South', 'East', 'West'];
-            
-            if (movement_roll == 1) {
-                npcs[index].move(directions[direction_roll]);
-            }
+        this.moving = true;
+        this.current_move_ticker = 0;
+        
+        switch (direction) {
+            case 'North':
+                this.sprite.textures = this.spritesheet.walkNorth;
+                this.sprite.play();
+                this.position.f = 0; 
+                this.position.y--;   
+                break;
+            case 'East':
+                this.sprite.textures = this.spritesheet.walkEast;
+                this.sprite.play();
+                this.position.f = 1; 
+                this.position.x++;  
+                break;
+            case 'South':
+                this.sprite.textures = this.spritesheet.walkSouth;
+                this.sprite.play();
+                this.position.f = 2; 
+                this.position.y++;   
+                break;
+            case 'West':
+                this.sprite.textures = this.spritesheet.walkWest;
+                this.sprite.play();
+                this.position.f = 3; 
+                this.position.x--;   
+                break;
+            default:
+                break;
         }
     }
 
     look_around(index) {
         if (npcs[index] && !npcs[index].frozen) {
             let movement_roll = Math.floor(Math.random() * 3) + 1, // 33% chance to move
-                direction_roll = Math.floor(Math.random() * 3) + 1, // Random direction
-                directions = ['North', 'South', 'East', 'West'];
+                direction_roll = Math.floor(Math.random() * 3) + 1; // Random direction
             
             if (movement_roll == 1) {
-                switch (directions[direction_roll]) {
-                    case 'North':
+                switch (direction_roll) {
+                    case 0:
                         npcs[index].sprite.textures = npcs[index].spritesheet.standNorth;
                         break;
-                    case 'South':
+                    case 1:
+                        npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
+                        break;
+                    case 2:
                         npcs[index].sprite.textures = npcs[index].spritesheet.standSouth;
                         break;
-                    case 'West':
+                    case 3:
                         npcs[index].sprite.textures = npcs[index].spritesheet.standWest;
-                        break;
-                    case 'East':
-                        npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
                         break;
                     default:
                         break;
@@ -241,18 +219,18 @@ class Npc {
 
     return_to_original_facing(index) {
         if (npcs[index] && !npcs[index].frozen) {
-            switch (npcs[index].initial_properties.facing) {
-                case 'North':
+            switch (npcs[index].initial_properties.position.f) {
+                case 0:
                     npcs[index].sprite.textures = npcs[index].spritesheet.standNorth;
                     break;
-                case 'South':
+                case 1:
+                    npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
+                    break;
+                case 2:
                     npcs[index].sprite.textures = npcs[index].spritesheet.standSouth;
                     break;
-                case 'West':
+                case 3:
                     npcs[index].sprite.textures = npcs[index].spritesheet.standWest;
-                    break;
-                case 'East':
-                    npcs[index].sprite.textures = npcs[index].spritesheet.standEast;
                     break;
                 default:
                     break;
@@ -262,17 +240,17 @@ class Npc {
 
     face_sprite(direction) {
         switch (direction) {
-            case 'North':
+            case 0:
                 this.sprite.textures = this.spritesheet.standNorth;
                 break;
-            case 'South':
+            case 1:
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            case 2:
                 this.sprite.textures = this.spritesheet.standSouth;
                 break;
-            case 'West':
+            case 3:
                 this.sprite.textures = this.spritesheet.standWest;
-                break;
-            case 'East':
-                this.sprite.textures = this.spritesheet.standEast;
                 break;
             default:
                 break;
