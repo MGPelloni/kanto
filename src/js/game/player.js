@@ -1,5 +1,5 @@
 class Player {
-    constructor(name = '', position = {map: 0, x: 0, y: 0}, spritesheet_id = 0) {
+    constructor(name = '', position = {map: 0, x: 0, y: 0, f: 2}, spritesheet_id = 0) {
         this.name = name;
         this.position = position;
 
@@ -14,6 +14,7 @@ class Player {
         this.controls = 'walking' // walking, menu, battle
         this.current_move_ticker = 0;
         this.current_map = maps[0];
+        this.last_position = {};
 
         this.pokemon = [];
         this.inventory = [];
@@ -92,17 +93,17 @@ class Player {
         let index;
 
         switch (direction) {
-            case 'North':
+            case 0:
                 index = this.position.x + this.current_map.width * (this.position.y - 1);
                 break;
-            case 'South':
+            case 1:
+                index = (this.position.x + 1) + this.current_map.width * this.position.y
+                break;
+            case 2:
                 index = this.position.x + this.current_map.width * (this.position.y + 1)
                 break;
-            case 'West':
+            case 3:
                 index = (this.position.x - 1) + this.current_map.width * this.position.y;
-                break;
-            case 'East':
-                index = (this.position.x + 1) + this.current_map.width * this.position.y
                 break;
             default:
                 break;

@@ -573,15 +573,25 @@ io.on("connection", (socket) => {
 
         if (lobby_index !== null) {
             lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
-            lobbies[lobby_index].trainers[trainer_index].facing = data.trainer.facing;
-    
-            console.log(lobbies[lobby_index].trainers[trainer_index].position);
     
             socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
                 socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
                 position: lobbies[lobby_index].trainers[trainer_index].position,
-                facing: lobbies[lobby_index].trainers[trainer_index].facing,
                 exiting: data.trainer.exiting
+            });
+        }
+    });
+
+    socket.on("facing_update", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        if (lobby_index !== null) {
+            lobbies[lobby_index].trainers[trainer_index].position.f = data.f;
+    
+            socket.to(lobbies[lobby_index].id).emit('trainer_faced', {
+                socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+                f: lobbies[lobby_index].trainers[trainer_index].position.f,
             });
         }
     });

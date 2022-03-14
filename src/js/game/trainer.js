@@ -1,13 +1,31 @@
 class Trainer {
-    constructor(name = '', position = {map: 0, x: 0, y: 0}, facing = 'South', spritesheet_id = 0, socket_id = 0) {
+    constructor(name = '', position = {map: 0, x: 0, y: 0, f: 2}, facing = 'South', spritesheet_id = 0, socket_id = 0) {
         this.name = name;
         this.position = position;
+        this.facing = facing;
+
+        switch (facing) {
+            case 'North':
+                this.position.f = 0;
+                break;
+            case 'East':
+                this.position.f = 1;
+                break;
+            case 'South':
+                this.position.f = 2;
+                break;
+            case 'West':
+                this.position.f = 3;
+                break;
+            default:
+                break;
+        }
+
         this.socket_id = socket_id;
 
         this.spritesheet_id = spritesheet_id;
         this.spritesheet = spritesheets[spritesheet_id];
- 
-        this.facing = facing;
+
         this.can_check_action = true;
         this.frozen = false;
         this.moving = false;
@@ -25,19 +43,19 @@ class Trainer {
     }
 
     set_sprite() {
-        switch (this.facing) {
-            case 'North':
+        switch (this.position.f) {
+            case 0:
                 this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standNorth);
                 break;
-            case 'West':
-                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standWest);
+            case 1:
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standEast);
                 break;
-            case 'South':
+            case 2:
                 this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standSouth);
                 break;
-            case 'East':
-                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standEast);
-                break;       
+            case 3:
+                this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standWest);
+                break;
             default:
                 break;
         }
@@ -113,48 +131,67 @@ class Trainer {
         };
 
         switch (direction) {
-            case 'East':
-                next_position.x++;  
-                break;
-            case 'West':
-                next_position.x--;   
-                break;
-            case 'North':
+            case 0:
                 next_position.y--;   
                 break;
-            case 'South':
+            case 1:
+                next_position.x++;  
+                break;
+            case 2:
                 next_position.y++;   
+                break;
+            case 3:
+                next_position.x--;   
                 break;
             default:
                 break;
         }
 
-        this.moving = true;
-        this.current_move_ticker = 0;
-        
-        switch (direction) {
-            case 'East':
-                this.sprite.textures = this.spritesheet.walkEast;
-                this.sprite.play();
-                this.facing = 'East';  
-                break;
-            case 'West':
-                this.sprite.textures = this.spritesheet.walkWest;
-                this.sprite.play();
-                this.facing = 'West'; 
-                break;
-            case 'North':
-                this.sprite.textures = this.spritesheet.walkNorth;
-                this.sprite.play();
-                this.facing = 'North'; 
-                break;
-            case 'South':
-                this.sprite.textures = this.spritesheet.walkSouth;
-                this.sprite.play();
-                this.facing = 'South'; 
-                break;
-            default:
-                break;
+        if (this.moving == false) {
+            this.moving = true;
+            this.current_move_ticker = 0;
+            this.colliding = trainer_collision_check(next_position.x, next_position.y);
+
+            switch (direction) {
+                case 0:
+                    if (!this.sprite.playing || this.sprite.textures !== player.spritesheet.walkNorth) {
+                        this.sprite.textures = this.spritesheet.walkNorth;
+                        this.sprite.play();
+                        this.facing = 'North';    
+                    }
+
+                    this.position.f = 0; 
+                    break;
+                case 1:
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkEast) {
+                        this.sprite.textures = this.spritesheet.walkEast;
+                        this.sprite.play();
+                        this.facing = 'East'; 
+                    }
+
+                    this.position.f = 1; 
+                    break;
+                case 2:
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkSouth) {
+                        this.sprite.textures = this.spritesheet.walkSouth;
+                        this.sprite.play();
+                        this.facing = 'South'; 
+                    }
+
+                    this.position.f = 2;
+                    break;
+                case 3:
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkWest) {
+                        this.sprite.textures = this.spritesheet.walkWest;
+                        this.sprite.play();
+                        this.facing = 'West'; 
+                    }
+
+                    this.position.f = 3;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -182,5 +219,24 @@ class Trainer {
 
     remove() {
         multiplayer_container.removeChild(this.sprite);
+    }
+
+    face_sprite(direction) {
+        switch (direction) {
+            case 0:
+                this.sprite.textures = this.spritesheet.standNorth;
+                break;
+            case 1:
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            case 2:
+                this.sprite.textures = this.spritesheet.standSouth;
+                break;
+            case 3:
+                this.sprite.textures = this.spritesheet.standWest;
+                break;
+            default:
+                break;
+        }
     }
 }

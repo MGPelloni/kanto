@@ -16,7 +16,7 @@ socket.on('trainer_moved', function(data){
 
     multiplayer.trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
-            multiplayer.trainers[i].move(data.facing);     
+            multiplayer.trainers[i].move(data.position.f);     
             multiplayer.trainers[i].next_position = data.position;
 
             if (data.exiting) {
@@ -98,9 +98,9 @@ function multiplayer_update_position(is_exiting = false) {
         position: {
             map: player.position.map,
             x: player.position.x,
-            y: player.position.y
+            y: player.position.y,
+            f: player.position.f
         },
-        facing: player.facing
     };
     
     switch (att.type) {
@@ -117,5 +117,24 @@ function multiplayer_update_position(is_exiting = false) {
 
     trainer.exiting = is_exiting;
 
+    console.log(trainer);
     socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
 }
+
+
+function multiplayer_update_facing() {
+    if (player.position.f !== player.last_position.f) {
+        player.last_position.f = player.position.f;
+        socket.emit('facing_update', {lobby_id: meta.lobby_id, f: player.position.f});
+    }
+}
+
+socket.on('trainer_faced', function(data){
+    console.log('Socket.io [trainer_faced]', data.f);
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            multiplayer.trainers[i].face_sprite(data.f)
+        }
+    });
+});
