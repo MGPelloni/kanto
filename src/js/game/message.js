@@ -229,7 +229,7 @@ function write_game_text() {
 
     // requestAnimationFrame(write_game_text);
     if (!dialogue.interval_id) {
-        dialogue.interval_id = setInterval(write_game_text, 1000 / 60);
+        dialogue.interval_id = setInterval(write_game_text, 1000 / FPS);
     }
 }
 

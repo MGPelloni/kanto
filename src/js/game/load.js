@@ -259,7 +259,7 @@ function kanto_start() {
     map.build();
 
     // Prepare animation tickers
-    app.ticker.maxFPS = 60;
+    app.ticker.maxFPS = FPS;
     app.ticker.add(move_loop);
     app.ticker.add(controls_loop);
 
