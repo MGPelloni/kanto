@@ -165,10 +165,13 @@ class Message {
 
 function write_game_text() {
     // Animate to a new line
-    if (dialogue.msg.animation.active) {
-        animate_game_text();
-        requestAnimationFrame(write_game_text);
-        return;
+    if (dialogue.msg) {
+        if (dialogue.msg.animation.active) {
+            animate_game_text();
+            // requestAnimationFrame(write_game_text);
+            // meep_var = setInterval(write_game_text, 1000 / 2);
+            return;
+        }
     }
 
     if (dialogue.msg) {
@@ -188,7 +191,9 @@ function write_game_text() {
             setTimeout(() => {
                 dialogue.disable_next = false;
             }, 300);
-            cancelAnimationFrame(write_game_text);
+            // cancelAnimationFrame(write_game_text);
+            clearInterval(dialogue.interval_id);
+            dialogue.interval_id = null;
             return;
         } else { // ..otherwise, type out the message by letter.
             dialogue.text = dialogue.msg.text.slice(0 + dialogue.msg.read_characters, dialogue.msg.index);
@@ -222,7 +227,10 @@ function write_game_text() {
         }    
     }
 
-    requestAnimationFrame(write_game_text);
+    // requestAnimationFrame(write_game_text);
+    if (!dialogue.interval_id) {
+        dialogue.interval_id = setInterval(write_game_text, 1000 / 60);
+    }
 }
 
 function animate_game_text() {
