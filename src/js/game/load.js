@@ -76,7 +76,7 @@ function kanto_upload_template() {
 
 function kanto_new_game() {
     meta = {
-        name: 'Untitled Game'
+        name: ''
     };
 
     // Create the first map

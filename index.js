@@ -42,15 +42,27 @@ server.listen(process.env.PORT || 8000);
 
 // Endpoints
 app.get('/', function (req, res) {
-    db.query('SELECT * FROM games ORDER BY name ASC;', function(err, result){
+    db.query('SELECT * FROM games WHERE featured=true ORDER BY name ASC;', function(err, result){
         if (err){
             console.log(err.toString());
             return;
         }
+
+        let featured_games = result.rows;
         
-        res.render('home', {
-            // EJS variable and server-side variable
-            games: result.rows
+        db.query('SELECT * FROM games WHERE featured=false ORDER BY name ASC;', function(err, result){
+            if (err){
+                console.log(err.toString());
+                return;
+            }
+
+            let user_games = result.rows;
+
+            res.render('home', {
+                // EJS variable and server-side variable
+                featured_games: featured_games,
+                user_games: user_games
+            });
         });
     });
 });
@@ -213,7 +225,7 @@ function kanto_server_install() {
                 });
             });
     
-            db.query('CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT);', function(err, result){
+            db.query("CREATE TABLE games (id SERIAL PRIMARY KEY, name TEXT, game_id TEXT, author_id BIGINT, game_data TEXT, featured BOOL DEFAULT 'f');", function(err, result){
                 if (err){
                     console.log(err.toString());
                     return;
@@ -230,7 +242,7 @@ function kanto_server_install() {
             
                     templates.forEach(template => {
                         let game_id = generate_game_id();
-                        db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [template.name, game_id, template.game_data], function(err, result){
+                        db.query('INSERT INTO games (name, game_id, game_data, featured) values ($1, $2, $3, $4);', [template.name, game_id, template.game_data, 't'], function(err, result){
                             console.log('Inserted template into games:', template.name);
                             if (err){
                                 console.log(err.toString());

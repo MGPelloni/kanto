@@ -11,7 +11,9 @@
         <header>
             <div class="_container">
                 <h1>Kanto</h1>
-                <nav><a class="_button" href="/create">Create New Game</a></nav>
+                <nav>
+                    <a class="_button" href="/create">Create New Game</a>
+                </nav>
             </div>
         </header>
         <div class="kanto-featured-games">
@@ -23,7 +25,7 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <% games.forEach(function(game) { %>
+                        <% featured_games.forEach(function(game) { %>
                             <tr>
                                 <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
                             </tr>
@@ -41,9 +43,9 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <% games.forEach(function(game) { %>
+                        <% user_games.forEach(function(game) { %>
                             <tr>
-                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>
+                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
                                 <td width="20%">Anonymous</td>  
                             </tr>
                         <% }); %>
