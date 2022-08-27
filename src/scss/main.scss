@@ -1,26 +1,20 @@
 @import
   'abstracts/variables',
-  'abstracts/functions',
   'abstracts/mixins';
 
 @import
   'vendors/normalize';
 
 @import
-  'base/animations',
   'base/elements',
   'base/typography',
   'base/utilities';
 
 @import
-  'components/chat',
   'components/editor',
+  'components/game',
   'components/viewport',
   'components/gamepad';
 
 @import
-  'layout/home',
-  'layout/games';
-
-@import
-  'components/dark-theme';
+  'layout/home';

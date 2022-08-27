@@ -1,0 +1,100 @@
+#game {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    @include breakpoint('sm') {
+        max-width: none;
+    }
+}
+
+.kanto-play,
+.kanto-create {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+
+    @include breakpoint('sm') {
+        align-items: flex-start;
+    }
+}
+
+.kanto-create {
+    ._grid {
+        grid-template-columns: 1fr 400px;
+    }
+}
+
+.toggle-volume {
+    border: none;
+    padding: 0;
+    outline: none;
+    color: #626262;
+    background-color: transparent;
+
+    &:hover {
+        color: #949494;
+    }
+
+    svg {
+        height: 3.5rem;
+    }
+
+    .volume-off {
+        display: none;
+    }
+    
+    &.-muted {
+        .volume-on {
+            display: none;
+        }
+
+        .volume-off {
+            display: inline-block;
+        }
+    }
+}
+
+#kanto-controls-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    transform: translateY(-100%);
+    width: calc(100% - 1rem);
+    opacity: 0;
+    transition: 0.6s;
+    pointer-events: none;
+}
+
+#kanto-view-controls-info {
+    padding-right: 0;
+    outline: none; 
+    color: #626262;
+    background-color: transparent;
+    
+    &:hover,
+    &:focus {
+        color: #949494;
+        
+        &+#kanto-controls-info {
+            opacity: 1;
+        }
+    }
+
+    @include breakpoint('sm') {
+        display: none;
+    }
+}
+
+.kanto-create #kanto-view-controls-info {
+    padding-bottom: 0.5rem;
+}
+
+.game-footer {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

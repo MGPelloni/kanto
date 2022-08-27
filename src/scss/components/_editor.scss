@@ -1,33 +1,23 @@
 #kanto-editor {
     font-size: 1.5rem;
     padding: 20px 0;
-    background-color: #cedae6;
     height: 400px;
+    background-color: #191919;
 
-    ._container {
-        width: calc(480px + 15px);
+    nav {
+        margin: 0 0 15px;
+        text-align: center;
     }
 
-    button {
-        border: 2px solid #000;
-        background-color: #fff;
-    }
-}
-
-#kanto-editor nav {
-    margin: 0 0 15px;
-    text-align: center;
-}
-
-#kanto-editor {
     ul,
     ol {
         padding: 0;
         margin: 0 0 10px;
         list-style-type: none;
     }
-    
+
     ._container {
+        width: calc(480px + 15px);
         padding: 0;
     }
 
@@ -44,8 +34,8 @@
 
         &:hover {
             opacity: 0.6;
-            background-color: #cedae6;
-            border-bottom: 2px solid #7caee0;
+            background-color: #000000;
+            border-bottom: 2px solid #484848;
         }
     }
 }
@@ -56,7 +46,7 @@
 
     .general-editor-display {
         padding: 0;
-        background-color: #191919;
+        color: #fff;
     }
 
     img {
@@ -77,7 +67,7 @@
 
 .general-editor-display {
     padding: 30px;
-    background-color: #f1f1f1;
+    background-color: #191919;
     height: 260px;
     overflow-y: scroll;
 
@@ -115,7 +105,8 @@
 
     &.-well {
         padding: 15px;
-        background-color: #e2e2e2;
+        background-color: #191919;
+        border: 2px solid #484848;
     }
 
     input:disabled {

@@ -36,3 +36,30 @@
 		grid-gap: 35px;
     }
 }
+
+._well {
+    padding: 2.5rem 7rem 2.5rem 2rem;
+    background-color: #000;
+    margin: 1rem 0;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) calc(100% + 20px);
+    background-size: 50px;
+    color: #b7b7b7;
+    border: 2px solid #404040;
+
+    h3 {
+        margin: 0 0 1rem;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    &.-danger {
+        background-color: #e6cece;
+    }
+
+    &.character-oak {
+        background-image: url('../assets/graphics/characters/oak.png');
+    }
+}

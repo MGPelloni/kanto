@@ -4,117 +4,22 @@
         letter-spacing: -4px;
         margin: 0;
     }
-
-    main._grid {
-        grid-template-columns: 1fr 400px;
-        font-size: 0;
-    }
 }
 
-#game {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+.kanto-home {
+    margin: 6rem 0 0;
 
-    @include breakpoint('sm') {
-        max-width: none;
-    }
-}
+    header {
+        padding: 2rem;
 
-canvas {
-    background-color: #000;
-    width: 400px;
-    height: 400px;
-    outline: none;
-
-    @include breakpoint('sm') {
-        width: 100%;
-        height: 100vw;
-    }
-}
-
-.kanto-home,
-.kanto-play,
-.kanto-create {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-}
-
-.kanto-play,
-.kanto-create {
-    @include breakpoint('sm') {
-        align-items: flex-start;
-    }
-}
-
-.toggle-volume {
-    border: none;
-    padding: 0;
-    outline: none;
-    svg {
-        height: 3.5rem;
-    }
-
-    .volume-off {
-        display: none;
-    }
-    
-    &.-muted {
-        .volume-on {
-            display: none;
-        }
-
-        .volume-off {
-            display: inline-block;
-        }
-    }
-}
-
-.game-footer {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    p {
-        margin: 0;
-    }
-
-    @include breakpoint('sm') {
-        padding: 0 5vw;
-    }
-}
-
-#kanto-controls-info {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    margin: 0 auto;
-    transform: translateY(-100%);
-    width: calc(100% - 1rem);
-    opacity: 0;
-    transition: 0.6s;
-    pointer-events: none;
-}
-
-#kanto-view-controls-info {
-    padding-right: 0;
-    outline: none; 
-    
-    &:hover,
-    &:focus {
-        &+#kanto-controls-info {
-            opacity: 1;
+        ._container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     }
 
-    @include breakpoint('sm') {
-        display: none;
+    a {
+        color: #fff;
     }
-}
-
-.kanto-create #kanto-view-controls-info {
-    padding-bottom: 0.5rem;
 }
