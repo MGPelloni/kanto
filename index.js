@@ -41,11 +41,20 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')))
 server.listen(process.env.PORT || 8000);
 
 // Endpoints
-app.get('/', (req, res) => { // Gallery View
-    let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/views/home.html'));
+app.get('/', function (req, res) {
+    db.query('SELECT * FROM games;', function(err, result){
+        if (err){
+            console.log(err.toString());
+            return;
+        }
+        
+        res.render('home', {
+            // EJS variable and server-side variable
+            games: result.rows
+        });
+    });
 });
+
 
 app.get('/play', (req, res) => {  // Play View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
@@ -59,19 +68,6 @@ app.get('/create', (req, res) => { // Create View
     res.sendFile(path.join(__dirname + '/views/create.html'));
 });
 
-app.get('/library', function (req, res) {
-    db.query('SELECT * FROM games;', function(err, result){
-        if (err){
-            console.log(err.toString());
-            return;
-        }
-        
-        res.render('library', {
-            // EJS variable and server-side variable
-            games: result.rows
-        });
-    });
-});
 
 app.get('/reset', (req, res) => { // Create View
     kanto_server_install();

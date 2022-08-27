@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>Kanto</title>
+        <link rel="stylesheet" href="dist/kanto.min.css">
+    </head>
+    <body id="kanto" class="kanto-home">
+        <header>
+            <div class="_container">
+                <h1>Kanto</h1>
+                <nav><a class="_button" href="/create">Create New Game</a></nav>
+            </div>
+        </header>
+        <div class="kanto-featured-games">
+            <div class="_container">
+                <table>
+                    <thead>
+                        <th>Featured Games</th>
+
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <% games.forEach(function(game) { %>
+                            <tr>
+                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="kanto-user-created-games">
+            <div class="_container">
+                <table>
+                    <thead>
+                        <th>User Created</th>
+                        <th>Author</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <% games.forEach(function(game) { %>
+                            <tr>
+                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>
+                                <td width="20%">Anonymous</td>  
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
