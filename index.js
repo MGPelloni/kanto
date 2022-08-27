@@ -17,6 +17,7 @@ const io = new Server(server);
 let lobbies = [];
 
 app.set('view engine', 'ejs');
+app.use(requireHTTPS);
 app.use(express.json({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));  // TODO: body-parser deprecated undefined extended: provide extended option
 
@@ -74,7 +75,6 @@ app.get('/library', function (req, res) {
 
 app.get('/reset', (req, res) => { // Create View
     kanto_server_install();
-
     res.send('Success');
 });
 
@@ -636,3 +636,11 @@ io.on("connection", (socket) => {
         io.to(targeted_room).emit('trainer_disconnected', socket.id); // broadcast to everyone in the room    
     });
 });
+
+function requireHTTPS(req, res, next) {
+    // The 'x-forwarded-proto' check is for Heroku
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+      return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
