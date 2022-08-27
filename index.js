@@ -42,7 +42,7 @@ server.listen(process.env.PORT || 8000);
 
 // Endpoints
 app.get('/', function (req, res) {
-    db.query('SELECT * FROM games;', function(err, result){
+    db.query('SELECT * FROM games ORDER BY name ASC;', function(err, result){
         if (err){
             console.log(err.toString());
             return;
