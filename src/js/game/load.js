@@ -27,10 +27,7 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_load_game() {
-    let query_string = parse_query_string(),
-        selected_game = query_string.get('g');
-
-    if (game_mode == 'create' && !selected_game) { // No game has been selected, and we are in create mode
+    if (game_mode == 'create' && !GAME_ID) { // No game has been selected, and we are in create mode
         kanto_new_game();
         return;
     }
@@ -40,7 +37,7 @@ function kanto_load_game() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({'game': selected_game}),
+        body: JSON.stringify({'game': GAME_ID}),
     }).then((res) => {
         return res.json();
     }).then((data) => {
@@ -480,12 +477,11 @@ function prepare_start_menu() {
 }
 
 function prepare_multiplayer() {
-    let query_string = parse_query_string(),
-        lobby_id = query_string.get('l');
+    let lobby_id = url_parameter('l');
 
     // Auto join lobby
     if (!lobby_id) {
-        lobby_id = query_string.get('g');
+        lobby_id = GAME_ID;
     }
 
     if (lobby_id) {
@@ -502,4 +498,9 @@ function store_data(name, json) {
 
 function retrieve_data(name) {
    return localStorage.getItem(name);
+}
+
+function url_parameter(name) {
+    let query_string = parse_query_string();
+    return query_string.get(name);
 }

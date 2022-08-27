@@ -5,6 +5,7 @@ const VERSION = '0.1.1';
 const TILE_SIZE = 16;
 const GAME_WIDTH = 160;
 const GAME_HEIGHT = 160;
+const GAME_ID = url_parameter('g');
 const FPS = 60;
 const canvas = document.getElementById('pkmn');
 canvas.addEventListener('contextmenu', (e) => {
