@@ -1,86 +1,45 @@
 /**
- * Gulp: https://gulpjs.com/
- * To use this file, run "npm install" and then "npm start" in your terminal at the root of the main folder.
- */	
+* Gulp: https://gulpjs.com/
+* To use this file, run "npm install" and then "npm start" in your terminal at the root of the theme folder.
+*/	
 
-let gulp = require('gulp'); // Workflow Automation
+const { series, watch, src, dest } = require('gulp'), // Workflow Automation
+concat = require('gulp-concat'), // Concatenate and rename files
+sass = require('gulp-dart-sass'), // Converting our SASS into CSS
+prefix = require('gulp-autoprefixer'), // Prefixes CSS to work with browsers
+cleanCSS = require('gulp-clean-css'), // Minify CSS
+babel = require('gulp-babel'), // Transpile JS
+uglify = require('gulp-uglify'), // Minify JS
+files_js = [
+    `node_modules/pixi.js/dist/pixi.min.js`, 
+    `node_modules/howler/dist/howler.min.js`, 
+    `node_modules/socket.io/client-dist/socket.io.js`,
+    `src/js/**/*.js`,
+    `src/js/main.js`
+];
 
-	// NPM Packages
-	sass = require('gulp-sass'); // Converting our SASS into CSS
-	prefix = require('gulp-autoprefixer'); // Prefixes CSS to work with browsers
-	cleanCSS = require('gulp-clean-css'); // Minify CSS
-	concat = require('gulp-concat'); // Concatenate files
-	uglify = require('gulp-uglify-es').default; // Minify JS
-	babel = require('gulp-babel'); // Transpile JS
-
-	// Paths
-	src = 'src'; // The source files location
-	dest = 'dist'; // Destination folder
-	modules = 'node_modules'; // Node modules added by NPM
-
-	// Watch files
-	watch = {
-		scss: `${src}/scss/**/*.scss`,
-		js: `${src}/js/**/*.js`,
-	};
-
-	// The SCSS files that need to be compiled in order
-    scss = [
-        `${src}/scss/main.scss`
-	];
-	
-	// The JS files that need to be compiled in order
-    js = [
-		`${modules}/pixi.js/dist/pixi.min.js`, 
-		`${modules}/howler/dist/howler.min.js`, 
-		`${modules}/socket.io/client-dist/socket.io.js`,
-		`${src}/js/**/*.js`,
-		`${src}/js/main.js`
-	];
-
-	browserSync = require('browser-sync').create();
-
-gulp.task('scss', function(){
-    return gulp.src(scss)
-        .pipe(sass())
-        .pipe(prefix('last 2 versions'))
-		.pipe(concat('kanto.min.css'))
-        .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe(gulp.dest(`${dest}`))
-});
-
-gulp.task('js', function(done){
-    return gulp.src(js)
-		.pipe(concat('kanto.min.js'))
-		// .pipe(babel())
-		// .pipe(uglify())
-        .pipe(gulp.dest(`${dest}`))
-});
-
-gulp.task('production-js', function(done){
-    return gulp.src(js)
-		.pipe(concat('kanto.min.js'))
-		.pipe(babel())
-		.pipe(uglify())
-        .pipe(gulp.dest(`${dest}`))
-});
+function scss() {
+  return src('src/scss/main.scss')
+  .pipe(concat('kanto.min.css'))
+  .pipe(sass())
+  .pipe(prefix('last 2 versions'))
+  .pipe(cleanCSS({level: {1: {specialComments: 0}}}))
+  .pipe(dest('dist'))
+}
 
 
-gulp.task('watch', function () {
-    gulp.watch(watch.scss, gulp.series('scss'));
-	gulp.watch(watch.js, gulp.series('js'));
-});
+function js() {
+  return src(files_js)
+  .pipe(concat('kanto.min.js'))
+  .pipe(babel())
+  .pipe(uglify())
+  .pipe(dest('dist'))
+}
 
-gulp.task('browser-sync', function() {
-    browserSync.init({
-		port: 8000,
-		files: ["dist/*"],
-        server: {
-			baseDir: "./"
-        }
-    });
-});
+function monitor() {
+  watch('src/scss/**/*.scss', series(scss));
+  watch('src/js/**/*.js', series(js));
+};
 
-gulp.task('default', gulp.series('scss', 'js', 'watch'));
-gulp.task('server', gulp.series('browser-sync'));
-gulp.task('compile', gulp.series('scss', 'production-js'));
+exports.default = series(scss, js, monitor);
+exports.compile = series(scss, js);
