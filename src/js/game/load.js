@@ -479,6 +479,11 @@ function prepare_start_menu() {
 function prepare_multiplayer() {
     let lobby_id = url_parameter('l');
 
+    // Auto join lobby
+    if (!lobby_id) {
+        lobby_id = GAME_ID;
+    }
+
     if (lobby_id) {
         multiplayer.enabled = true;
         meta.lobby_id = lobby_id;
