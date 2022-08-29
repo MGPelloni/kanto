@@ -132,6 +132,9 @@ class Editor {
                         case 5:
                             atts_container.children[sprite.game_position.index].tint = '0x000000';
                             break;
+                        case 6:
+                            atts_container.children[sprite.game_position.index].tint = '0xFFD5D5';
+                            break;
                         default:
                             break;
                     }
@@ -164,6 +167,9 @@ class Editor {
                             break;
                         case 5:
                             atts_container.children[sprite.game_position.index].tint = '0x000000';
+                            break;
+                        case 6:
+                            atts_container.children[sprite.game_position.index].tint = '0xFFD5D5';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -269,6 +275,9 @@ class Editor {
               break;
             case 5:
               color = '0x000000';
+              break;
+            case 6:
+              color = '0xFFD5D5';
               break;
             default:
               color = '0xEEEEEE';
@@ -706,6 +715,10 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Facing:</label><select name="facing"><option>North</option><option>South</option><option>West</option><option>East</option></select></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Movement State:</label><select name="movement_state"><option>Active</option><option>Static</option><option>Frozen</option></select></div>';
+            break;
+        case 6:
+            display_editor.innerHTML += '<h5>NPC Wall</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="6" disabled></div>';
             break;
         default:
             break;

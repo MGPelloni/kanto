@@ -5,5 +5,6 @@
  * 3: Action [Message]
  * 4: Exit [Map, X, Y]
  * 5: NPC [Map, X, Y]
+ * 6: NPC Wall
  * ?: Force Direction
  */

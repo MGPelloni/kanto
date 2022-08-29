@@ -487,6 +487,7 @@ class Npc {
         switch (this.map.atts[x + this.map.width * y].type) {
             case 1: // Wall
             case 3: // Action
+            case 6: // NPC Wall
                 return true;
                 break;
             default:
