@@ -574,7 +574,7 @@ io.on("connection", (socket) => {
         let lobby_index = find_lobby_index(data.lobby_id);
         // console.log(lobbies[lobby_index].game.maps);
         // console.log(io.sockets.adapter.rooms);
-    });
+    }); 
 
     socket.on("position_update", (data) => {
         let lobby_index = find_lobby_index(data.lobby_id),
