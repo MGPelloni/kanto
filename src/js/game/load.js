@@ -203,6 +203,7 @@ function kanto_load_maps() {
 
 function kanto_game_export() {
     let exported_meta = meta;
+    delete exported_meta.lobby_id;
 
     let exported_maps = maps.map(object => ({ ...object })) // clone the maps data without object references
     exported_maps.forEach(exported_map => {
@@ -224,7 +225,7 @@ function kanto_game_export() {
         maps: exported_maps
     };
 
-    return JSON.stringify(game_data);
+    return saveTemplateAsFile(`kanto-game-export.json`, game_data);
 }
 
 
