@@ -211,9 +211,9 @@ function kanto_server_install() {
             }  
         
             // Add default templates
-            fs.readdir('src/js/maps/', (err, files) => {
+            fs.readdir('templates/games/', (err, files) => {
                 files.forEach(file => {
-                    let game_data = JSON.parse(fs.readFileSync('src/js/maps/' + file, 'utf8'));
+                    let game_data = JSON.parse(fs.readFileSync('templates/games/' + file, 'utf8'));
     
                     db.query('INSERT INTO templates (name, game_data) values ($1, $2);', [game_data.meta.name, JSON.stringify(game_data)], function(err, result){
                         if (err){
