@@ -20,7 +20,7 @@
 }
 
 .kanto-create {
-    ._grid {
+    ._container > ._grid {
         grid-template-columns: 1fr 400px;
     }
 }
