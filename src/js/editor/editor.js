@@ -7,6 +7,10 @@ class Editor {
         this.action_timeout = false;
         this.palette = document.querySelector('#tile-editor img');
         this.mode = null;
+        this.templates = {
+            games: [],
+            maps: []
+        };
 
         if (this.palette) {
             this.prepare_maps();
@@ -14,13 +18,18 @@ class Editor {
             this.prepare_tiles();
             this.prepare_atts();
             this.prepare_properties();
-            this.saved_games_list();
+            // this.saved_games_list();
             this.log();
 
             // Async
-            kanto_get_templates().then(data => {
-                this.templates = data;
-                editor.prepare_template_list(data);
+            kanto_get_game_templates().then(data => {
+                this.templates.games = data;
+                editor.prepare_game_template_list(data);
+            });
+
+            kanto_get_map_templates().then(data => {
+                this.templates.maps = data;
+                editor.prepare_map_template_list(data);
             });
         }
     }
@@ -30,7 +39,7 @@ class Editor {
         this.prepare_tiles();
         this.prepare_atts();
         this.prepare_properties();
-        this.saved_games_list();
+        // this.saved_games_list();
 
         this.save();
     }
@@ -187,8 +196,8 @@ class Editor {
     }
 
     prepare_maps() {
-        let editor_display = document.querySelector('#map-editor .general-editor-display');
-        let map_element = document.createElement('ol');
+        let editor_maps_list = document.querySelector('#map-editor #editor-maps-list'),
+            map_element = document.createElement('ol');
 
         maps.forEach(map => {
             let map_single = document.createElement('li');
@@ -197,8 +206,8 @@ class Editor {
             map_element.appendChild(map_single)
         });
 
-        editor_display.innerHTML = '';
-        editor_display.appendChild(map_element);
+        editor_maps_list.innerHTML = '';
+        editor_maps_list.appendChild(map_element);
 
         document.querySelectorAll('#kanto-editor [data-map]').forEach(elem => {
             elem.addEventListener('click', e => {
@@ -378,50 +387,77 @@ class Editor {
         }
     }
 
-    prepare_template_list(data) {
+    prepare_game_template_list(data) {
         if (document.querySelector('#editor-game-templates')) {
             let game_templates_ul = document.querySelector('#editor-game-templates');
             game_templates_ul.innerHTML = '';
 
             data.forEach(row => {
                 let template_single = document.createElement('li');
-                template_single.innerHTML = row.name;
-                template_single.setAttribute('data-game-template', row.name);
+                template_single.innerHTML = row.meta.name;
                 game_templates_ul.appendChild(template_single);
             });
 
             if (document.querySelector('#editor-game-templates')) {
                 document.querySelectorAll('#editor-game-templates li').forEach(elem => {
                     elem.addEventListener('click', e => {
-                        kanto_quickload_game(elem.getAttribute('data-game-template'), 'template');
+                        editor.templates.games.forEach(template => {
+                            if (template.meta.name == elem.innerHTML) {
+                                kanto_switch_game(JSON.stringify(template));
+                            }
+                        });
                     });
                 }); 
             }
         }
     }
 
-    saved_games_list() {
-        if (document.querySelector('#editor-saved-games-list')) {
-            let saved_games_ul = document.querySelector('#editor-saved-games-list');
-            saved_games_ul.innerHTML = '';
+    prepare_map_template_list(data) {
+        if (document.querySelector('#editor-maps-templates')) {
+            let maps_templates_ul = document.querySelector('#editor-maps-templates');
+            maps_templates_ul.innerHTML = '';
 
-            Object.keys(localStorage).forEach(function(key){
-                let game_single = document.createElement('li');
-                game_single.innerHTML = `${key}`;
-                game_single.setAttribute('data-game', key);
-                saved_games_ul.appendChild(game_single);
+            data.forEach(row => {
+                let template_single = document.createElement('li');
+                template_single.innerHTML = row.name;
+                maps_templates_ul.appendChild(template_single);
             });
 
-
-            if (document.querySelector('#editor-saved-games-list')) {
-                document.querySelectorAll('#editor-saved-games-list li').forEach(elem => {
+            if (document.querySelector('#editor-maps-templates')) {
+                document.querySelectorAll('#editor-maps-templates li').forEach(elem => {
                     elem.addEventListener('click', e => {
-                        kanto_quickload_game(elem.getAttribute('data-game'));
+                        editor.templates.maps.forEach(template => {
+                            if (template.name == elem.innerHTML) {
+                                kanto_append_map(JSON.stringify(template));
+                            }
+                        });
                     });
                 }); 
             }
         }
     }
+
+    // saved_games_list() {
+    //     if (document.querySelector('#editor-saved-games-list')) {
+    //         let saved_games_ul = document.querySelector('#editor-saved-games-list');
+    //         saved_games_ul.innerHTML = '';
+
+    //         Object.keys(localStorage).forEach(function(key){
+    //             let game_single = document.createElement('li');
+    //             game_single.innerHTML = `${key}`;
+    //             saved_games_ul.appendChild(game_single);
+    //         });
+
+
+    //         if (document.querySelector('#editor-saved-games-list')) {
+    //             document.querySelectorAll('#editor-saved-games-list li').forEach(elem => {
+    //                 elem.addEventListener('click', e => {
+    //                     kanto_switch_game(elem.innerHTML);
+    //                 });
+    //             }); 
+    //         }
+    //     }
+    // }
 }
 
 function add_padding() {
@@ -725,8 +761,8 @@ function set_att_editor(type) {
     }
 }
 
-async function kanto_get_templates() {
-    let res = await fetch(`${window.location.protocol}//${window.location.host}/templates`, {
+async function kanto_get_game_templates() {
+    let res = await fetch(`${window.location.protocol}//${window.location.host}/templates/games`, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -737,4 +773,18 @@ async function kanto_get_templates() {
 
     let templates = await res.json();
     return templates;
+}
+
+async function kanto_get_map_templates() {
+    let res = await fetch(`${window.location.protocol}//${window.location.host}/templates/maps`, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    let maps = await res.json();
+    return maps;
 }

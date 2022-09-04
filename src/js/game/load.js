@@ -20,13 +20,13 @@ function kanto_load_assets() {
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('message', 'assets/graphics/message.jpg')
         .add('start-menu', 'assets/graphics/start-menu.png')
-    app.loader.load(kanto_load_game);
+    app.loader.load(kanto_fetch_game);
 }
 
 /**
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
-function kanto_load_game() {
+function kanto_fetch_game() {
     if (game_mode == 'create' && !GAME_ID) { // No game has been selected, and we are in create mode
         kanto_new_game();
         return;
@@ -41,7 +41,7 @@ function kanto_load_game() {
     }).then((res) => {
         return res.json();
     }).then((data) => {
-        kanto_process_import(data);
+        kanto_load_game(data);
     });
 }
 
@@ -87,62 +87,37 @@ function kanto_new_game() {
     kanto_start();
 }
 
-function kanto_quickload_game(selected_game, type = 'game') {
-    let game_data = retrieve_data(selected_game);
+/**
+ * Imports a JSON string and parses the data to be loaded as a game.
+ * 
+ * @param {string} data The JSON game string.
+ */
+function kanto_load_game(data) {
+    // Mutate string data before parsing JSON
+    data = data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
 
-    console.log(game_data);
-
-    if (type == 'template') {
-        editor.templates.forEach(template => {
-            if (template.name == selected_game) {
-                game_data = template.game_data;
-            }
-
-            meta = {
-                name: template.name,
-                game_id: null,
-            };
-        });
-    }
-
-    import_data = JSON.parse(game_data);
-
-    if (type != 'template') {
-        meta = {
-            name: import_data.meta.name,
-            game_id: import_data.meta.game_id
-        };
-    }
+    // Set global import game data [meta, maps, player]
+    import_data = JSON.parse(data);
     
+    // Load Meta
+    meta = import_data.meta;
+
     // Load Maps
     maps = kanto_load_maps();
     map = maps[0];
 
-    // Load Player
-    player.current_map = map;
-    player.position.map = map.id;
-    player.position.x = map.starting_position.x;
-    player.position.y = map.starting_position.y;
-    player.change_spritesheet(import_data.player.sprite);
-
-    // Build the new map
-    map.build();
-
-    // Create editor
-    editor.prepare_maps();
+    // Loading is complete, start the game
+    kanto_start();
 }
 
-function kanto_quickload_import(game_data, type) {
-    if (type == 'template') {
-        editor.templates.forEach(template => {
-            if (template.template_name == selected_game) {
-                game_data = template.game_data;
-            }
-        });
-    }
+function kanto_switch_game(data) {
+    // Mutate string data before parsing JSON
+    data = data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
+    import_data = JSON.parse(data);
+    kanto_reset();
+}
 
-    import_data = JSON.parse(game_data);
-
+function kanto_reset() {
     // Load Meta
     meta = {
         name: import_data.meta.name
@@ -166,27 +141,6 @@ function kanto_quickload_import(game_data, type) {
     editor.prepare_maps();
 }
 
-function kanto_process_import(data) {
-    // Mutate data
-    data.game_data = data.game_data.replaceAll('POKeMON', 'POKéMON'); // TODO: Database doesn't save é
-
-    // Set global import game data [meta, maps, player]
-    import_data = JSON.parse(data.game_data);
-    // console.log(import_data);
-
-    
-    // Load Meta
-    meta = import_data.meta;
-
-    // Load Maps
-    maps = kanto_load_maps();
-    map = maps[0];
-
-    
-    // Loading is complete, start the game
-    kanto_start();
-}
-
 function kanto_load_maps() {
     let res = [];
         
@@ -199,6 +153,41 @@ function kanto_load_maps() {
     });
 
     return res;
+}
+
+function kanto_append_map(data) {
+    // Create map
+    let map = JSON.parse(data);
+    
+    map.id = maps.length;
+
+    // Remove warps
+    map.atts.forEach((att, key) => {
+        if (att.type == 2 || att.type == 4) {
+            map.atts[key] = {type: 0};
+        }
+    });
+
+    console.log(map);
+
+    let kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.music, map.starting_position);
+    
+    console.log(kanto_map);
+    maps.push(kanto_map);
+    editor.update();
+    
+    return maps;
+}
+
+function kanto_map_export() {
+    let exported_map = map;
+
+    // Format the data by deleting added properties
+    delete exported_map.id;
+    delete exported_map.x;
+    delete exported_map.y;
+
+    return saveTemplateAsFile(`kanto-map-export.json`, map);
 }
 
 function kanto_game_export() {
@@ -225,7 +214,12 @@ function kanto_game_export() {
         maps: exported_maps
     };
 
-    return saveTemplateAsFile(`kanto-game-export.json`, game_data);
+    return JSON.stringify(game_data);
+}
+
+
+function kanto_game_json_export() {
+    return saveTemplateAsFile(`kanto-game-export.json`, JSON.parse(kanto_game_export()));
 }
 
 
