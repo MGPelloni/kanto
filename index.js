@@ -158,7 +158,7 @@ app.post('/game', (req, res) => { // Create View
             }
         });
     } else {
-        db.query('SELECT * FROM templates WHERE name=$1;', ['Pallet Town'], function(err, result){
+        db.query('SELECT * FROM games WHERE name=$1;', ['Pallet Town'], function(err, result){
             if (err) {
                 console.log(err.toString());
             }
@@ -277,21 +277,6 @@ function kanto_server_install() {
                 });
             });
         }); 
-    });
-}
-
-/**
- * Init function for the Kanto server.
- */
-function kanto_server_initialize() {
-    db.query('SELECT * FROM templates;', function(err, result){
-        if (err) { // Tables aren't installed
-            console.log(err.toString());
-            kanto_server_install();
-            return;
-        }
-        
-        console.log('Server has been succesfully initialized, listening on port:', process.env.PORT);
     });
 }
 
