@@ -381,6 +381,23 @@ class Editor {
         this.update();
     }
 
+    clear_map() {
+        if (prompt(`Are you sure you want to delete ${map.name}? Type DELETE to continue:`) == 'DELETE') {
+            let index = 0;
+            
+            maps.forEach((maps_single, i) => {
+                if (maps_single.id == map.id) {
+                    index = i;
+                }
+            });
+
+            map = maps[index] = new Kanto_Map(index);
+            player.place(maps[index].starting_position.x, maps[index].starting_position.y, map.id);
+            map.build();
+            this.update();
+        }
+    }
+
     log() {
         if (document.querySelector('#coords')) {
             document.querySelector('#coords').innerHTML = `{${player.position.map}, ${player.position.x}, ${player.position.y}}`
@@ -714,6 +731,11 @@ if (document.querySelector('#editor-new-map')) {
     });
 }
 
+if (document.querySelector('#editor-delete-map')) {
+    document.querySelector('#editor-delete-map').addEventListener('click', e => {
+        editor.clear_map();
+    });
+}
 
 function set_att_editor(type) {
     let att_editor = document.querySelector('#att-editor');
