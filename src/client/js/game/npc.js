@@ -59,7 +59,6 @@ class Npc {
     }
 
     set_sprite() {
-        console.log(this.position.f);
         switch (this.position.f) {
             case 0:
                 this.sprite = new PIXI.AnimatedSprite(this.spritesheet.standNorth);

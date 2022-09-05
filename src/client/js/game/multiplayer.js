@@ -67,8 +67,9 @@ socket.on('map_server_sync', function(data){
         npcs.forEach(npc => {
             if (npc_server_data.uid == npc.uid) {
                 npc.place(npc_server_data.position.x, npc_server_data.position.y, npc_server_data.position.f);
-                npc.sprite.visible = true;
             }
+
+            npc.sprite.visible = true;
         })
     });
 });
