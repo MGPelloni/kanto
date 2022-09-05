@@ -27,13 +27,13 @@ app.get('/', function (req, res) {
 app.get('/play', (req, res) => {  // Play View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/views/play.html'));
+    res.render('play');
 });
 
 app.get('/create', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
-    res.sendFile(path.join(__dirname + '/views/create.html'));
+    res.render('create');
 });
 
 app.get('/reset', (req, res) => { // Create View
