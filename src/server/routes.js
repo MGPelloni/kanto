@@ -1,5 +1,3 @@
-
-// Endpoints
 app.get('/', function (req, res) {
     db.query('SELECT * FROM games WHERE featured=true ORDER BY name ASC;', function(err, result){
         if (err){
@@ -25,7 +23,6 @@ app.get('/', function (req, res) {
         });
     });
 });
-
 
 app.get('/play', (req, res) => {  // Play View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
@@ -80,7 +77,7 @@ app.get('/templates/maps', (req, res) => {
     });
 });
 
-app.get('/maps', (req, res) => { // Create View
+app.get('/maps', (req, res) => {
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
     db.query('SELECT * FROM maps;', function(err, result){
         if (err){
@@ -92,7 +89,7 @@ app.get('/maps', (req, res) => { // Create View
     });
 });
 
-app.post('/game', (req, res) => { // Create View
+app.post('/game', (req, res) => {
     let game_id = req.body.game;
 
     if (game_id) {
@@ -129,11 +126,9 @@ app.post('/game', (req, res) => { // Create View
    
 });
 
-app.post('/upload', (req, res) => { // Upload Endpoint
+app.post('/upload', (req, res) => {
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Upload attempt from ' + requesting_ip + " accepted.");
-
-    // console.log('Got body:', req.body);
 
     let game_id = null;
   
