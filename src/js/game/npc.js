@@ -77,7 +77,11 @@ class Npc {
                 break;
         }
         
-        // this.sprite.anchor.set(0.5);
+        // Hide sprite until synced with server
+        if (this.can_move) {
+            this.sprite.visible = false;
+        }
+
         this.sprite.animationSpeed = 0.125;
         this.sprite.loop = false;
         this.sprite.x = this.position.x * TILE_SIZE;
