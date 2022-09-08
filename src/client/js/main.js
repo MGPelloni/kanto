@@ -52,7 +52,7 @@ let multiplayer = {
 let socket = io();
 
 // Node.JS Variables
-let ss_amount = 42 // This will check how many sprites are available through node.js FS
+let ss_amount = 58 // This will check how many sprites are available through node.js FS
 
 // Animation Containers
 let background = new PIXI.Container();
