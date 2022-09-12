@@ -39,7 +39,7 @@ class Npc {
 
         this.current_move_ticker = 0;
         this.pokemon = [];
-        this.inventory = [];
+        this.items = [];
 
         this.set_sprite();
         npc_container.addChild(this.sprite);

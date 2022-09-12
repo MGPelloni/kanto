@@ -277,27 +277,30 @@ function controls_loop() {
         }
 
         if (keys["13"]) { // Enter
-            if (!player.menu.cooldown) {
-                if (menu_container.visible) {
-                    menu_container.visible = false;
-                    player.controls = 'walking';
-                } else {
-                    sfx.play('start-menu');
-                    menu_container.visible = true;
-                    menus[0].open();
-
-                    player.menu.history.push(0);
-                    player.menu.current = 0;
-                    player.menu.active = true;
-                    player.controls = 'menu';
+            if (!player.frozen) {
+                if (!player.menu.cooldown) {
+                    if (menu_container.visible) {
+                        menu_container.visible = false;
+                    } else {
+                        sfx.play('start-menu');
+                        kanto_update_menus();
+    
+                        menu_container.visible = true;
+                        menus[0].open();
+                        
+                        player.menu.history.push(0);
+                        player.menu.current = 0;
+                        player.menu.active = true;
+                        player.controls = 'menu';
+                    }
+    
+                    setTimeout(() => {
+                        player.menu.cooldown = false;
+                    }, 300);
+    
+                    player.menu.cooldown = true;
                 }
-
-                setTimeout(() => {
-                    player.menu.cooldown = false;
-                }, 300);
-
-                player.menu.cooldown = true;
-            }
+            } 
         }
     }
 }

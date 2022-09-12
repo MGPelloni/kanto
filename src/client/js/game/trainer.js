@@ -35,7 +35,7 @@ class Trainer {
         this.current_map = maps[0];
 
         this.pokemon = [];
-        this.inventory = [];
+        this.items = [];
 
         this.set_sprite();
         multiplayer_container.addChild(this.sprite);

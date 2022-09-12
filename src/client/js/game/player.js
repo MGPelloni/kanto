@@ -17,7 +17,7 @@ class Player {
         this.last_position = {};
 
         this.pokemon = [];
-        this.inventory = [];
+        this.items = [];
 
         // Menu information
         this.menu = {

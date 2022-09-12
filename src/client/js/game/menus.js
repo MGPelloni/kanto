@@ -3,30 +3,47 @@ class Menu {
         this.name = name;
         this.options = options;
         this.dimensions = dimensions;
-        
-        // Sprite
-        this.sprite = this.create_sprite();
-        menu_container.addChild(this.sprite);
 
-        // Cursor
-        this.cursor.initial_position = {
-            x: this.cursor.x,
-            y: this.cursor.y
-        }
+        this.dimensions.menu_margin = 17;
+        this.dimensions.option_margin = 15;
         
-        this.cursor.increment = 15;
-        this.cursor.index = 0; // Cursor index
+        this.create_sprite();
+        this.create_cursor();
+        this.set_properties();
+    }
 
+    set_properties() {
         this.max_options = this.options.length - 1;
+    }
+
+    create_cursor() {       
+        this.cursor = {
+            initial_position: {
+                x: this.dimensions.x + 8,
+                y: this.dimensions.y + this.dimensions.menu_margin
+            },
+            increment: 15,
+            index: 0,
+            sprite: null,
+        }
+
+        this.cursor.sprite = new PIXI.Graphics();
+        this.cursor.sprite.beginFill(0x000000);
+        this.cursor.sprite.moveTo(0, 0);
+        this.cursor.sprite.lineTo(4, 4);
+        this.cursor.sprite.lineTo(0, 9);
+        this.cursor.sprite.endFill();
+        this.cursor.sprite.x = this.cursor.initial_position.x;
+        this.cursor.sprite.y = this.cursor.initial_position.y;
+
+        this.sprite.addChild(this.cursor.sprite);
     }
 
     create_sprite() {
         let menu_sprite_container = new PIXI.Container();
         menu_sprite_container.visible = false;
 
-        let menu_bg = new PIXI.Sprite(PIXI.Texture.WHITE),
-            menu_margin = 17, // Starting margin for top of menu options
-            menu_option_margin = 15; // Each menu option margin
+        let menu_bg = new PIXI.Sprite(PIXI.Texture.WHITE);
         
         // Start Menu
         menu_bg.width = this.dimensions.width;
@@ -41,24 +58,21 @@ class Menu {
         this.options.forEach((elem, i) => {
             let menu_text = new PIXI.Text(elem.name, {fontFamily: 'pokemon_gbregular', fontSize: 8, fill : 0x000000, align : 'left'});
             menu_text.x = menu_bg.x + 16;
-            menu_text.y = menu_bg.y + (menu_option_margin * i) + menu_margin;
+            menu_text.y = menu_bg.y + (this.dimensions.option_margin * i) + this.dimensions.menu_margin;
             menu_text.resolution = 4;
             menu_sprite_container.addChild(menu_text);
         });
         
-        // create a new graphics object
-        this.cursor = new PIXI.Graphics();
-        this.cursor.beginFill(0x000000);
-        this.cursor.moveTo(0, 0);
-        this.cursor.lineTo(4, 4);
-        this.cursor.lineTo(0, 9);
-        this.cursor.endFill();
+        this.sprite = menu_sprite_container;
+        menu_container.addChild(this.sprite);
+    }
 
-        this.cursor.x = menu_bg.x + 8;
-        this.cursor.y = menu_bg.y + menu_margin;
-
-        menu_sprite_container.addChild(this.cursor);
-        return menu_sprite_container;
+    update_options(new_options) {
+        this.options = new_options;
+        
+        this.create_sprite();
+        this.create_cursor();
+        this.set_properties();
     }
 
     move_cursor(direction) {
@@ -86,7 +100,7 @@ class Menu {
                 this.cursor.index = 0;
             }
 
-            this.cursor.y = (this.cursor.index * this.cursor.increment) + this.cursor.initial_position.y; 
+            this.cursor.sprite.y = (this.cursor.index * this.cursor.increment) + this.cursor.initial_position.y; 
             player.menu.cooldown = true;
 
             setTimeout(() => {
@@ -96,7 +110,7 @@ class Menu {
     }
 
     reset() {
-        this.cursor.y = this.cursor.initial_position.y;
+        this.cursor.sprite.y = this.cursor.initial_position.y;
         this.cursor.index = 0;
     }
 
@@ -117,4 +131,31 @@ class Menu {
             player.controls = 'walking';
         }
     }
+}
+
+function kanto_get_menu(menu_name) {
+    let found_menu = false;
+
+    menus.forEach(menu => {
+        console.log(menu.name, menu_name);
+        if (menu.name == menu_name) {
+            found_menu = menu;
+        }
+    });
+
+    return found_menu;
+}
+
+function kanto_update_menus() {
+    let items_menu = kanto_get_menu('Items');
+    let item_options = [];
+
+    player.items.forEach(item => {
+        item_options.push({
+            name: item.name,
+            type: 'Item',
+        })
+    });
+
+    items_menu.update_options(item_options);
 }

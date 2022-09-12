@@ -33,6 +33,7 @@ let maps = [];
 let player; 
 let npcs = [];
 let menus = [];
+let items = [];
 let initialized = false;
 let keys = {}; 
 let editor = {};

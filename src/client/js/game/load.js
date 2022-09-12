@@ -205,7 +205,7 @@ function kanto_game_export() {
     let exported_player = {
         sprite: player.spritesheet_id,
         pokemon: player.pokemon,
-        inventory: player.inventory,
+        items: player.items,
     };
 
     let game_data = {
@@ -267,6 +267,9 @@ function kanto_start() {
     // Foreground
     prepare_menus();
     prepare_dialogue();
+
+    // Game properties
+    prepare_items();
 
     // Multiplayer
     prepare_multiplayer();
@@ -395,6 +398,21 @@ function prepare_dialogue() {
     dialogue = new Dialogue();
 }
 
+function prepare_items() {
+    items = [
+        new Item('POKéBALL', 'Ball'),
+        new Item('GREAT BALL', 'Ball'),
+        new Item('POTION', 'Restore'),
+        new Item('SUPER POTION', 'Restore'),
+        new Item('ANTIDOTE', 'Status'),
+        new Item('BICYCLE', 'Special'),
+    ];
+
+    items.forEach(item => {
+        player.items.push(item);
+    });
+}
+
 function open_pokedex() {
     dialogue.queue_messages(["Your POKéDEX doesn't seem to be working.."]);
 }
@@ -407,30 +425,40 @@ function prepare_menus() {
     menus.push(new Menu('Start', [
         {
             name: 'POKéDEX',
+            type: 'menu',
             callback: open_pokedex
         }, 
         {
             name: 'POKéMON',
+            type: 'menu',
             open_menu: 'Pokemon'
         }, 
         {
             name: 'ITEM',
+            type: 'menu',
             open_menu: 'Items'
         }, 
         { 
             name: 'RED',
+            type: 'menu',
             callback: () => {
                 dialogue.queue_messages(["You have no badges or money!", "Embarrassing!"]);
             },
         }, 
         { 
-            name: 'SAVE'
+            name: 'SAVE',
+            type: 'menu'
         }, 
         {
-            name: 'OPTION'
+            name: 'OPTION',
+            type: 'menu'
         }, 
         {
-            name: 'EXIT'
+            name: 'EXIT',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
         }
     ], {
         width: 80,
@@ -443,10 +471,11 @@ function prepare_menus() {
     menus.push(new Menu('Items', [
         {
             name: 'POKé Ball',
-            callback: open_pokedex
+            type: 'Item'
         }, 
         {
-            name: 'ULTRA BALL'
+            name: 'ULTRA BALL',
+            type: 'Item'
         }
     ], {
         width: 96,
@@ -459,18 +488,23 @@ function prepare_menus() {
     menus.push(new Menu('Pokemon', [
         {
             name: 'Squirtle',
+            type: 'Pokemon'
         }, 
         {
             name: 'Bulbasaur',
+            type: 'Pokemon'
         }, 
         {
             name: 'Pikachu',
+            type: 'Pokemon'
         }, 
         {
             name: 'Pidgey',
+            type: 'Pokemon'
         }, 
         {
             name: 'Wartortle',
+            type: 'Pokemon'
         }, 
     ], {
         width: 160,
