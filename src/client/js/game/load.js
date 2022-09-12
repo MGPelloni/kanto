@@ -396,79 +396,88 @@ function prepare_dialogue() {
 }
 
 function open_pokedex() {
-    console.log('Open pokedex');
+    dialogue.queue_messages(["Your POKéDEX doesn't seem to be working.."]);
 }
 
 function prepare_menus() {
     menu_container.visible = false;
     app.stage.addChild(menu_container);
 
-    prepare_start_menu();
-}
-
-function prepare_start_menu() {
-    let start_menu = new PIXI.Container();
-
-    let menu_texture = new PIXI.Texture.from(app.loader.resources['start-menu'].url),
-    menu_bg = new PIXI.Sprite(menu_texture),
-    menu_margin = 17, // Starting margin for top of menu options
-    menu_option_margin = 15, // Each menu option margin
-    menu_options = [
-    {
-        name: 'POKéDEX',
-        callback: open_pokedex
-    }, 
-    {
-        name: 'POKéMON'
-    }, 
-    {
-        name: 'ITEM'
-    }, 
-    { 
-        name: 'RED'
-    }, 
-    { 
-        name: 'SAVE'
-    }, 
-    {
-        name: 'OPTION'
-    }, 
-    {
-        name: 'EXIT'
-    }];
-
     // Start Menu
-    menu_bg.width = TILE_SIZE * 4 + (TILE_SIZE / 2) + 8;
-    menu_bg.height = TILE_SIZE * 8;
-    menu_bg.x = TILE_SIZE * 5 + (TILE_SIZE / 2) - 8;
-    menu_bg.y = 0;
+    menus.push(new Menu('Start', [
+        {
+            name: 'POKéDEX',
+            callback: open_pokedex
+        }, 
+        {
+            name: 'POKéMON',
+            open_menu: 'Pokemon'
+        }, 
+        {
+            name: 'ITEM',
+            open_menu: 'Items'
+        }, 
+        { 
+            name: 'RED',
+            callback: () => {
+                dialogue.queue_messages(["You have no badges or money!", "Embarrassing!"]);
+            },
+        }, 
+        { 
+            name: 'SAVE'
+        }, 
+        {
+            name: 'OPTION'
+        }, 
+        {
+            name: 'EXIT'
+        }
+    ], {
+        width: 80,
+        height: 128,
+        x: 80,
+        y: 0
+    }));
 
+    // Items
+    menus.push(new Menu('Items', [
+        {
+            name: 'POKé Ball',
+            callback: open_pokedex
+        }, 
+        {
+            name: 'ULTRA BALL'
+        }
+    ], {
+        width: 96,
+        height: 64,
+        x: 32,
+        y: 48
+    }));
 
-    menu_container.addChild(start_menu);
-    start_menu.addChild(menu_bg);
-
-    // Menu items
-    menu_options.forEach((elem, i) => {
-        let menu_text = new PIXI.Text(elem.name, {fontFamily: 'pokemon_gbregular', fontSize: 8, fill : 0x000000, align : 'left'});
-        menu_text.x = menu_bg.x + 16;
-        menu_text.y = menu_bg.y + (menu_option_margin * i) + menu_margin;
-        menu_text.resolution = 4;
-        start_menu.addChild(menu_text);
-    });
-    
-    // create a new graphics object
-    let menu_cursor = new PIXI.Graphics();
-    menu_cursor.beginFill(0x000000);
-    menu_cursor.moveTo(0, 0);
-    menu_cursor.lineTo(4, 4);
-    menu_cursor.lineTo(0, 9);
-    menu_cursor.endFill();
-
-    menu_cursor.x = menu_bg.x + 8;
-    menu_cursor.y = menu_margin;
-
-    start_menu.addChild(menu_cursor);
-    menus.push(new Menu('Start Menu', menu_options, start_menu, menu_cursor));
+    // Pokemon
+    menus.push(new Menu('Pokemon', [
+        {
+            name: 'Squirtle',
+        }, 
+        {
+            name: 'Bulbasaur',
+        }, 
+        {
+            name: 'Pikachu',
+        }, 
+        {
+            name: 'Pidgey',
+        }, 
+        {
+            name: 'Wartortle',
+        }, 
+    ], {
+        width: 160,
+        height: 160,
+        x: 0,
+        y: 0
+    }));
 }
 
 function prepare_multiplayer() {

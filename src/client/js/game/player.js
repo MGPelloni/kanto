@@ -19,6 +19,14 @@ class Player {
         this.pokemon = [];
         this.inventory = [];
 
+        // Menu information
+        this.menu = {
+            active: false,
+            cooldown: false,
+            current: null,
+            history: [],
+        }
+
         this.set_sprite();
         app.stage.addChild(this.sprite);
         this.place(position.x, position.y);

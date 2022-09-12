@@ -79,7 +79,7 @@ function controls_loop() {
             if (keys["87"] || keys["38"]) { // Up, W
                 switch (player.controls) {
                     case 'menu':
-                        menus[0].move_cursor('North');
+                        menus[player.menu.current].move_cursor('North');
                         break;
                     default: // Walking
                         if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkNorth) {
@@ -111,7 +111,7 @@ function controls_loop() {
             } else if (keys["83"] || keys["40"]) { // Down, S  
                 switch (player.controls) {
                     case 'menu':
-                        menus[0].move_cursor('South');
+                        menus[player.menu.current].move_cursor('South');
                         break;
                 
                     default: // Walking
@@ -212,41 +212,91 @@ function controls_loop() {
         
         if (keys["88"]) {
             // A Button
-            if (player.can_check_action) {
-                player.check_action(player.position.f);
-                player.can_check_action = false;
-
-                setTimeout(() => {
-                    player.can_check_action = true;
-                }, 1000);
-            }
-
+            
             if (dialogue.active) {
                 dialogue.next();
+                return;
+            }
+
+            switch (player.controls) {
+                case 'menu':
+                    if (!player.menu.cooldown) {
+                        setTimeout(() => {
+                            player.menu.cooldown = false;
+                        }, 300);
+
+                        player.menu.cooldown = true;
+
+                        let current_menu = menus[player.menu.current],
+                            selected_option = current_menu.options[current_menu.cursor.index];
+
+                            console.log(current_menu, selected_option);
+
+                        if (selected_option.callback) {
+                            selected_option.callback();
+                        } else if (selected_option.open_menu) {
+                            menus.forEach((menu, i) => {
+                                if (menu.name == selected_option.open_menu) {
+                                    player.menu.current = i;
+                                    player.menu.history.push(i);
+                                    menu.open();
+                                }
+                            });
+                        }
+                    }
+
+                    break;
+                default: // Walking
+                    if (player.can_check_action) {
+                        player.check_action(player.position.f);
+                        player.can_check_action = false;
+
+                        setTimeout(() => {
+                            player.can_check_action = true;
+                        }, 1000);
+                    }
             }
         }
 
         if (keys["90"]) {
             // B Button
+            switch (player.controls) {
+                case 'menu':
+                    if (!player.menu.cooldown) {
+                        setTimeout(() => {
+                            player.menu.cooldown = false;
+                        }, 300);
+
+                        player.menu.cooldown = true;
+                        menus[player.menu.current].close();
+                    }
+                    break;
+                default: // Walking
+                    break;
+            }
         }
 
         if (keys["13"]) { // Enter
-            if (!player.menu_control_cooldown) {
+            if (!player.menu.cooldown) {
                 if (menu_container.visible) {
                     menu_container.visible = false;
                     player.controls = 'walking';
-                    menus[0].reset();
                 } else {
                     sfx.play('start-menu');
                     menu_container.visible = true;
+                    menus[0].open();
+
+                    player.menu.history.push(0);
+                    player.menu.current = 0;
+                    player.menu.active = true;
                     player.controls = 'menu';
                 }
 
                 setTimeout(() => {
-                    player.menu_control_cooldown = false;
+                    player.menu.cooldown = false;
                 }, 300);
 
-                player.menu_control_cooldown = true;
+                player.menu.cooldown = true;
             }
         }
     }

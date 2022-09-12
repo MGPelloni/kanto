@@ -1,4 +1,3 @@
-
 class Lobby {
     constructor(id = null, game_id = null, trainers = []) {
         this.id = id;
