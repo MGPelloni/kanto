@@ -86,6 +86,7 @@ class Editor {
 
                 this.adjust_attribute(sprite.game_position, attribute_type);
                 map.build_npcs(); // reset npcs
+                map.server_sync();
                 this.save();
             default:
                 break;
