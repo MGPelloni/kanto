@@ -82,7 +82,7 @@ class Npc {
                 default:
                     break;
             }
-            // console.log(`Moving (NPC ${this.index}):`, direction, this.position);
+            console.log(`Moving (NPC ${this.index}):`, direction, this.position);
             
             // broadcast NPC movement to everyone in the room    
             io.to(this.lobby_id).emit('npc_moved', {
@@ -91,7 +91,7 @@ class Npc {
                 moving: direction,
             }); 
         } else {
-            // console.log(`Collision (NPC ${this.index}):`, direction, this.position);
+            console.log(`Collision (NPC ${this.index}):`, direction, this.position);
         }
 
     }
@@ -107,7 +107,8 @@ class Npc {
     }
 
     collision_check(x, y) {
-        let lobby_index = find_lobby_index(this.lobby_id);
+        let lobby_index = find_lobby_index(this.lobby_id),
+            collision = false;
 
         // x-axis boundary check   
         if (x < 0 || x >= this.map.width) {
@@ -134,16 +135,16 @@ class Npc {
         // Player checks
         lobbies[lobby_index].trainers.forEach(trainer => {
             if (x == trainer.position.x && y == trainer.position.y) {
-                return true;
+                collision = true;
             }       
         });
     
         lobbies[lobby_index].npcs.forEach(npc => {
             if (this.position.map == npc.position.map && x == npc.position.x && y == npc.position.y) {
-                return true;
+                collision = true;
             }
         });
     
-        return false;
+        return collision;
     }
 }
