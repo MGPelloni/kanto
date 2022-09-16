@@ -144,6 +144,9 @@ class Editor {
                         case 6:
                             atts_container.children[sprite.game_position.index].tint = '0xFFD5D5';
                             break;
+                        case 7:
+                            atts_container.children[sprite.game_position.index].tint = '0xDAA520';
+                            break;
                         default:
                             break;
                     }
@@ -179,6 +182,9 @@ class Editor {
                             break;
                         case 6:
                             atts_container.children[sprite.game_position.index].tint = '0xFFD5D5';
+                            break;
+                        case 7:
+                            atts_container.children[sprite.game_position.index].tint = '0xDAA520';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -287,6 +293,9 @@ class Editor {
               break;
             case 6:
               color = '0xFFD5D5';
+              break;
+            case 7:
+              color = '0xDAA520';
               break;
             default:
               color = '0xEEEEEE';
@@ -567,6 +576,7 @@ function expand_map(direction) {
     map.height = new_height;
     map.build_tiles();
     map.build_atts();
+    map.build_items();
     maps[map.id] = map;
     editor.update();
 
@@ -650,6 +660,7 @@ function condense_map(direction) {
     map.height = new_height;
     map.build_tiles();
     map.build_atts();
+    map.build_items();
     maps[map.id] = map;
     editor.update();
 
@@ -777,6 +788,12 @@ function set_att_editor(type) {
         case 6:
             display_editor.innerHTML += '<h5>NPC Wall</h5>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="6" disabled></div>';
+            break;
+        case 7:
+            display_editor.innerHTML += '<h5>Item</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="7" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><select name="name"><option value="POKé BALL">POKé BALL</option><option value="GREAT BALL">GREAT BALL</option></select></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             break;
         default:
             break;

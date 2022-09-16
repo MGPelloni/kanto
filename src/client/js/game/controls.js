@@ -144,7 +144,6 @@ function controls_loop() {
             } else if (keys["65"] || keys["37"]) { // Left, A
                 switch (player.controls) {
                     case 'menu':
-                        console.log('Left');
                         break;
                 
                     default:
@@ -177,7 +176,6 @@ function controls_loop() {
             } else if (keys["68"]|| keys["39"]) { // Right, D
                 switch (player.controls) {
                     case 'menu':
-                        console.log('Right');
                         break;
                 
                     default: // Walking
@@ -230,8 +228,6 @@ function controls_loop() {
                         let current_menu = menus[player.menu.current],
                             selected_option = current_menu.options[current_menu.cursor.index];
 
-                            console.log(current_menu, selected_option);
-
                         if (selected_option.callback) {
                             selected_option.callback();
                         } else if (selected_option.open_menu) {
@@ -280,7 +276,12 @@ function controls_loop() {
             if (!player.frozen) {
                 if (!player.menu.cooldown) {
                     if (menu_container.visible) {
-                        menu_container.visible = false;
+                        if (player.menu.history.length == 1) { // Viewing the start menu, can close with START
+                            menu_container.visible = false;
+                            player.controls = 'walking';
+                            player.menu.history = [];
+                            player.menu.active = false;
+                        }
                     } else {
                         sfx.play('start-menu');
                         kanto_update_menus();

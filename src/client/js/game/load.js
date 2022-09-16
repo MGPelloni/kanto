@@ -16,6 +16,12 @@ function kanto_load_assets() {
         app.loader.add(`mobile-sprite-${i}`, sprite_path + `${i}.png`);
     }
 
+    // Items
+    let item_path = 'assets/graphics/items/';
+    for (let i = 1; i < item_sprite_amount; i++) {
+        app.loader.add(`item-sprite-${i}`, item_path + `${i}.png`);
+    }
+
     app.loader
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('message', 'assets/graphics/message.jpg')
@@ -200,6 +206,7 @@ function kanto_game_export() {
         delete exported_map.id;
         delete exported_map.x;
         delete exported_map.y;
+        delete exported_map.items;
     });   
 
     let exported_player = {
@@ -400,17 +407,13 @@ function prepare_dialogue() {
 
 function prepare_items() {
     items = [
-        new Item('POKéBALL', 'Ball'),
+        new Item('POKé BALL', 'Ball'),
         new Item('GREAT BALL', 'Ball'),
         new Item('POTION', 'Restore'),
         new Item('SUPER POTION', 'Restore'),
         new Item('ANTIDOTE', 'Status'),
         new Item('BICYCLE', 'Special'),
     ];
-
-    items.forEach(item => {
-        player.items.push(item);
-    });
 }
 
 function open_pokedex() {
@@ -470,12 +473,11 @@ function prepare_menus() {
     // Items
     menus.push(new Menu('Items', [
         {
-            name: 'POKé Ball',
-            type: 'Item'
-        }, 
-        {
-            name: 'ULTRA BALL',
-            type: 'Item'
+            name: 'Cancel',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
         }
     ], {
         width: 96,

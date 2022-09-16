@@ -54,6 +54,7 @@ let socket = io();
 
 // Node.JS Variables
 let ss_amount = 58 // This will check how many sprites are available through node.js FS
+let item_sprite_amount = 8 // This will check how many sprites are available through node.js FS
 
 // Animation Containers
 let background = new PIXI.Container();

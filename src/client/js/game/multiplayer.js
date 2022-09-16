@@ -118,8 +118,7 @@ function multiplayer_update_position(is_exiting = false) {
     }
 
     trainer.exiting = is_exiting;
-
-    console.log(trainer);
+    
     socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
 }
 

@@ -28,6 +28,7 @@ class Kanto_Map {
     this.tiles = tiles;
     this.atts = atts;
     this.music = music;
+    this.items = [];
 
     if (this.tiles.length == 0 || !this.tiles) {
       this.generate_tiles();
@@ -58,9 +59,35 @@ class Kanto_Map {
     console.log('Generated random atts: ', this.atts);
   }
 
+  build_items() {
+    this.items = [];
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        let index = x + this.width * y;
+        
+        if (this.atts[index].type == 7) {
+          let item = {
+            name: this.atts[index].name,
+            sprite: new PIXI.Sprite.from(app.loader.resources[`item-sprite-${this.atts[index].sprite}`].url),
+            position: {map: this.id, x: x, y: y, index: index},
+            available: true
+          }
+
+          item.sprite.game_position = {map: this.id, x: x, y: y, index: index};
+          item.sprite.x = x * TILE_SIZE;
+          item.sprite.y = y * TILE_SIZE;
+
+          this.items.push(item);
+          background.addChild(item.sprite);
+        }
+      }
+    }
+  }
+
   build_tiles() {
     background.removeChildren();
-
+    
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         let index = x + this.width * y;
@@ -257,6 +284,12 @@ class Kanto_Map {
             sprite.tint = '0x000000';
             sprite.alpha = 0.5;
             break;
+          case 6: 
+            sprite.tint = '0xFFD5D5';
+            break;
+          case 7: 
+            sprite.tint = '0xDAA520';
+            break;
           default:
             sprite.tint = '0xEEEEEE';
             sprite.alpha = 0;
@@ -303,6 +336,7 @@ class Kanto_Map {
     this.build_tiles();
     this.build_npcs();
     this.build_atts();
+    this.build_items();
     this.server_sync();
     
     if (music) {
@@ -310,6 +344,14 @@ class Kanto_Map {
     }
 
     player.place(this.starting_position.x, this.starting_position.y, this.id);
+  }
+
+  refresh() {
+    this.build_tiles();
+    this.build_npcs();
+    this.build_atts();
+    this.build_items(); 
+    this.server_sync();
   }
 }
 

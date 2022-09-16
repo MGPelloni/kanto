@@ -19,6 +19,7 @@ function collision_check(x, y) {
     switch (map.atts[x + map.width * y].type) {
         case 1: // Wall
         case 3: // Action
+        case 7: // Item
             return true;
             break;
         default:
@@ -66,6 +67,7 @@ function collision_check(x, y) {
     switch (map.atts[x + map.width * y].type) {
         case 1: // Wall
         case 3: // Action
+        case 7: // Item
             return true;
             break;
         default:

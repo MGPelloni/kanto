@@ -131,6 +131,31 @@ class Player {
                     dialogue.queue_messages(att_tile.message);
                 }
                 break;
+            case 7:
+                let item = new Item(att_tile.name);
+                dialogue.add_message(`Found; ${att_tile.name}!`);
+
+                let found_sfx = new Sfx();
+                found_sfx.enabled = true;
+                found_sfx.play('item-found', 0.5);
+
+                player.items.push(item);
+
+                this.current_map.atts[index] = {type: 0};
+                maps[this.current_map.id].atts[index] = {type: 0};
+
+                map.items.forEach((item, i) => {
+                    if (item.position.index == index) {
+                        map.items[i].sprite.visible = false;
+                        map.items[i].available = false;
+                    }
+                });
+                
+                map.build_tiles();
+                map.build_atts();
+                map.build_items();
+                maps[map.id] = map;
+                break;
             default:
                 break;
         }

@@ -129,6 +129,8 @@ class Menu {
             player.menu.current = player.menu.history[player.menu.history.length - 1];
         } else {
             player.controls = 'walking';
+            player.menu.active = false;
+            menu_container.visible = false;
         }
     }
 }
@@ -156,6 +158,16 @@ function kanto_update_menus() {
             type: 'Item',
         })
     });
+
+    item_options.push(
+        {
+            name: 'CANCEL',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
+        }
+    )
 
     items_menu.update_options(item_options);
 }

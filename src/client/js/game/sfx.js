@@ -7,7 +7,7 @@ class Sfx {
         this.active = false;
     }
 
-    play(name) {
+    play(name, volume = 1) {
         if (this.enabled && !this.active) {
             this.active = true;
 
@@ -15,7 +15,7 @@ class Sfx {
                 this.library[name] = new Howl({
                     src: [`${this.path}/${name}.wav`],
                     loop: false,
-                    volume: 1
+                    volume: volume
                 })
             }
                 

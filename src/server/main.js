@@ -19,6 +19,7 @@ const db = new Client({
 
 // Kanto
 const lobbies = [];
+const items = [];
 
 // Configuration
 app.set('view engine', 'ejs');

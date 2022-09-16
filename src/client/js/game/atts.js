@@ -6,5 +6,6 @@
  * 4: Exit [Map, X, Y]
  * 5: NPC [Map, X, Y]
  * 6: NPC Wall
+ * 7: Item
  * ?: Force Direction
  */

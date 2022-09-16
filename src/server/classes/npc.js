@@ -124,6 +124,7 @@ class Npc {
             case 1: // Wall
             case 3: // Action
             case 6: // NPC Wall
+            case 7: // Item
                 return true;
                 break;
             default:
