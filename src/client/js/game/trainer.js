@@ -33,6 +33,7 @@ class Trainer {
         this.controls = 'walking' // walking, menu, battle
         this.current_move_ticker = 0;
         this.current_map = maps[0];
+        this.speed = 1;
 
         this.pokemon = [];
         this.items = [];

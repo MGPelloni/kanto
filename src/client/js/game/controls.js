@@ -408,23 +408,23 @@ function move_loop() {
             if (!trainer.colliding) {
                 switch (trainer.position.f) {
                     case 0:
-                        trainer.sprite.y--; 
+                        trainer.sprite.y -= trainer.speed; 
                         break;
                     case 1:
-                        trainer.sprite.x++;
+                        trainer.sprite.x += trainer.speed;
                         break; 
                     case 2:
-                        trainer.sprite.y++;
+                        trainer.sprite.y += trainer.speed;
                         break;  
                     case 3:
-                        trainer.sprite.x--;
+                        trainer.sprite.x -= trainer.speed;
                         break;      
                     default:
                         break;
                 }
             }
 
-            if (trainer.current_move_ticker >= 15) {
+            if (trainer.current_move_ticker >= (16 / trainer.speed - 1)) {
                 trainer.moving = false;
                 trainer.can_move = false;
 
@@ -432,7 +432,7 @@ function move_loop() {
                     multiplayer.trainers[i].can_move = true;
                     multiplayer.trainers[i].current_move_ticker = 0;
                     multiplayer.trainers[i].position_update(multiplayer.trainers[i].next_position, multiplayer.trainers[i].facing);
-                }, 8)
+                }, (8 / trainer.speed))
             }
 
             trainer.current_move_ticker++;
