@@ -52,6 +52,26 @@ class Music {
             }, 1500)
         }
     }
+
+    immediate_play(num) {
+        if (!this.enabled) {
+            return;
+        }
+
+        if (this.current_track.howl) {
+            this.current_track.howl.stop();
+        }
+
+        let track = new Howl({
+            src: [`${this.path}/${num}.mp3`],
+            loop: true,
+            volume: 0.5
+        });
+
+        this.current_track.howl = track;
+        this.current_track.id = num;
+        this.current_track.howl.play();
+    }
 }
 
 document.querySelector('.toggle-volume').addEventListener('click', e => {

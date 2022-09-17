@@ -15,9 +15,11 @@ class Player {
         this.current_move_ticker = 0;
         this.current_map = maps[0];
         this.last_position = {};
+        this.speed = 1;
 
         this.pokemon = [];
         this.items = [];
+        this.money = 0;
 
         // Menu information
         this.menu = {
@@ -222,5 +224,13 @@ class Player {
         // if (multiplayer.enabled) {
         //     multiplayer_update_position();
         // }
+    }
+
+    use_item(name) {
+        this.items.forEach(item => {
+            if (item.name == name) {
+                item.use();
+            }
+        });
     }
 }

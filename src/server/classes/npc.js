@@ -82,7 +82,7 @@ class Npc {
                 default:
                     break;
             }
-            console.log(`Moving (NPC ${this.index}):`, direction, this.position);
+            // console.log(`Moving (NPC ${this.uid}):`, direction, this.position);
             
             // broadcast NPC movement to everyone in the room    
             io.to(this.lobby_id).emit('npc_moved', {
@@ -91,7 +91,7 @@ class Npc {
                 moving: direction,
             }); 
         } else {
-            console.log(`Collision (NPC ${this.index}):`, direction, this.position);
+            // console.log(`Collision (NPC ${this.uidx}):`, direction, this.position);
         }
 
     }

@@ -224,9 +224,19 @@ function controls_loop() {
                         }, 300);
 
                         player.menu.cooldown = true;
+                        sfx.play('action');
 
                         let current_menu = menus[player.menu.current],
                             selected_option = current_menu.options[current_menu.cursor.index];
+
+                        switch (selected_option.type) {
+                            case 'Item':
+                                player.use_item(selected_option.name);
+                                break;
+                        
+                            default:
+                                break;
+                        }
 
                         if (selected_option.callback) {
                             selected_option.callback();
@@ -264,6 +274,7 @@ function controls_loop() {
                         }, 300);
 
                         player.menu.cooldown = true;
+                        sfx.play('action');
                         menus[player.menu.current].close();
                     }
                     break;
@@ -311,37 +322,37 @@ function move_loop() {
     if (player.moving) {
         // Up
         if (player.direction == 'North') {
-            background.y++;
-            atts_container.y++;
-            npc_container.y++;
-            multiplayer_container.y++;
+            background.y += player.speed;
+            atts_container.y += player.speed;
+            npc_container.y += player.speed;
+            multiplayer_container.y += player.speed;
         }
 
         // Down
         if (player.direction == 'South') {
-            background.y--;
-            atts_container.y--;
-            npc_container.y--;
-            multiplayer_container.y--;
+            background.y -= player.speed;
+            atts_container.y -= player.speed;
+            npc_container.y -= player.speed;
+            multiplayer_container.y -= player.speed;
         }
 
         // Left
         if (player.direction == 'West') {
-            background.x++;
-            atts_container.x++;
-            npc_container.x++;
-            multiplayer_container.x++;
+            background.x += player.speed;
+            atts_container.x += player.speed;
+            npc_container.x += player.speed;
+            multiplayer_container.x += player.speed;
         }
 
         // Right
         if (player.direction == 'East') {
-            background.x--;
-            atts_container.x--;
-            npc_container.x--;
-            multiplayer_container.x--;
+            background.x -= player.speed;
+            atts_container.x -= player.speed;
+            npc_container.x -= player.speed;
+            multiplayer_container.x -= player.speed;
         }
 
-        if (player.current_move_ticker >= 15) {
+        if (player.current_move_ticker >= (16 / player.speed - 1)) {
             player.moving = false;
             player.facing = player.direction;
             player.direction = null;
@@ -352,7 +363,7 @@ function move_loop() {
                 player.position_update();
                 player.can_move = true;
                 player.current_move_ticker = 0;
-            }, 8)
+            }, (8 / player.speed))
         }
         
         player.current_move_ticker++;
