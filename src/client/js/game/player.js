@@ -196,6 +196,8 @@ class Player {
             default:
                 break;
         }
+
+        multiplayer_update_spritesheet();
     }
 
     position_update() {

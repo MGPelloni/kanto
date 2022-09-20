@@ -25,6 +25,7 @@ class Item {
                     music.immediate_play(map.music);
                 }
 
+                multiplayer_update_speed();
                 kanto_close_menus();
                 break;
             case 'GREAT BALL':

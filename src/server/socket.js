@@ -36,6 +36,8 @@ io.on("connection", (socket) => {
     }); 
 
     socket.on("position_update", (data) => {
+        // console.log("position_update", data);
+
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -51,6 +53,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("facing_update", (data) => {
+        // console.log("facing_update", data);
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -64,7 +67,41 @@ io.on("connection", (socket) => {
         }
     });
 
+    socket.on("speed_update", (data) => {
+        // console.log("speed_update", data);
+
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        if (lobby_index !== null) {
+            lobbies[lobby_index].trainers[trainer_index].speed = data.s;
+    
+            socket.to(lobbies[lobby_index].id).emit('trainer_speed', {
+                socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+                s: lobbies[lobby_index].trainers[trainer_index].speed,
+            });
+        }
+    });
+
+    socket.on("spritesheet_update", (data) => {
+        console.log("spritesheet_update", data);
+        
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        if (lobby_index !== null) {
+            lobbies[lobby_index].trainers[trainer_index].spritesheet_id = data.spritesheet_id;
+    
+            socket.to(lobbies[lobby_index].id).emit('trainer_sprite', {
+                socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+                spritesheet_id: lobbies[lobby_index].trainers[trainer_index].spritesheet_id,
+            });
+        }
+    });
+
     socket.on("map_server_sync", (data) => {
+        console.log("map_server_sync", data);
+        
         let lobby_index = find_lobby_index(data.lobby_id);
         let targeted_npcs = [];
 

@@ -130,12 +130,40 @@ function multiplayer_update_facing() {
     }
 }
 
+function multiplayer_update_speed() {
+    socket.emit('speed_update', {lobby_id: meta.lobby_id, s: player.speed});
+}
+
+function multiplayer_update_spritesheet() {
+    socket.emit('spritesheet_update', {lobby_id: meta.lobby_id, spritesheet_id: player.spritesheet_id});
+}
+
 socket.on('trainer_faced', function(data){
     console.log('Socket.io [trainer_faced]', data.f);
 
     multiplayer.trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             multiplayer.trainers[i].face_sprite(data.f)
+        }
+    });
+});
+
+socket.on('trainer_speed', function(data){
+    console.log('Socket.io [trainer_speed]', data.s);
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            multiplayer.trainers[i].speed = data.s
+        }
+    });
+});
+
+socket.on('trainer_sprite', function(data){
+    console.log('Socket.io [trainer_sprite]', data.spritesheet_id);
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            multiplayer.trainers[i].change_spritesheet(data.spritesheet_id);
         }
     });
 });
