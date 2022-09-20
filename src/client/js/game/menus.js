@@ -171,3 +171,9 @@ function kanto_update_menus() {
 
     items_menu.update_options(item_options);
 }
+
+function kanto_close_menus() {
+    menus.forEach(menu => {
+        menu.close();
+    });
+}

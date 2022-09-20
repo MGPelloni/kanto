@@ -793,7 +793,7 @@ function set_att_editor(type) {
         case 7:
             display_editor.innerHTML += '<h5>Item</h5>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="7" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><select name="name"><option value="POKé BALL">POKé BALL</option><option value="GREAT BALL">GREAT BALL</option></select></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><input name="name" type="text"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             break;
         default:

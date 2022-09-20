@@ -20,6 +20,7 @@ class Player {
         this.pokemon = [];
         this.items = [];
         this.money = 0;
+        this.history = {}; // Last spritesheet
 
         // Menu information
         this.menu = {
