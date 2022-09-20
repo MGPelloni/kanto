@@ -6,7 +6,7 @@ socket.on('create_current_trainers', function(data){
     console.log('Socket.io [create_current_trainers]', data);
     
     data.forEach(trainer => {
-        let new_trainer = new Trainer(trainer.name, trainer.position, trainer.facing, trainer.spritesheet_id, trainer.socket_id);
+        let new_trainer = new Trainer(trainer.name, trainer.position, trainer.spritesheet_id, trainer.socket_id);
         multiplayer.trainers.push(new_trainer);
     });
 });
@@ -34,7 +34,7 @@ socket.on('trainer_moved', function(data){
 });
 
 socket.on('trainer_joined', function(data){
-    let new_trainer = new Trainer(data.name, data.position, data.facing, data.spritesheet_id, data.socket_id);
+    let new_trainer = new Trainer(data.name, data.position, data.spritesheet_id, data.socket_id);
     console.log('Socket.io [trainer_joined]', new_trainer);
     multiplayer.trainers.push(new_trainer);
 });
@@ -83,9 +83,9 @@ function multiplayer_join_lobby() {
         position: {
             map: player.position.map,
             x: player.position.x,
-            y: player.position.y
+            y: player.position.y,
+            f: 2
         },
-        facing: player.facing,
         spritesheet_id: player.spritesheet_id,
     };
 

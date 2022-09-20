@@ -1,21 +1,20 @@
 class Trainer {
-    constructor(name = '', position = {map: 0, x: 0, y: 0, f: 2}, facing = 'South', spritesheet_id = 0, socket_id = 0) {
+    constructor(name = '', position = {map: 0, x: 0, y: 0, f: 2}, spritesheet_id = 0, socket_id = 0) {
         this.name = name;
         this.position = position;
-        this.facing = facing;
 
-        switch (facing) {
-            case 'North':
-                this.position.f = 0;
+        switch (this.position.f) {
+            case 0:
+                this.facing = 'North';
                 break;
-            case 'East':
-                this.position.f = 1;
+            case 1:
+                this.facing = 'East';
                 break;
-            case 'South':
-                this.position.f = 2;
+            case 2:
+                this.facing = 'South';
                 break;
-            case 'West':
-                this.position.f = 3;
+            case 3:
+                this.facing = 'West';
                 break;
             default:
                 break;

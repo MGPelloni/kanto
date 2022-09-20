@@ -25,7 +25,6 @@ io.on("connection", (socket) => {
         socket.to(data.lobby_id).emit('trainer_joined', {
             name: 'BLUE',
             position: trainer.position,
-            facing: trainer.facing,
             spritesheet_id: data.trainer.spritesheet_id, 
             socket_id: socket.id
         });
