@@ -31,15 +31,21 @@ function collision_check(x, y) {
         return true;
     }
 
-    // npc check
-    let npc_collision = false;
+    // npc + trainer check
+    let collision = false;
     npcs.forEach(npc => {
         if (x == npc.position.x && y == npc.position.y) {
-            npc_collision = true;
+            collision = true;
         }
     });
 
-    if (npc_collision) { 
+    multiplayer.trainers.forEach(trainer => {
+        if (x == trainer.position.x && y == trainer.position.y) {
+            collision = true;
+        }
+    });
+
+    if (collision) { 
         return true;
     }
 
