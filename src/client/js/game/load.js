@@ -416,10 +416,6 @@ function prepare_items() {
     ];
 }
 
-function open_pokedex() {
-    dialogue.queue_messages(["Your POKéDEX doesn't seem to be working.."]);
-}
-
 function prepare_menus() {
     menu_container.visible = false;
     app.stage.addChild(menu_container);
@@ -429,7 +425,9 @@ function prepare_menus() {
         {
             name: 'POKéDEX',
             type: 'menu',
-            callback: open_pokedex
+            callback: () => {
+                dialogue.queue_messages(["Your POKéDEX doesn't seem to be working.."]);
+            }
         }, 
         {
             name: 'POKéMON',
@@ -448,9 +446,12 @@ function prepare_menus() {
                 dialogue.queue_messages(["You have no badges or money!", "Embarrassing!"]);
             },
         }, 
-        { 
-            name: 'SAVE',
-            type: 'menu'
+        {
+            name: 'SPRITE',
+            type: 'menu',
+            callback: () => {
+                player.change_spritesheet();
+            }
         }, 
         {
             name: 'OPTION',

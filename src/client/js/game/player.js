@@ -177,6 +177,10 @@ class Player {
     }
 
     change_spritesheet(num = 0) {
+        if (!num) {
+            num = Math.floor(Math.random() * mobile_ss_amount);
+        }
+
         this.spritesheet_id = num;
         this.spritesheet = spritesheets[num];
 
