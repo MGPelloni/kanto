@@ -58,7 +58,209 @@ class Player {
         this.emote.visible = false;
     }
 
-    encounter() {
+    move(direction) {
+        if (!player.moving && player.can_move && !paused) {
+            this.last_position.f = this.position.f;
+
+            let next_position = {
+                x: this.position.x,
+                y: this.position.y
+            };
+
+            switch (direction) {
+                case 0: // North
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkNorth) {
+                        this.sprite.textures = this.spritesheet.walkNorth;
+                        this.sprite.play();
+                        this.facing = 'North';
+                    }
+
+                    this.position.f = 0;
+                    next_position.y--;
+
+                    if (collision_check(next_position.x, next_position.y) == false) {
+                        this.direction = 'North';
+                        this.moving = true;
+                        this.position.y--;
+                        multiplayer_update_position();
+                    } else {
+                        if (exit_check()) { // Check if the player is at an exit
+                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            multiplayer_update_position(true);
+                            sfx.play('go-outside');
+                        } else { // Collision into a barrier
+                            sfx.play('collision');
+                            multiplayer_update_facing();
+                        }
+                    }
+                    break;
+                case 1: // East
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkEast) {
+                        this.sprite.textures = this.spritesheet.walkEast;
+                        this.sprite.play();       
+                        this.facing = 'East';      
+                    }
+
+                    next_position.x++;
+                    this.position.f = 1;
+
+                    if (collision_check(next_position.x, next_position.y) == false) {
+                        this.direction = 'East';
+                        this.moving = true;
+                        this.position.x++;
+                        multiplayer_update_position();
+                    } else {
+                        if (exit_check()) { // Check if the player is at an exit
+                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            sfx.play('go-outside');
+                            multiplayer_update_position(true);
+                        } else { // Collision into a barrier
+                            sfx.play('collision');
+                            multiplayer_update_facing();
+                        }
+                    }
+                    break;
+                case 2: // South
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkSouth) {
+                        this.sprite.textures = this.spritesheet.walkSouth;
+                        this.sprite.play();
+                        this.facing = 'South';
+                    }
+
+                    next_position.y++;
+                    this.position.f = 2;
+
+                    if (collision_check(next_position.x, next_position.y) == false) {
+                        this.direction = 'South';
+                        this.moving = true;
+                        this.position.y++;
+                        multiplayer_update_position();
+                    } else {
+                        if (exit_check()) { // Check if the player is at an exit
+                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            multiplayer_update_position(true);
+                            sfx.play('go-outside');
+                        } else { // Collision into a barrier
+                            sfx.play('collision');
+                            multiplayer_update_facing();
+                        }
+                    }
+                    break;
+                case 3: // West
+                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkWest) {
+                        this.sprite.textures = this.spritesheet.walkWest;
+                        this.sprite.play();
+                        this.facing = 'West';
+                    }
+
+                    next_position.x--;
+                    this.position.f = 3;
+
+                    if (collision_check(next_position.x, next_position.y) == false) {
+                        this.direction = 'West';
+                        this.moving = true;
+                        this.position.x--;
+                        multiplayer_update_position();
+                    } else {
+                        if (exit_check()) { // Check if the player is at an exit
+                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            multiplayer_update_position(true);
+                            sfx.play('go-outside');
+                        } else { // Collision into a barrier
+                            sfx.play('collision');
+                            multiplayer_update_facing();
+                        }
+                    }    
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    move_to_trainer(direction, trainer) {
+        switch (direction) {
+            case 0: // North
+                this.automove = setInterval(() => {
+                    if (this.position.y - trainer.position.y > 1) {
+                        this.move(0);
+                    } else {
+                        setTimeout(() => {
+                            player.start_battle();
+                        }, 5000);
+
+                        clearInterval(this.automove);
+                    }
+                }, 16);
+                break;
+            case 1: // East
+                this.automove = setInterval(() => {
+                    if (trainer.position.x - this.position.x > 1) {
+                        this.move(1);
+                    } else {
+                        setTimeout(() => {
+                            player.start_battle();
+                        }, 5000);
+
+                        clearInterval(this.automove);
+                    }
+                }, 16);
+                break;
+            case 2: // South
+                this.automove = setInterval(() => {
+                    if (trainer.position.y - this.position.y > 1) {
+                        this.move(2);
+                    } else {
+                        setTimeout(() => {
+                            player.start_battle();
+                        }, 5000);
+
+                        clearInterval(this.automove);
+                    }
+                }, 16);
+                break;
+            case 3: // East
+                this.automove = setInterval(() => {
+                    if (this.position.x - trainer.position.x > 1) {
+                        this.move(3);
+                    } else {
+                        setTimeout(() => {
+                            player.start_battle();
+                        }, 5000);
+                        
+                        clearInterval(this.automove);
+                    }
+                }, 16);
+                break;
+        }
+    }
+
+    encounter(trainer) {
+        switch (player.position.f) {
+            case 0: // North
+                setTimeout(() => {
+                    player.move_to_trainer(0, trainer);
+                }, (1500 - 16));
+                break;
+            case 1: // East
+                setTimeout(() => {
+                    player.move_to_trainer(1, trainer);
+                }, (1500 - 16));
+                break;
+            case 2: // South
+                setTimeout(() => {
+                    player.move_to_trainer(2, trainer);
+                }, (1500 - 16));
+                break;
+            case 3: // West
+                setTimeout(() => {
+                    player.move_to_trainer(3, trainer);
+                }, (1500 - 16));
+                break;
+            default:
+                break;
+        }
+
         this.frozen = true;
         this.emote.visible = true;
         music.immediate_play(43);
@@ -66,15 +268,14 @@ class Player {
         setTimeout(() => {
             this.emote.visible = false;
         }, 1500);
-        
+    }
 
-        // setTimeout(() => {
-        //     music.immediate_play(23);
-        // }, 5000);
+    start_battle() {
+        music.immediate_play(23);
 
         setTimeout(() => {
-            this.frozen = false;
             music.immediate_play(map.music);
+            this.frozen = false;
         }, 5000);
     }
 
@@ -184,7 +385,7 @@ class Player {
                 found_sfx.enabled = true;
                 found_sfx.play('item-found', 0.5);
 
-                player.items.push(item);
+                this.items.push(item);
 
                 this.current_map.atts[index] = {type: 0};
                 maps[this.current_map.id].atts[index] = {type: 0};

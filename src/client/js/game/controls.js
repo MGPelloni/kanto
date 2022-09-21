@@ -69,43 +69,13 @@ function keysUp(e) {
 function controls_loop() {
     if (!player.moving && player.can_move && !paused) {
         if (!player.frozen) {
-            player.last_position.f = player.position.f;
-
-            let next_position = {
-                x: player.position.x,
-                y: player.position.y
-            };
-
             if (keys["87"] || keys["38"]) { // Up, W
                 switch (player.controls) {
                     case 'menu':
                         menus[player.menu.current].move_cursor('North');
                         break;
                     default: // Walking
-                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkNorth) {
-                            player.sprite.textures = player.spritesheet.walkNorth;
-                            player.sprite.play();
-                            player.facing = 'North';
-                        }
-        
-                        next_position.y--;
-                        player.position.f = 0;
-        
-                        if (collision_check(next_position.x, next_position.y) == false) {
-                            player.direction = 'North';
-                            player.moving = true;
-                            player.position.y--;
-                            multiplayer_update_position();
-                        } else {
-                            if (exit_check()) { // Check if the player is at an exit
-                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                                multiplayer_update_position(true);
-                                sfx.play('go-outside');
-                            } else { // Collision into a barrier
-                                sfx.play('collision');
-                                multiplayer_update_facing();
-                            }
-                        }
+                        player.move(0);
                         break;
                 }
             } else if (keys["83"] || keys["40"]) { // Down, S  
@@ -113,104 +83,30 @@ function controls_loop() {
                     case 'menu':
                         menus[player.menu.current].move_cursor('South');
                         break;
-                
                     default: // Walking
-                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkSouth) {
-                            player.sprite.textures = player.spritesheet.walkSouth;
-                            player.sprite.play();
-                            player.facing = 'South';
-                        }
-        
-                        next_position.y++;
-                        player.position.f = 2;
-        
-                        if (collision_check(next_position.x, next_position.y) == false) {
-                            player.direction = 'South';
-                            player.moving = true;
-                            player.position.y++;
-                            multiplayer_update_position();
-                        } else {
-                            if (exit_check()) { // Check if the player is at an exit
-                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                                multiplayer_update_position(true);
-                                sfx.play('go-outside');
-                            } else { // Collision into a barrier
-                                sfx.play('collision');
-                                multiplayer_update_facing();
-                            }
-                        }
+                        player.move(2);
                         break;
                 }
             } else if (keys["65"] || keys["37"]) { // Left, A
                 switch (player.controls) {
                     case 'menu':
                         break;
-                
                     default:
-                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkWest) {
-                            player.sprite.textures = player.spritesheet.walkWest;
-                            player.sprite.play();
-                            player.facing = 'West';
-                        }
-        
-                        next_position.x--;
-                        player.position.f = 3;
-        
-                        if (collision_check(next_position.x, next_position.y) == false) {
-                            player.direction = 'West';
-                            player.moving = true;
-                            player.position.x--;
-                            multiplayer_update_position();
-                        } else {
-                            if (exit_check()) { // Check if the player is at an exit
-                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                                multiplayer_update_position(true);
-                                sfx.play('go-outside');
-                            } else { // Collision into a barrier
-                                sfx.play('collision');
-                                multiplayer_update_facing();
-                            }
-                        }        
+                        player.move(3);    
                         break;
                 }
             } else if (keys["68"]|| keys["39"]) { // Right, D
                 switch (player.controls) {
                     case 'menu':
                         break;
-                
                     default: // Walking
-                        if (!player.sprite.playing || player.sprite.textures !== player.spritesheet.walkEast) {
-                            player.sprite.textures = player.spritesheet.walkEast;
-                            player.sprite.play();       
-                            player.facing = 'East';      
-                        }
-        
-                        next_position.x++;
-                        player.position.f = 1;
-        
-                        if (collision_check(next_position.x, next_position.y) == false) {
-                            player.direction = 'East';
-                            player.moving = true;
-                            player.position.x++;
-                            multiplayer_update_position();
-                        } else {
-                            if (exit_check()) { // Check if the player is at an exit
-                                player.place(player.current_map.atts[player.position.index].x, player.current_map.atts[player.position.index].y, player.current_map.atts[player.position.index].map);
-                                sfx.play('go-outside');
-                                multiplayer_update_position(true);
-                            } else { // Collision into a barrier
-                                sfx.play('collision');
-                                multiplayer_update_facing();
-                            }
-                        }
+                        player.move(1);
                         break;
                 }
             }
         }
         
-        if (keys["88"]) {
-            // A Button
-            
+        if (keys["88"]) { // A Button
             if (dialogue.active) {
                 dialogue.next();
                 return;
@@ -264,8 +160,7 @@ function controls_loop() {
             }
         }
 
-        if (keys["90"]) {
-            // B Button
+        if (keys["90"]) { // B Button
             switch (player.controls) {
                 case 'menu':
                     if (!player.menu.cooldown) {
@@ -279,7 +174,7 @@ function controls_loop() {
                     }
                     break;
                 default: // Walking
-                    if (player.can_check_action) {
+                    if (player.can_check_action && !player.frozen) {
                         multiplayer_player_encounter();
                         player.can_check_action = false;
 
@@ -447,7 +342,6 @@ function move_loop() {
         }        
     });
 }
-
 
 function editor_controls_loop() {
     if (!paused) {

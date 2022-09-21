@@ -174,7 +174,17 @@ socket.on('trainer_sprite', function(data){
 
 socket.on("player_encounter", (data) => {
     console.log('Socket.io [player_encounter]', data);   
-    player.encounter(); 
+    let targeted_trainer = null;
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            targeted_trainer = trainer;
+        }
+    });
+
+    if (targeted_trainer) {
+        player.encounter(targeted_trainer); 
+    }
 });
 
 socket.on("player_encountered", (data) => {
