@@ -279,6 +279,14 @@ function controls_loop() {
                     }
                     break;
                 default: // Walking
+                    if (player.can_check_action) {
+                        multiplayer_player_encounter();
+                        player.can_check_action = false;
+
+                        setTimeout(() => {
+                            player.can_check_action = true;
+                        }, 1000);
+                    }
                     break;
             }
         }

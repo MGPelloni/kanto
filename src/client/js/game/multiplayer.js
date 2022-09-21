@@ -138,6 +138,10 @@ function multiplayer_update_spritesheet() {
     socket.emit('spritesheet_update', {lobby_id: meta.lobby_id, spritesheet_id: player.spritesheet_id});
 }
 
+function multiplayer_player_encounter() {
+    socket.emit('player_encounter', {lobby_id: meta.lobby_id});
+}
+
 socket.on('trainer_faced', function(data){
     console.log('Socket.io [trainer_faced]', data.f);
 
@@ -166,4 +170,34 @@ socket.on('trainer_sprite', function(data){
             multiplayer.trainers[i].change_spritesheet(data.spritesheet_id);
         }
     });
+});
+
+socket.on("player_encounter", (data) => {
+    console.log('Socket.io [player_encounter]', data);   
+    player.encounter(); 
+});
+
+socket.on("player_encountered", (data) => {
+    console.log('Socket.io [player_encountered]', data);   
+    player.encountered(); 
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            trainer.encounter();
+            // multiplayer.trainers[i].move(data.position.f);     
+            // multiplayer.trainers[i].next_position = data.position;
+
+            // if (data.exiting) {
+            //     console.log('Exiting', data.position);
+            //     if (data.position.map == player.position.map) {
+            //         multiplayer.trainers[i].sprite.visible = false;
+            //     } else {
+            //         multiplayer.trainers[i].sprite.x = data.position.x * TILE_SIZE;
+            //         multiplayer.trainers[i].sprite.y = data.position.y * TILE_SIZE;
+            //         multiplayer.trainers[i].sprite.visible = true;
+            //     }
+            // }
+        }
+    });
+    
 });

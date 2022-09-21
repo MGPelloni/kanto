@@ -98,6 +98,74 @@ io.on("connection", (socket) => {
         }
     });
 
+    socket.on("player_encounter", (data) => {
+        console.log("player_encounter", data);
+        
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        if (lobby_index !== null) {
+            let player = lobbies[lobby_index].trainers[trainer_index];
+            let trainers_in_sight = [];
+
+            switch (player.position.f) {
+                case 0: // North
+                    lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.position.map == player.position.map && trainer.position.x == player.position.x && trainer.position.y < player.position.y) {
+                            if (player.position.y - trainer.position.y <= 5) {
+                                trainers_in_sight.push(trainer);
+                            }
+                        }
+                    });
+                    break;
+                case 1: // East
+                    lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.position.map == player.position.map && trainer.position.x > player.position.x && trainer.position.y == player.position.y) {
+                            if (trainer.position.x - player.position.x <= 5) {
+                                trainers_in_sight.push(trainer);
+                            }
+                        }
+                    });
+                    break;
+                case 2: // South
+                    lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.position.map == player.position.map && trainer.position.x == player.position.x && trainer.position.y > player.position.y) {
+                            if (trainer.position.y - player.position.y <= 5) {
+                                trainers_in_sight.push(trainer);
+                            }
+                        }
+                    });
+                    break;
+                case 3: // West
+                    lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.position.map == player.position.map && trainer.position.x < player.position.x && trainer.position.y == player.position.y) {
+                            if (player.position.x - trainer.position.x <= 5) {
+                                trainers_in_sight.push(trainer);
+                            }
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+            if (trainers_in_sight.length > 0) {
+                // socket.to(lobbies[lobby_index].id).emit('player_encounter', {
+                //     player: player,
+                //     trainer: trainers_in_sight[0]
+                // });
+
+                io.to(player.socket_id).emit('player_encounter', {
+                    socket_id: trainers_in_sight[0].socket_id,
+                });
+
+                io.to(trainers_in_sight[0].socket_id).emit('player_encountered', {
+                    socket_id: player.socket_id,
+                });
+            }
+        }
+    });
+
     socket.on("map_server_sync", (data) => {
         console.log("map_server_sync", data);
         

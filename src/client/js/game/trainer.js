@@ -38,7 +38,9 @@ class Trainer {
         this.items = [];
 
         this.set_sprite();
+        this.set_emote();
         multiplayer_container.addChild(this.sprite);
+        multiplayer_container.addChild(this.emote);
         this.position_update(position);
     }
 
@@ -67,6 +69,36 @@ class Trainer {
         this.sprite.y = this.position.y * TILE_SIZE;
         this.sprite.width = TILE_SIZE;
         this.sprite.height = TILE_SIZE;
+    }
+
+    set_emote() {
+        this.emote = new PIXI.Sprite.from(app.loader.resources['emote-shock'].url);
+        this.emote.x = this.position.x * TILE_SIZE;
+        this.emote.y = this.position.y * TILE_SIZE - TILE_SIZE;
+        this.emote.width = TILE_SIZE;
+        this.emote.height = TILE_SIZE;
+        this.emote.visible = false;
+    }
+
+    encounter() {
+        this.frozen = true;
+        this.emote.visible = true;
+
+        setTimeout(() => {
+            this.emote.visible = false;
+        }, 1500);
+
+        setTimeout(() => {
+            this.frozen = false;
+        }, 5000);
+    }
+
+    encountered() {
+        this.frozen = true;
+
+        setTimeout(() => {
+            this.frozen = false;
+        }, 5000);
     }
 
     place(map, x, y) {
@@ -211,6 +243,8 @@ class Trainer {
 
         this.sprite.x = next_position.x * TILE_SIZE;
         this.sprite.y = next_position.y * TILE_SIZE;
+        this.emote.x = next_position.x * TILE_SIZE;
+        this.emote.y = next_position.y * TILE_SIZE - TILE_SIZE;
 
         this.place(next_position.map, next_position.x, next_position.y);
         // console.log('trainer -> position_update', next_position);

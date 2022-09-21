@@ -31,7 +31,9 @@ class Player {
         }
 
         this.set_sprite();
+        this.set_emote();
         app.stage.addChild(this.sprite);
+        app.stage.addChild(this.emote);
         this.place(position.x, position.y);
     }
 
@@ -44,6 +46,46 @@ class Player {
         this.sprite.y = (app.view.height / 2) - 4;
         this.sprite.width = TILE_SIZE;
         this.sprite.height = TILE_SIZE;
+    }
+
+    set_emote() {
+        this.emote = new PIXI.Sprite.from(app.loader.resources['emote-shock'].url);
+        this.emote.anchor.set(0.5);
+        this.emote.x = app.view.width / 2;
+        this.emote.y = (app.view.height / 2) - 4 - 16;
+        this.emote.width = TILE_SIZE;
+        this.emote.height = TILE_SIZE;
+        this.emote.visible = false;
+    }
+
+    encounter() {
+        this.frozen = true;
+        this.emote.visible = true;
+        music.immediate_play(43);
+
+        setTimeout(() => {
+            this.emote.visible = false;
+        }, 1500);
+        
+
+        // setTimeout(() => {
+        //     music.immediate_play(23);
+        // }, 5000);
+
+        setTimeout(() => {
+            this.frozen = false;
+            music.immediate_play(map.music);
+        }, 5000);
+    }
+
+    encountered() {
+        this.frozen = true;
+        music.immediate_play(43);
+
+        setTimeout(() => {
+            this.frozen = false;
+            music.immediate_play(map.music);
+        }, 5000);
     }
 
     place(x, y, map_id = false) {

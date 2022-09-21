@@ -26,6 +26,7 @@ function kanto_load_assets() {
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('message', 'assets/graphics/message.jpg')
         .add('start-menu', 'assets/graphics/start-menu.png')
+        .add('emote-shock', 'assets/graphics/emotes/shock.png')
     app.loader.load(kanto_fetch_game);
 }
 
