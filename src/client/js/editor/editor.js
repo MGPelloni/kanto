@@ -1,5 +1,6 @@
 class Editor {
     constructor() {
+        this.initialized = false;
         this.selected_texture = 0;
         this.selected_attribute = 1;
         this.enabled = true;
@@ -12,6 +13,8 @@ class Editor {
             maps: []
         };
 
+        this.working_dialogue = [];
+
         if (this.palette) {
             this.prepare_maps();
             this.prepare_palette();
@@ -20,6 +23,8 @@ class Editor {
             this.prepare_properties();
             // this.saved_games_list();
             this.log();
+
+            editor_event_listeners();
 
             // Async
             kanto_get_game_templates().then(data => {
@@ -31,6 +36,75 @@ class Editor {
                 this.templates.maps = data;
                 editor.prepare_map_template_list(data);
             });
+        }
+
+        this.event_listeners();
+        this.initialized = true;   
+    }
+
+    event_listeners() {
+        if (!this.initialized) {            
+            document.querySelectorAll('#kanto-editor [data-open]').forEach(elem => {
+                elem.addEventListener('click', e => {
+                    document.querySelectorAll('.editor').forEach(elem => {
+                        elem.classList.remove('-active');
+                    });
+            
+                    document.querySelector(elem.dataset.open).classList.add('-active');
+                    editor.mode = elem.dataset.mode;
+                    editor.refresh();
+                });
+            });
+            
+            document.querySelectorAll('#kanto-editor [data-att]').forEach(elem => {
+                elem.addEventListener('click', e => {
+                    editor.selected_attribute = parseInt(elem.dataset.att);
+                    set_att_editor(editor.selected_attribute);
+                    editor.clear_working_dialogue();
+                });
+            });
+            
+            if (document.querySelector('#editor-publish-game')) {
+                document.querySelector('#editor-publish-game').addEventListener('click', e => {
+                    editor.publish();
+                });
+            }
+            
+            if (document.querySelector('#editor-new-map')) {
+                document.querySelector('#editor-new-map').addEventListener('click', e => {
+                    editor.create_new_map();
+                });
+            }
+            
+            if (document.querySelector('#editor-delete-map')) {
+                document.querySelector('#editor-delete-map').addEventListener('click', e => {
+                    editor.clear_map();
+                });
+            }
+
+            if (document.querySelector('#editor-add-message')) {
+                document.querySelector('#editor-add-message').addEventListener('click', e => {
+                    editor.add_message_to_dialogue();
+                });
+            }
+                        
+            if (document.querySelector('#editor-message-add-option')) {
+                document.querySelector('#editor-message-add-option').addEventListener('click', e => {
+                    editor.add_message_field('option');
+                });
+            }
+
+            if (document.querySelector('#editor-message-add-callback')) {
+                document.querySelector('#editor-message-add-callback').addEventListener('click', e => {
+                    editor.add_message_field('callback');
+                });
+            }
+
+            if (document.querySelector('#editor-message-add-response')) {
+                document.querySelector('#editor-message-add-response').addEventListener('click', e => {
+                    editor.add_message_field('response');
+                });
+            }
         }
     }
 
@@ -378,10 +452,214 @@ class Editor {
                 }
             });
 
+            if (this.working_dialogue) {
+                data['dialogue'] = this.prepare_dialogue_data();
+            }
+
             return data;
         }
 
         return false;
+    }
+
+    prepare_dialogue_data() {
+        let prepared_dialogue = [];
+
+        this.working_dialogue.forEach(message => {
+            let prepared_message = {};
+            prepared_message.text = message.text;
+
+            if (message.options) {
+                prepared_message.options = [];
+
+                message.options.forEach(option => {
+                    prepared_message.options.push({
+                        option: option,
+                        dialogue: []
+                    });
+                });
+            }
+
+            if (message.callback) {
+                prepared_message.callback = message.callback;
+            }
+
+            if (message.response) {
+                let found_option = false;
+                
+                for (let index = prepared_dialogue.length - 1; index >= 0; index--) {
+                    if (!found_option && prepared_dialogue[index].options) {
+                        prepared_dialogue[index].options.forEach((option, j) => {
+                            if (found_option) {
+                                return;
+                            }
+
+                            if (option.dialogue) {
+                                option.dialogue.forEach((inner_message, k) => {
+                                    if (inner_message.options) {
+                                        inner_message.options.forEach((inner_option, l) => {
+                                            if (inner_option.option == message.response) {
+                                                found_option = true;
+                                                prepared_dialogue[index].options[j].dialogue[k].options[l].dialogue.push(prepared_message);
+                                                return;
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+
+                            if (option.option == message.response) {
+                                found_option = true;
+                                prepared_dialogue[index].options[j].dialogue.push(prepared_message);
+                                return;
+                            }
+                        });
+                    }
+                }
+            } else {
+                prepared_dialogue.push(prepared_message);
+            }            
+        });
+
+        return prepared_dialogue;
+    }
+
+    add_message_to_dialogue() {
+        let inputs = document.querySelectorAll('#message-editor input, #message-editor textarea, #message-editor select');
+        let data = {};
+
+        if (inputs) {
+            inputs.forEach(input => {
+                if (!input.value) {
+                    return;
+                }
+
+                switch (input.name) {
+                    case 'option':
+                        if (!data.options) {
+                            data.options = [];
+                        }
+
+                        data.options.push(input.value);
+                        break;
+                    case 'callback':
+                        if (!data.callback) {
+                            data.callback = [];
+                        }
+
+                        data.callback.push(input.value);                
+                    default:
+                        data[input.name] = input.value;
+                        break;
+                }
+                
+                input.value = '';
+
+                if (input.name == 'type') {
+                    input.value = 'Text'; // Resetting the editor select
+                }
+            });
+
+            this.working_dialogue.push(data);
+            this.reset_dialogue_editor();
+
+            document.querySelector('#message-editor').classList.add('_hidden');
+        }
+
+        this.update_working_dialogue_list();
+    }
+
+    reset_dialogue_editor() {
+        let message_form = document.querySelector('.editor-message-form');
+        message_form.innerHTML = '<div class="editor-data-line"><span>Text:</span><textarea name="text"></textarea></div>';
+    }
+
+    add_message_field(type) {
+        let message_form = document.querySelector('.editor-message-form');
+        
+        let message_container = document.createElement('div');
+        message_container.classList.add('editor-data-line');        
+
+        switch (type) {
+            case 'option':
+                message_container.innerHTML = '<div><span>Option:</span><input type="text" name="option"></div>';
+                break;
+            case 'callback':
+                message_container.innerHTML = '<div><span>Callback:</span><input type="text" name="callback"></div>';
+                break;
+            case 'response':
+                message_container.innerHTML = '<div><span>Response:</span><input type="text" name="response"></div>';
+            default:
+                break;
+        }
+
+        message_form.appendChild(message_container);
+    }
+
+    update_working_dialogue_list() {
+        let working_dialogue_list = document.querySelector('.editor.-active .dialogue-editor-list');
+
+        working_dialogue_list.innerHTML = '';
+        
+        let depth = 0;
+
+        this.working_dialogue.forEach((message, i) => {
+            let li = document.createElement('li');
+            li.setAttribute('data-index', i);
+            li.setAttribute('data-depth', depth);
+
+            if (message.options) {
+                depth++;
+            }
+
+            if (message.response) {
+                li.innerHTML += `${message.response}: `;
+            }
+
+            if (typeof message === 'object') {
+                li.innerHTML += message.text;
+            }
+
+            // Options
+            let options = document.createElement('div');
+
+            let buttons = ['up', 'down', 'x'];
+
+            buttons.forEach(option => {
+                let button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add(`message-option-${option}`);
+
+                switch (option) {
+                    case 'up':
+                        button.addEventListener('click', e => {
+                            console.log('Up');
+                        });
+                        break;
+                    case 'down':
+                        button.addEventListener('click', e => {
+                            console.log('Down');
+                        });
+                        break;
+                    case 'x':
+                        button.addEventListener('click', e => {
+                            console.log('X');
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
+                options.appendChild(button);
+            });
+
+            li.appendChild(options);
+            working_dialogue_list.appendChild(li);
+        });
+    }
+
+    clear_working_dialogue() {
+        this.working_dialogue = [];
     }
 
     create_new_map() {
@@ -712,42 +990,6 @@ function center_stage_assets() {
     atts_container.y = atts_container.origin.y + ((player.position.y * TILE_SIZE) * -1);
 }
 
-document.querySelectorAll('#kanto-editor [data-open]').forEach(elem => {
-    elem.addEventListener('click', e => {
-        document.querySelectorAll('.editor').forEach(elem => {
-            elem.classList.remove('-active');
-        });
-
-        document.querySelector(elem.dataset.open).classList.add('-active');
-        editor.mode = elem.dataset.mode;
-        editor.refresh();
-    });
-});
-
-document.querySelectorAll('#kanto-editor [data-att]').forEach(elem => {
-    elem.addEventListener('click', e => {
-        editor.selected_attribute = parseInt(elem.dataset.att);
-        set_att_editor(editor.selected_attribute);
-    });
-});
-
-if (document.querySelector('#editor-publish-game')) {
-    document.querySelector('#editor-publish-game').addEventListener('click', e => {
-        editor.publish();
-    });
-}
-
-if (document.querySelector('#editor-new-map')) {
-    document.querySelector('#editor-new-map').addEventListener('click', e => {
-        editor.create_new_map();
-    });
-}
-
-if (document.querySelector('#editor-delete-map')) {
-    document.querySelector('#editor-delete-map').addEventListener('click', e => {
-        editor.clear_map();
-    });
-}
 
 function set_att_editor(type) {
     let att_editor = document.querySelector('#att-editor');
@@ -757,48 +999,52 @@ function set_att_editor(type) {
     switch (type) {
         case 1:
             display_editor.innerHTML += '<h5>Wall</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="1" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="1" disabled></div>';
             break;
         case 2:
             display_editor.innerHTML += '<h5>Warp</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="2" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="2" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Map:</label><input name="map" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>X:</label><input name="x" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Y:</label><input name="y" type="number"></div>';
             break;
         case 3:
             display_editor.innerHTML += '<h5>Action</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="3" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea><p>You can use <code>;</code> to manually break up lines.</p>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="3" disabled></div>';
+            display_editor.innerHTML += '<ol class="dialogue-editor-list"></ol>';
+            display_editor.innerHTML += '<div class="dialogue-editor-options"><button class="dialogue-editor-add">Add to Dialogue</button></div>';
             break;
         case 4:
             display_editor.innerHTML += '<h5>Exit</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="4" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="4" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Map:</label><input name="map" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>X:</label><input name="x" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Y:</label><input name="y" type="number"></div>';
             break;
         case 5:
             display_editor.innerHTML += '<h5>NPC</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="5" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Message:</label><textarea name="message" type="text"></textarea><p>You can use <code>;</code> to manually break up lines.</p>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="5" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Facing:</label><select name="facing"><option>North</option><option>South</option><option>West</option><option>East</option></select></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Movement State:</label><select name="movement_state"><option>Active</option><option>Static</option><option>Frozen</option></select></div>';
+            display_editor.innerHTML += '<ol class="dialogue-editor-list"></ol>';
+            display_editor.innerHTML += '<div class="dialogue-editor-options"><button class="dialogue-editor-add">Add to Dialogue</button></div>';
             break;
         case 6:
             display_editor.innerHTML += '<h5>NPC Wall</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="6" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="6" disabled></div>';
             break;
         case 7:
             display_editor.innerHTML += '<h5>Item</h5>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Type:</label><input name="type" type="number" value="7" disabled></div>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="7" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><input name="name" type="text"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             break;
         default:
             break;
     }
+
+    editor_event_listeners();
 }
 
 async function kanto_get_game_templates() {
@@ -827,4 +1073,23 @@ async function kanto_get_map_templates() {
 
     let maps = await res.json();
     return maps;
+}
+
+function editor_event_listeners() {
+    if (document.querySelector('._modal')) {
+        document.querySelectorAll('.modal-close').forEach(elem => {
+            elem.addEventListener('click', e => {
+                e.target.closest('._modal').classList.add('_hidden');
+                editor.reset_dialogue_editor();
+            });
+        });
+    }
+    
+    if (document.querySelector('.dialogue-editor-add')) {
+        document.querySelectorAll('.dialogue-editor-add').forEach(elem => {
+            elem.addEventListener('click', e => {
+                document.querySelector('#message-editor').classList.remove('_hidden');
+            });
+        });
+    }
 }

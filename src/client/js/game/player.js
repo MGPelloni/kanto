@@ -271,12 +271,14 @@ class Player {
     }
 
     start_battle() {
-        music.immediate_play(23);
+        // music.immediate_play(23);
 
-        setTimeout(() => {
-            music.immediate_play(map.music);
-            this.frozen = false;
-        }, 5000);
+        music.immediate_play(map.music);
+        this.frozen = false;
+
+        // setTimeout(() => {
+
+        // }, 5000);
     }
 
     encountered() {
@@ -374,7 +376,7 @@ class Player {
                 break;
             case 3:
                 if (!dialogue.active) {
-                    dialogue.queue_messages(att_tile.message);
+                    dialogue.queue_messages(att_tile.dialogue);
                 }
                 break;
             case 7:
@@ -411,7 +413,7 @@ class Player {
                 if (!dialogue.active) {
                     npc.frozen = true;
                     npc.face_player();
-                    dialogue.queue_messages(npc.message);
+                    dialogue.queue_messages(npc.dialogue);
                 }
             };
         });

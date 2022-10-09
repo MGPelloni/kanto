@@ -52,3 +52,17 @@ const saveTemplateAsFile = (filename, dataObjToWrite) => {
     link.dispatchEvent(evt);
     link.remove()
 };
+
+const move_element_in_array = (arr, from, to) => {
+	if (Object.prototype.toString.call(arr) !== '[object Array]') {
+		throw new Error('Please provide a valid array.');
+	}
+
+	var item = arr.splice(from, 1);
+
+	if (!item.length) {
+		throw new Error('There is no item in the array at index ' + from);
+	}
+
+	arr.splice(to, 0, item[0]);
+};

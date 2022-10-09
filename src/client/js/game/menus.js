@@ -122,10 +122,8 @@ class Menu {
     close() {
         this.sprite.visible = false;
         player.menu.history.pop();
-        console.log(player.menu.history);
 
         if (player.menu.history.length > 0) {
-            console.log(player.menu.history[player.menu.history.length - 1]);
             player.menu.current = player.menu.history[player.menu.history.length - 1];
         } else {
             player.controls = 'walking';

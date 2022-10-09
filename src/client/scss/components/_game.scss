@@ -22,6 +22,7 @@
 .kanto-create {
     ._container > ._grid {
         grid-template-columns: 1fr 400px;
+        grid-gap: 10px;
     }
 }
 

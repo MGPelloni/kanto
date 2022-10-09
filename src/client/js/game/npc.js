@@ -1,5 +1,5 @@
 class Npc {
-    constructor(position = {map: 0, x: 0, y: 0, f: 0}, spritesheet_id = 0, message = '', facing = 'South', movement_state = 'Active', index = 0) {        
+    constructor(position = {map: 0, x: 0, y: 0, f: 0}, spritesheet_id = 0, dialogue = [], facing = 'South', movement_state = 'Active', index = 0) {        
         // Setting position based on attribute
         this.position = position;
         
@@ -26,7 +26,7 @@ class Npc {
         };
 
         this.uid = `M${this.position.map}X${this.position.x}Y${this.position.y}`;
-        this.message = message;
+        this.dialogue = dialogue;
         this.spritesheet_id = spritesheet_id;
         this.spritesheet = spritesheets[spritesheet_id]; 
         this.frozen = false;

@@ -31,10 +31,6 @@
                                         <span>Player Sprite: </span>
                                         <input type="number" name="editor-game-sprite" data-property="game_sprite" class="editor-map-property">
                                     </div>
-                                    <div class="editor-data-line">
-                                        <span>Game Description: </span>
-                                        <textarea name="editor-game-description" data-property="game_description"></textarea>
-                                    </div>
                                 </div>
                                 <div class="general-editor-options">
                                     <button data-open="#editor-saved-games">Load Game</button>
@@ -107,6 +103,28 @@
                                 <div class="general-editor-options">
 
                                 </div>                           
+                            </div>
+                            <div id="message-editor" class="_modal _hidden">
+                                <div class="modal-inner">
+                                    <button class="modal-close">X</button>
+                                    <div class="general-editor-display">
+                                        <h3>Dialogue Event</h3>
+                                        <div class="editor-message-form">
+                                            <div class="editor-data-line">
+                                                <span>Text:</span>
+                                                <textarea name="text"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="general-editor-options">
+                                        <div class="editor-message-options-options">
+                                            <button id="editor-message-add-option">Add Option</button>
+                                            <button id="editor-message-add-response">Add Response</button>
+                                            <button id="editor-message-add-callback">Add Callback</button>
+                                        </div>
+                                        <button id="editor-add-message">Add To Dialogue</button>
+                                    </div>
+                                </div>
                             </div>
                             <div id="editor-saved-games" class="editor">
                                 <div class="general-editor-display">

@@ -121,7 +121,47 @@
         "type": 1
     }, {
         "type": 3,
-        "message": ["I heard MARCO created us in JavaScript!", "Technology is incredible!"]
+        "message": [{
+            "type": "Default",
+            "text": "I heard MARCO created us in JavaScript!"
+        }, {
+            "type": "Default",
+            "text": "Technology is incredible!"
+        }, {
+            "type": "Option",
+            "text": "Want to trade BULBASAUR for PIKACHU?",
+            "options": [
+                {
+                    "option": "YES",
+                    "message": {
+                        "text": "Cool!"
+                    },
+                    "callback": "dialogue_trade_pokemon"
+                },
+                {
+                    "option": "NO",
+                    "message": {
+                        "text": "Aw!"
+                    }                    
+                }
+            ]
+        },
+        {
+            "type": "Store",
+            "text": "What can I do for you?",
+            "options": [
+                {
+                    "option": "GREAT BALL",
+                    "cost": 600
+                },
+                {
+                    "option": "NO",
+                    "message": {
+                        "text": "Aw!"
+                    }                    
+                }
+            ]
+        }]
     }, {
         "type": 0
     }, {

@@ -317,7 +317,7 @@ class Kanto_Map {
         
         switch (att.type) {
           case 5: 
-            let npc = new Npc({map: this.id, x: x, y: y}, att.sprite, att.message, att.facing, att.movement_state, npcs.length); // npc.js
+            let npc = new Npc({map: this.id, x: x, y: y}, att.sprite, att.dialogue, att.facing, att.movement_state, npcs.length); // npc.js
             npcs.push(npc);
             break;
           default:

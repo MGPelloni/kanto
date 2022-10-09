@@ -432,7 +432,7 @@
             "type": 1
         }, {
             "type": 5,
-            "message": ["Huh? No badges..;", "This should be easy!"],
+            "dialogue": ["Huh? No badges..;", "This should be easy!"],
             "sprite": 28,
             "facing": "South",
             "movement_state": "Frozen"
@@ -594,7 +594,7 @@
             "type": 1
         }, {
             "type": 5,
-            "message": ["Hey - you don't look like a member of TEAM ROCKET!"],
+            "dialogue": ["Hey - you don't look like a member of TEAM ROCKET!"],
             "sprite": 28,
             "facing": "North",
             "movement_state": "Frozen"
@@ -934,7 +934,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["VIOLET CITY POWER PLANT;", "This building is for TEAM ROCKET members only!;", "Keep out!"]
+            "dialogue": ["VIOLET CITY POWER PLANT;", "This building is for TEAM ROCKET members only!;", "Keep out!"]
         }, {
             "type": 0
         }, {
@@ -1009,7 +1009,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["Can't you read? This building is for TEAM ROCKET members only!;", "So scram!"],
+            "dialogue": ["Can't you read? This building is for TEAM ROCKET members only!;", "So scram!"],
             "sprite": 28,
             "facing": "South",
             "movement_state": "Static"
@@ -1415,7 +1415,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["My CLEFAIRY loves running around the VIOLET TOWN park.;", "Ever since TEAM ROCKET took over the POWER PLANT, we don't get out much!"],
+            "dialogue": ["My CLEFAIRY loves running around the VIOLET TOWN park.;", "Ever since TEAM ROCKET took over the POWER PLANT, we don't get out much!"],
             "sprite": 6,
             "facing": "South",
             "movement_state": "Active"
@@ -1425,7 +1425,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["CLEFAIRY!"],
+            "dialogue": ["CLEFAIRY!"],
             "sprite": 3,
             "facing": "West",
             "movement_state": "Active"
@@ -1744,7 +1744,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": ["VIOLET TOWN POKéMON GARDEN"]
+            "dialogue": ["VIOLET TOWN POKéMON GARDEN"]
         }, {
             "type": 0
         }, {
@@ -3264,7 +3264,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["I've heard stories about legendary POKéMON resting in tunnels and caves..;", "...;", "If you see one, tell me!"],
+            "dialogue": ["I've heard stories about legendary POKéMON resting in tunnels and caves..;", "...;", "If you see one, tell me!"],
             "sprite": 9,
             "facing": "North",
             "movement_state": "Frozen"
@@ -4248,10 +4248,10 @@
             "type": 0
         }, {
             "type": 3,
-            "message": ["POWER PLANT TERMINAL;", "Power redirecting to TEAM ROCKET HQ in PEWTER CITY.;"]
+            "dialogue": ["POWER PLANT TERMINAL;", "Power redirecting to TEAM ROCKET HQ in PEWTER CITY.;"]
         }, {
             "type": 3,
-            "message": ["POWER PLANT TERMINAL;", "Power redirecting to TEAM ROCKET HQ in PEWTER CITY.;"]
+            "dialogue": ["POWER PLANT TERMINAL;", "Power redirecting to TEAM ROCKET HQ in PEWTER CITY.;"]
         }, {
             "type": 1
         }, {
@@ -4292,7 +4292,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["Hey kid! You shouldn't be down here!"],
+            "dialogue": ["Hey kid! You shouldn't be down here!"],
             "sprite": 28,
             "facing": "West",
             "movement_state": "Static"
@@ -4332,7 +4332,7 @@
             "type": 1
         }, {
             "type": 5,
-            "message": ["Guess what?;", "We're taking all the power from VIOLET CITY and redirecting it to our home base!;", "And no one can stop us! Hahaha!"],
+            "dialogue": ["Guess what?;", "We're taking all the power from VIOLET CITY and redirecting it to our home base!;", "And no one can stop us! Hahaha!"],
             "sprite": 28,
             "facing": "East",
             "movement_state": "Static"
@@ -4509,7 +4509,7 @@
             "type": 1
         }, {
             "type": 5,
-            "message": [""],
+            "dialogue": [""],
             "sprite": 6,
             "facing": "South",
             "movement_state": "Frozen"
@@ -4541,7 +4541,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["I'm sorry, we're only servicing TEAM ROCKET members at the moment.."]
+            "dialogue": ["I'm sorry, we're only servicing TEAM ROCKET members at the moment.."]
         }, {
             "type": 1
         }, {
@@ -4584,7 +4584,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["Hey..;", "You're not with TEAM ROCKET, are you?;", "...;", "Through the back here, there's a secret tunnel to the POWER PLANT.;", "Don't tell anyone!"],
+            "dialogue": ["Hey..;", "You're not with TEAM ROCKET, are you?;", "...;", "Through the back here, there's a secret tunnel to the POWER PLANT.;", "Don't tell anyone!"],
             "sprite": 13,
             "facing": "South",
             "movement_state": "Static"
@@ -4811,7 +4811,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["Sorry, but we're closed right now.", "The electricity is out so my register doesn't work.."],
+            "dialogue": ["Sorry, but we're closed right now.", "The electricity is out so my register doesn't work.."],
             "sprite": 20,
             "facing": "South",
             "movement_state": "Active"

@@ -63,3 +63,50 @@
         background-image: url('../assets/graphics/characters/oak.png');
     }
 }
+
+._hidden {
+    display: none;
+}
+
+._offscreen {
+	position: absolute;
+	opacity: 0;
+	top: -9999px;
+	left: -9999px;
+	pointer-events: none;
+}
+
+._modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.55);
+    z-index: 99;
+    padding-top: 100px;
+
+    .modal-inner {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: -5px;
+        right: 0;
+        transform: translateY(-100%);
+    }
+
+    .general-editor-display {
+        height: auto;
+        padding: 30px 30px 15px 30px;
+    }
+
+    .general-editor-options {
+        background-color: #191919;
+        padding: 15px 30px;
+        justify-content: space-between;
+    }
+}

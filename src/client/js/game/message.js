@@ -12,11 +12,29 @@ class Dialogue {
         }
         this.disable_next = false;
         this.awaiting_action = false;
+        this.option_prompt_active = false;
     }
 
-    add_message(text) {
+    add_message(message) {
+        let queued_message = '';
+        let queued_options = [];
+        
+        if (typeof message === 'object') {
+            console.log(message);
+
+            if (message.text) {
+                queued_message = message.text
+            }
+
+            if (message.options) {
+                queued_options = message.options;
+            }
+        } else if (typeof message === 'string') { // Legacy
+            queued_message = message;
+        }
+
         this.active = true;
-        this.msg = new Message(text);
+        this.msg = new Message(queued_message, queued_options);
         player.frozen = true;
         message_container.visible = true;
         message_text.text = '';
@@ -64,11 +82,59 @@ class Dialogue {
             this.awaiting_action = false;
         }
     }
+
+    open_option_prompt(options) {
+        let dialogue_menu = null,
+        menu_index = null;
+
+        this.queued_options = options;
+    
+        menus.forEach((menu, i) => {
+            if (menu.name == 'Dialogue') {
+                dialogue_menu = menu;
+                menu_index = i;
+            }
+        });
+    
+        if (dialogue_menu) {
+            let prepared_options = [];
+
+            options.forEach(option => {
+                prepared_options.push({
+                    name: option.option
+                });
+            });
+
+            dialogue_menu.update_options(prepared_options);
+
+            menu_container.visible = true;
+            dialogue_menu.reset();
+            dialogue_menu.open();
+            player.menu.history.push(menu_index);
+            player.menu.current = menu_index;
+            player.menu.active = true;
+            player.controls = 'menu';
+            this.option_prompt_active = true;
+        }
+    }
+
+    selected_option(selected_option) {
+        if (this.queued_options && !this.disable_next) {
+            this.queued_options.forEach(dialogue_option => {
+                if (dialogue_option.option == selected_option) {
+                    dialogue.option_prompt_active = false;
+                    dialogue.queue_messages(dialogue_option.dialogue);
+                    kanto_close_menus();
+                }
+            })
+        }
+    }
 }
 
 class Message {
-    constructor(text) {
+    constructor(text, options = []) {
       this.text = text;
+      this.options = options;
       this.index = 0;
       this.tick = 0;
       this.row_limit = 18;
@@ -184,6 +250,11 @@ function write_game_text() {
         }
         
         if (dialogue.msg.index > dialogue.msg.length) { // If we've reached the end of the message
+            
+            if (dialogue.msg.options.length > 0) { // Option fork, we have to wait for user input
+                dialogue.open_option_prompt(dialogue.msg.options);
+            }
+
             dialogue.msg = null;
             dialogue.awaiting_action = true;
             dialogue.disable_next = true;
@@ -194,6 +265,7 @@ function write_game_text() {
             // cancelAnimationFrame(write_game_text);
             clearInterval(dialogue.interval_id);
             dialogue.interval_id = null;
+
             return;
         } else { // ..otherwise, type out the message by letter.
             dialogue.text = dialogue.msg.text.slice(0 + dialogue.msg.read_characters, dialogue.msg.index);

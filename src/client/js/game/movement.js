@@ -34,13 +34,13 @@ function collision_check(x, y) {
     // npc + trainer check
     let collision = false;
     npcs.forEach(npc => {
-        if (x == npc.position.x && y == npc.position.y) {
+        if (player.position.map == npc.position.map && x == npc.position.x && y == npc.position.y) {
             collision = true;
         }
     });
 
     multiplayer.trainers.forEach(trainer => {
-        if (x == trainer.position.x && y == trainer.position.y) {
+        if (player.position.map == trainer.position.map && x == trainer.position.x && y == trainer.position.y) {
             collision = true;
         }
     });

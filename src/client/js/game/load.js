@@ -385,6 +385,30 @@ function prepare_dialogue() {
     message_text.scale.y = 0.5;
     message_text.resolution = 4;
 
+    // // Option container
+    // let message_options_container = new PIXI.Container();
+    // let menu_options_container_bg = new PIXI.Sprite(PIXI.Texture.WHITE);
+    // let message_options = ['YES', 'NO'];
+
+    // menu_options_container_bg.width = 48;
+    // menu_options_container_bg.height = 48;
+    // menu_options_container_bg.x = app.view.width - 52;
+    // menu_options_container_bg.y = 1 / message_bg.aspect * message_bg.width;
+    
+    // Add menu to menu container
+    // message_options_container.addChild(menu_options_container_bg);
+
+    // message_options.forEach((elem, i) => {
+    //     let menu_text = new PIXI.Text(elem, {fontFamily: 'pokemon_gbregular', fontSize: 8, fill : 0x000000, align : 'left'});
+    //     menu_text.x = menu_options_container_bg.x + 8;
+    //     menu_text.y = menu_options_container_bg.y + (15 * i) + 8;
+    //     menu_text.resolution = 4;
+    //     message_options_container.addChild(menu_text);
+    // });
+    // app.stage.addChild(message_options_container);
+
+
+
     // Hiding arrow
     let message_arrow_hide = new PIXI.Sprite(PIXI.Texture.WHITE);
     message_arrow_hide.name = "message_arrow";
@@ -400,8 +424,9 @@ function prepare_dialogue() {
     message_container.addChild(message_bg);
     message_container.addChild(message_text);
     message_container.addChild(message_arrow_hide);
-
     message_container.visible = false;
+
+
 
     dialogue = new Dialogue();
 }
@@ -515,6 +540,21 @@ function prepare_menus() {
         height: 160,
         x: 0,
         y: 0
+    }));
+
+    // Dialogue
+    menus.push(new Menu('Dialogue', [
+        {
+            name: 'YES',
+        }, 
+        {
+            name: 'NO',
+        } 
+    ], {
+        width: 48,
+        height: 48,
+        x: 112,
+        y: 56
     }));
 }
 
