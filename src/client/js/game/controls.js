@@ -233,6 +233,9 @@ function controls_loop() {
         } 
     }
 
+    if (keys["16"]) { // Shift
+        player.speed = 2;
+    }
 }
 
 // Main animation loop

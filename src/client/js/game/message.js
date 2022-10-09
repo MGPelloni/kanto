@@ -20,8 +20,6 @@ class Dialogue {
         let queued_options = [];
         
         if (typeof message === 'object') {
-            console.log(message);
-
             if (message.text) {
                 queued_message = message.text
             }
@@ -122,9 +120,12 @@ class Dialogue {
         if (this.queued_options && !this.disable_next) {
             this.queued_options.forEach(dialogue_option => {
                 if (dialogue_option.option == selected_option) {
-                    dialogue.option_prompt_active = false;
-                    dialogue.queue_messages(dialogue_option.dialogue);
+                    this.awaiting_action = false;
+                    this.option_prompt_active = false;
+                    sfx.play('action');
                     kanto_close_menus();
+
+                    this.queue_messages(dialogue_option.dialogue);
                 }
             })
         }
@@ -250,7 +251,6 @@ function write_game_text() {
         }
         
         if (dialogue.msg.index > dialogue.msg.length) { // If we've reached the end of the message
-            
             if (dialogue.msg.options.length > 0) { // Option fork, we have to wait for user input
                 dialogue.open_option_prompt(dialogue.msg.options);
             }
@@ -285,7 +285,7 @@ function write_game_text() {
             dialogue.msg.tick = 0;
     
             let current_row = dialogue.msg.rows[dialogue.msg.current_row];
-            
+
             if (current_row.length + dialogue.msg.read_characters >= dialogue.text.length + dialogue.msg.read_characters) {
                 dialogue.msg.index++; // Add a character to the message
             } else if (dialogue.msg.index == dialogue.msg.rows[dialogue.msg.current_row].length + dialogue.msg.read_characters + 1) {
