@@ -66,3 +66,15 @@ const move_element_in_array = (arr, from, to) => {
 
 	arr.splice(to, 0, item[0]);
 };
+
+const delete_element_in_array = (arr, at) => {
+	if (Object.prototype.toString.call(arr) !== '[object Array]') {
+		throw new Error('Please provide a valid array.');
+	}
+
+	var item = arr.splice(at, 1);
+
+	if (!item.length) {
+		throw new Error('There is no item in the array at index ' + from);
+	}
+};

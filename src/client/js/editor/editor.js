@@ -78,7 +78,7 @@ class Editor {
             
             if (document.querySelector('#editor-delete-map')) {
                 document.querySelector('#editor-delete-map').addEventListener('click', e => {
-                    editor.clear_map();
+                    editor.delete_map();
                 });
             }
 
@@ -277,18 +277,15 @@ class Editor {
     }
 
     prepare_maps() {
-        let editor_maps_list = document.querySelector('#map-editor #editor-maps-list'),
-            map_element = document.createElement('ol');
+        let editor_maps_list = document.querySelector('#map-editor #editor-maps-list');
+        editor_maps_list.innerHTML = '';
 
         maps.forEach(map => {
             let map_single = document.createElement('li');
             map_single.innerHTML = `${map.id}: ${map.name}`;
             map_single.setAttribute('data-map', map.id);
-            map_element.appendChild(map_single)
+            editor_maps_list.appendChild(map_single)
         });
-
-        editor_maps_list.innerHTML = '';
-        editor_maps_list.appendChild(map_element);
 
         document.querySelectorAll('#kanto-editor [data-map]').forEach(elem => {
             elem.addEventListener('click', e => {
@@ -669,18 +666,54 @@ class Editor {
         this.update();
     }
 
-    clear_map() {
+    delete_map() {
         if (prompt(`Are you sure you want to delete ${map.name}? Type DELETE to continue:`) == 'DELETE') {
-            let index = 0;
-            
+            let deleted_index = 0;
+
+            // Find the index of the map
             maps.forEach((maps_single, i) => {
                 if (maps_single.id == map.id) {
-                    index = i;
+                    deleted_index = i;
                 }
             });
 
-            map = maps[index] = new Kanto_Map(index);
-            player.place(maps[index].starting_position.x, maps[index].starting_position.y, map.id);
+            // Delete the map out of the maps array
+            delete_element_in_array(maps, deleted_index);
+            
+            /**
+             * IDs must be adjusted, along with exits and warp attributes.
+             */
+            for (let i = 0; i < maps.length; i++) {
+                maps[i].id = i;
+
+                maps[i].atts.forEach((att, j) => {
+                    switch (att.type) {
+                        case 2: // Warp
+                        case 4: // Exit
+
+                            // The att's map is a reference to a map greater than the deleted index
+                            if (maps[i].atts[j].map > deleted_index) {
+                                console.log("Bringing down the index by one:", maps[i].atts[j]);
+                                console.log(maps[i].atts[j].map)
+                                maps[i].atts[j].map = maps[i].atts[j].map - 1;
+                                console.log(maps[i].atts[j].map);
+                            } else if (maps[i].atts[j].map == deleted_index) {
+                                console.log("Attribute references a deleted map:", maps[i].atts[j]);
+                                console.log(maps[i].atts[j]);
+                                maps[i].atts[j] = {type: 0};
+                                console.log(maps[i].atts[j]);
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        
+            
+            player.place(maps[0].starting_position.x, maps[0].starting_position.y, 0);
+            map = maps[0];
             map.build();
             this.update();
         }

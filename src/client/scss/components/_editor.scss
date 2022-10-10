@@ -22,7 +22,8 @@
         padding: 0;
     }
 
-    ul li {
+    ul.-styled li,
+    ol.-styled li {
         padding: 3px 10px;
         margin: 0 0 5px;
         border-bottom: 2px solid transparent;
