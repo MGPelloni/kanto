@@ -13,7 +13,7 @@ class Item {
                     player.history.spritesheet_id = player.spritesheet_id;
                     player.change_spritesheet(5);
                     player.speed = 2;
-                    music.immediate_play(33);
+                    music.immediate_play(32);
                 } else {
                     if (player.history.spritesheet_id) {
                         player.change_spritesheet(player.history.spritesheet_id);

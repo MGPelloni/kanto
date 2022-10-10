@@ -263,7 +263,7 @@ class Player {
 
         this.frozen = true;
         this.emote.visible = true;
-        music.immediate_play(43);
+        music.immediate_play(25);
 
         setTimeout(() => {
             this.emote.visible = false;
@@ -271,19 +271,13 @@ class Player {
     }
 
     start_battle() {
-        // music.immediate_play(23);
-
         music.immediate_play(map.music);
         this.frozen = false;
-
-        // setTimeout(() => {
-
-        // }, 5000);
     }
 
     encountered() {
         this.frozen = true;
-        music.immediate_play(43);
+        music.immediate_play(25);
 
         setTimeout(() => {
             this.frozen = false;
