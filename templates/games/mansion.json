@@ -5,7 +5,7 @@
     "player": {
         "sprite": 13,
         "pokemon": [],
-        "inventory": []
+        "items": []
     },
     "maps": [{
         "name": "Pokemon Mansion (First Floor)",
@@ -1757,6 +1757,6 @@
         }, {
             "type": 1
         }],
-        "music": 39
+        "music": 43
     }]
 }

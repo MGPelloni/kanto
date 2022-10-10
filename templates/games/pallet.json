@@ -5,7 +5,7 @@
     "player": {
         "sprite": 0,
         "pokemon": [],
-        "inventory": []
+        "items": []
     },
     "maps": [{
         "name": "Red's House (Upstairs)",
@@ -149,7 +149,7 @@
         }, {
             "type": 0
         }],
-        "music": 4
+        "music": 3
     }, {
         "name": "Red's House (Downstairs)",
         "height": 8,
@@ -302,7 +302,7 @@
         }, {
             "type": 0
         }],
-        "music": 4
+        "music": 3
     }, {
         "name": "Pallet Town",
         "height": 28,
@@ -2014,7 +2014,7 @@
         }, {
             "type": 0
         }],
-        "music": 4
+        "music": 3
     }, {
         "name": "Blue's House",
         "height": 8,
@@ -2163,7 +2163,7 @@
         }, {
             "type": 1
         }],
-        "music": 4
+        "music": 3
     }, {
         "name": "Oak's Laboratory",
         "height": 12,
@@ -2439,6 +2439,6 @@
         }, {
             "type": 0
         }],
-        "music": 31
+        "music": 6
     }]
 }

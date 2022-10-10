@@ -2715,7 +2715,7 @@
         }, {
             "type": 0
         }],
-        "music": 9
+        "music": 28
     }, {
         "name": "Underground Tunnel",
         "height": 23,
@@ -2932,10 +2932,7 @@
         }, {
             "type": 1
         }, {
-            "type": 7,
-            "name": "ULTRA BALL",
-            "sprite": 1,
-            "dialogue": []
+            "type": 0
         }, {
             "type": 1
         }, {
@@ -3373,10 +3370,7 @@
         }, {
             "type": 1
         }, {
-            "type": 7,
-            "name": "RARE CANDY",
-            "sprite": 1,
-            "dialogue": []
+            "type": 0
         }, {
             "type": 0
         }, {
@@ -4178,7 +4172,7 @@
         }, {
             "type": 0
         }],
-        "music": 38
+        "music": 26
     }, {
         "name": "Power Plant",
         "height": 20,
@@ -4405,7 +4399,7 @@
         }, {
             "type": 1
         }],
-        "music": 36
+        "music": 37
     }, {
         "name": "Underground",
         "height": 5,
@@ -4739,7 +4733,7 @@
         }, {
             "type": 1
         }],
-        "music": 4
+        "music": 16
     }, {
         "name": "Pokemart",
         "height": 8,
@@ -4888,6 +4882,6 @@
         }, {
             "type": 0
         }],
-        "music": 4
+        "music": 16
     }]
 }

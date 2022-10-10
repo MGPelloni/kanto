@@ -5,7 +5,7 @@
     "player": {
         "sprite": 0,
         "pokemon": [],
-        "inventory": []
+        "items": []
     },
     "maps": [{
         "name": "Red's House (Upstairs)",
