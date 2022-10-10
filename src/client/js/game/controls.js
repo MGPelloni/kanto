@@ -206,10 +206,15 @@ function controls_loop() {
             if (!player.menu.cooldown) {
                 if (menu_container.visible) {
                     if (player.menu.history.length == 1) { // Viewing the start menu, can close with START
-                        menu_container.visible = false;
-                        player.controls = 'walking';
-                        player.menu.history = [];
-                        player.menu.active = false;
+                        if (!player.menu.cooldown) {
+                            setTimeout(() => {
+                                player.menu.cooldown = false;
+                            }, 300);
+        
+                            player.menu.cooldown = true;
+                            sfx.play('action');
+                            menus[player.menu.current].close();
+                        }
                     }
                 } else {
                     sfx.play('start-menu');
