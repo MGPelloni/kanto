@@ -630,17 +630,23 @@ class Editor {
                 switch (option) {
                     case 'up':
                         button.addEventListener('click', e => {
-                            console.log('Up');
+                            let targeted_index = parseInt(e.target.closest('li').getAttribute('data-index'));
+                            move_element_in_array(this.working_dialogue, targeted_index, targeted_index - 1);
+                            editor.update_working_dialogue_list();
                         });
                         break;
                     case 'down':
                         button.addEventListener('click', e => {
-                            console.log('Down');
+                            let targeted_index = parseInt(e.target.closest('li').getAttribute('data-index'));
+                            move_element_in_array(this.working_dialogue, targeted_index, targeted_index + 1);
+                            editor.update_working_dialogue_list();
                         });
                         break;
                     case 'x':
                         button.addEventListener('click', e => {
-                            console.log('X');
+                            let targeted_index = parseInt(e.target.closest('li').getAttribute('data-index'));
+                            delete_element_in_array(this.working_dialogue, targeted_index);
+                            editor.update_working_dialogue_list();
                         });
                         break;
                     default:
