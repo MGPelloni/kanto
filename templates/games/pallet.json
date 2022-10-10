@@ -107,7 +107,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": "RED is; playing the SNES!; ...Okay!; It's time to go!"
+            "dialogue": "RED is; playing the SNES!; ...Okay!; It's time to go!"
         }, {
             "type": 0
         }, {
@@ -183,7 +183,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": ["There's a movie on TV. Four boys are walking on railroad tracks.", "I better go too."]
+            "dialogue": ["There's a movie on TV. Four boys are walking on railroad tracks.", "I better go too."]
         }, {
             "type": 0
         }, {
@@ -239,7 +239,7 @@
             "type": 1
         }, {
             "type": 5,
-            "message": ["MOM: Right. All boys leave home some day. It said so on TV.", "PROF.OAK, next door, is looking for you."],
+            "dialogue": ["MOM: Right. All boys leave home some day. It said so on TV.", "PROF.OAK, next door, is looking for you."],
             "sprite": 41,
             "facing": "West",
             "movement_state": "Frozen"
@@ -930,7 +930,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": "RED's house"
+            "dialogue": "RED's house"
         }, {
             "type": 1
         }, {
@@ -950,7 +950,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": "BLUE's house"
+            "dialogue": "BLUE's house"
         }, {
             "type": 1
         }, {
@@ -1120,7 +1120,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["I'm raising POKéMON too!", "When they get strong, they can protect me!"],
+            "dialogue": ["I'm raising POKéMON too!", "When they get strong, they can protect me!"],
             "sprite": 15,
             "facing": "South",
             "movement_state": "Active"
@@ -1190,7 +1190,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": "PALLET TOWN Shades of your journey await!"
+            "dialogue": "PALLET TOWN Shades of your journey await!"
         }, {
             "type": 0
         }, {
@@ -1446,7 +1446,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": "OAK POKéMON RESEARCH LAB"
+            "dialogue": "OAK POKéMON RESEARCH LAB"
         }, {
             "type": 1
         }, {
@@ -1503,7 +1503,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["Technology is incredible!", "You can now store and recall items and POKéMON as data via PC!"],
+            "dialogue": ["Technology is incredible!", "You can now store and recall items and POKéMON as data via PC!"],
             "sprite": 9,
             "facing": "South",
             "movement_state": "Active"
@@ -2102,7 +2102,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["POKéMON are living things! If they get tired, give them a rest!"],
+            "dialogue": ["POKéMON are living things! If they get tired, give them a rest!"],
             "sprite": 6,
             "facing": "South",
             "movement_state": "Active"
@@ -2183,10 +2183,10 @@
             "type": 1
         }, {
             "type": 3,
-            "message": "Push START to open the MENU!"
+            "dialogue": "Push START to open the MENU!"
         }, {
             "type": 3,
-            "message": "The SAVE option is on the MENU screen."
+            "dialogue": "The SAVE option is on the MENU screen."
         }, {
             "type": 1
         }, {
@@ -2197,7 +2197,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["There's an email message here!", "...", "Calling all POKéMON trainers!", "The elite trainers of POKéMON LEAGUE are ready to take on all comers!", "Bring your best POKéMON and see how you rate as a trainer!", "POKéMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
+            "dialogue": ["There's an email dialogue here!", "...", "Calling all POKéMON trainers!", "The elite trainers of POKéMON LEAGUE are ready to take on all comers!", "Bring your best POKéMON and see how you rate as a trainer!", "POKéMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
         }, {
             "type": 1
         }, {
@@ -2228,7 +2228,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["POKéMON around the world wait for you, RED!"],
+            "dialogue": ["POKéMON around the world wait for you, RED!"],
             "sprite": 25,
             "facing": "South",
             "movement_state": "Frozen"
@@ -2364,7 +2364,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["PROF.OAK is the authority on POKéMON!", "Many POKéMON trainers hold him in high regard!"],
+            "dialogue": ["PROF.OAK is the authority on POKéMON!", "Many POKéMON trainers hold him in high regard!"],
             "sprite": 15,
             "facing": "South",
             "movement_state": "Active"
@@ -2390,7 +2390,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["I study POKéMON as PROF.OAK's AIDE."],
+            "dialogue": ["I study POKéMON as PROF.OAK's AIDE."],
             "sprite": 26,
             "facing": "West",
             "movement_state": "Static"
@@ -2406,7 +2406,7 @@
             "type": 0
         }, {
             "type": 5,
-            "message": ["I study POKéMON as PROF.OAK's AIDE."],
+            "dialogue": ["I study POKéMON as PROF.OAK's AIDE."],
             "sprite": 26,
             "facing": "South",
             "movement_state": "Static"

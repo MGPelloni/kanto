@@ -107,7 +107,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": "RED is; playing the SNES!; ...Okay!; It’s time to go!"
+            "dialogue": "RED is; playing the SNES!; ...Okay!; It’s time to go!"
         }, {
             "type": 0
         }, {
@@ -199,7 +199,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": ["There’s a movie on TV. Four boys are walking on railroad tracks.", "I better go too."]
+            "dialogue": ["There’s a movie on TV. Four boys are walking on railroad tracks.", "I better go too."]
         }, {
             "type": 0
         }, {
@@ -1131,7 +1131,7 @@
             "type": 0
         }, {
             "type": 3,
-            "message": ["RED's house"]
+            "dialogue": ["RED's house"]
         }, {
             "type": 1
         }, {
@@ -1439,7 +1439,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": "PALLET TOWN Shades of your journey await!"
+            "dialogue": "PALLET TOWN Shades of your journey await!"
         }, {
             "type": 0
         }, {
@@ -1754,7 +1754,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": "OAK POKeMON RESEARCH LAB"
+            "dialogue": "OAK POKeMON RESEARCH LAB"
         }, {
             "type": 1
         }, {
@@ -2625,10 +2625,10 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["Push START to open the MENU!"]
+            "dialogue": ["Push START to open the MENU!"]
         }, {
             "type": 3,
-            "message": ["The SAVE option is on the MENU screen."]
+            "dialogue": ["The SAVE option is on the MENU screen."]
         }, {
             "type": 1
         }, {
@@ -2639,7 +2639,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["There’s an email message here!;", "...;", "Calling all POKeMON trainers!", "The elite trainers of POKeMON LEAGUE are ready to take on all comers!", "Bring your best POKeMON and see how you rate as a trainer!", "POKeMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
+            "dialogue": ["There’s an email dialogue here!;", "...;", "Calling all POKeMON trainers!", "The elite trainers of POKeMON LEAGUE are ready to take on all comers!", "Bring your best POKeMON and see how you rate as a trainer!", "POKeMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
         }, {
             "type": 1
         }, {
@@ -3154,7 +3154,7 @@
             "type": 1
         }, {
             "type": 3,
-            "message": ["I heard MARCO created us in JavaScript!", "Technology is incredible!"]
+            "dialogue": ["I heard MARCO created us in JavaScript!", "Technology is incredible!"]
         }, {
             "type": 0
         }, {
