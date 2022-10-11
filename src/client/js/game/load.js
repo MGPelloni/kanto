@@ -10,12 +10,6 @@ function kanto_load() {
  * Loads the game assets.
  */
 function kanto_load_assets() {
-    // Sprites
-    let sprite_path = 'assets/graphics/sprites/';
-    for (let i = 0; i < ss_amount; i++) {
-        app.loader.add(`mobile-sprite-${i}`, sprite_path + `${i}.png`);
-    }
-
     // Items
     let item_path = 'assets/graphics/items/';
     for (let i = 1; i < item_sprite_amount; i++) {
@@ -24,6 +18,7 @@ function kanto_load_assets() {
 
     app.loader
         .add('tilemap', 'assets/graphics/tileset.png')
+        .add('sprites', 'assets/graphics/sprites.png')
         .add('message', 'assets/graphics/message.jpg')
         .add('start-menu', 'assets/graphics/start-menu.png')
         .add('emote-shock', 'assets/graphics/emotes/shock.png')
@@ -349,8 +344,58 @@ function prepare_tilemap() {
 }
 
 function prepare_spritesheets() {
-    for (let i = 0; i < ss_amount; i++) {
-        spritesheets[i] = create_spritesheet(app.loader.resources[`mobile-sprite-${i}`].url);
+    let ssheet = new PIXI.Texture.from(app.loader.resources['sprites'].url);
+
+    let sprite_width = TILE_SIZE,
+        sprite_amount = ssheet.width / TILE_SIZE;
+
+    for (let i = 0; i < sprite_amount; i++) {
+        let spritesheet = {};
+        let x = i * sprite_width;
+        let w = TILE_SIZE;
+        let h = TILE_SIZE;
+
+        spritesheet["standSouth"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 0, w, h))
+        ];
+    
+        spritesheet["standNorth"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 1 * h, w, h))
+        ];
+    
+        spritesheet["standWest"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 2 * h, w, h))
+        ];
+    
+        spritesheet["standEast"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 2 * h, w, h), null, null, 12),
+        ];
+    
+        spritesheet["walkSouth"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 3 * h, w, h)),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 0, w, h)),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 3 * h, w, h), null, null, 12),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 0, w, h)),
+        ];
+    
+        spritesheet["walkWest"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 5 * h, w, h)),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 2 * h, w, h)),
+        ];
+    
+        spritesheet["walkEast"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 5 * h, w, h), null, null, 12),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 2 * h, w, h), null, null, 12),
+        ];
+    
+        spritesheet["walkNorth"] = [
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 4 * h, w, h)),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 1 * h, w, h)),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 4 * h, w, h), null, null, 12),
+            new PIXI.Texture(ssheet, new PIXI.Rectangle(x, 1 * h, w, h)),
+        ];
+
+        spritesheets.push(spritesheet);
     }
 }
 

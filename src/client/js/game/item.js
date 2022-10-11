@@ -11,14 +11,14 @@ class Item {
             case 'BICYCLE':
                 if (player.speed == 1) {
                     player.history.spritesheet_id = player.spritesheet_id;
-                    player.change_spritesheet(5);
+                    player.change_spritesheet(4);
                     player.speed = 2;
                     music.immediate_play(32);
                 } else {
                     if (player.history.spritesheet_id) {
                         player.change_spritesheet(player.history.spritesheet_id);
                     } else {
-                        player.change_spritesheet(1);
+                        player.change_spritesheet(0);
                     }
                     
                     player.speed = 1;

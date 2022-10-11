@@ -54,7 +54,6 @@ let socket = io();
 
 // Node.JS Variables
 let mobile_ss_amount = 40;
-let ss_amount = 58; // This will check how many sprites are available through node.js FS
 let item_sprite_amount = 8; // This will check how many sprites are available through node.js FS
 
 // Animation Containers
