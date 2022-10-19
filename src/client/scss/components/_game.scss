@@ -67,9 +67,15 @@
     opacity: 0;
     transition: 0.6s;
     pointer-events: none;
+
+    ul {
+        font-size: 1.4rem;
+        margin: 10px 0 0;
+    }
 }
 
-#kanto-view-controls-info {
+#kanto-view-controls-info,
+#kanto-view-chat {
     padding-right: 0;
     outline: none; 
     color: #626262;

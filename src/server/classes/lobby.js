@@ -27,6 +27,7 @@ class Lobby {
         this.game = JSON.parse(res.game_data);
         this.npcs = [];
         this.items = [];
+        this.chat = new Chat(this.id);
         
         this.game.maps.forEach((map, i) => {
             map.id = i;

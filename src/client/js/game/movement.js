@@ -114,4 +114,8 @@ if (game_mode == 'create') {
             paused = true;
         }
     });
+} else {
+    document.querySelector('#pkmn').addEventListener('click', e => {
+        paused = false;
+    });
 }

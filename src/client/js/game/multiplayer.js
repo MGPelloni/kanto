@@ -80,6 +80,7 @@ socket.on('join_lobby_success', function(data){
 
 function multiplayer_join_lobby() {
     let trainer = {
+        name: player.name,
         position: {
             map: player.position.map,
             x: player.position.x,
@@ -138,9 +139,14 @@ function multiplayer_update_spritesheet() {
     socket.emit('spritesheet_update', {lobby_id: meta.lobby_id, spritesheet_id: player.spritesheet_id});
 }
 
+function multiplayer_update_name() {
+    socket.emit('name_update', {lobby_id: meta.lobby_id, name: player.name});
+}
+
 function multiplayer_player_encounter() {
     socket.emit('player_encounter', {lobby_id: meta.lobby_id});
 }
+
 
 socket.on('trainer_faced', function(data){
     console.log('Socket.io [trainer_faced]', data.f);
@@ -168,6 +174,16 @@ socket.on('trainer_sprite', function(data){
     multiplayer.trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             multiplayer.trainers[i].change_spritesheet(data.spritesheet_id);
+        }
+    });
+});
+
+socket.on('trainer_name', function(data){
+    console.log('Socket.io [trainer_name]', data.name);
+
+    multiplayer.trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            multiplayer.trainers[i].name = data.name;
         }
     });
 });
@@ -208,6 +224,15 @@ socket.on("player_encountered", (data) => {
             //     }
             // }
         }
-    });
-    
+    }); 
+});
+
+socket.on('chat_trainer_message', function(data){
+    console.log('Socket.io [chat_trainer_message]', data.name, data.message, data.atts);
+    chat.trainer_message(data.name, data.message, data.atts);
+});
+
+socket.on('chat_server_message', function(data){
+    console.log('Socket.io [chat_server_message]', data.message);
+    chat.server_message(data.message);
 });

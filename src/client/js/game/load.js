@@ -247,7 +247,13 @@ function kanto_start() {
     Howler.mute(true); // Mute the volume across the game until user enables
     
     // Create player
-    player = new Player('RED', {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
+    let player_name = 'RED';
+
+    if (retrieve_data('player_name')) {
+        player_name = retrieve_data('player_name');
+    }
+
+    player = new Player(player_name, {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
     player.current_map = map;
 
     // Build the first map
@@ -617,10 +623,27 @@ function prepare_multiplayer() {
 
         multiplayer_join_lobby(lobby_id);
     }
+
+    // Chat
+    chat = new Chat();
+
+    document.querySelector('#chat-input').addEventListener('focus', (e) => {
+        paused = true;
+    });
+
+    document.querySelector('#chat-settings').addEventListener('click', (e) => {
+        let name = prompt('What would you like your name to be?');
+
+        if (name) {
+            store_data('player_name', name);
+            player.name = name; 
+            multiplayer_update_name();
+        }
+    });
 }
 
-function store_data(name, json) {
-    localStorage.setItem(name, json);
+function store_data(name, value) {
+    localStorage.setItem(name, value);
 }
 
 function retrieve_data(name) {

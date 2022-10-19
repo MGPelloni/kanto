@@ -110,3 +110,10 @@
         justify-content: space-between;
     }
 }
+._sans-uppercase {
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.2rem;
+}

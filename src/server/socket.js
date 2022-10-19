@@ -2,7 +2,7 @@ io.on("connection", (socket) => {
     console.log('New socket: ', socket.id);
 
     socket.on("join_lobby", (data) => {
-        let trainer = new Trainer(socket.id, data.trainer.position, data.trainer.spritesheet_id);
+        let trainer = new Trainer(socket.id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
         let targeted_lobby_index = null;
         
         lobbies.forEach((lobby, i) => {
@@ -12,10 +12,13 @@ io.on("connection", (socket) => {
         });
 
         if (targeted_lobby_index === null) { // Creating a new lobby
-            lobbies.push(new Lobby(data.lobby_id, data.game_id, [trainer]))
+            let new_lobby = new Lobby(data.lobby_id, data.game_id, [trainer]);
+            lobbies.push(new_lobby)
         } else { // Lobby ID exists, joining current lobby
             socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
+            lobbies[targeted_lobby_index].chat.direct_message(socket.id, `Welcome to Kanto. There are ${lobbies[targeted_lobby_index].trainers.length} other players in this game.`);
             lobbies[targeted_lobby_index].trainers.push(trainer);
+            lobbies[targeted_lobby_index].chat.server_message(`${trainer.name} has connected.`);
         }
 
         // const clients = io.sockets.adapter.rooms.get(data.lobby_id);
@@ -23,7 +26,7 @@ io.on("connection", (socket) => {
         // Rooms
         socket.join(data.lobby_id);
         socket.to(data.lobby_id).emit('trainer_joined', {
-            name: 'BLUE',
+            name: trainer.name,
             position: trainer.position,
             spritesheet_id: data.trainer.spritesheet_id, 
             socket_id: socket.id
@@ -35,8 +38,6 @@ io.on("connection", (socket) => {
     }); 
 
     socket.on("position_update", (data) => {
-        // console.log("position_update", data);
-
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -52,7 +53,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("facing_update", (data) => {
-        // console.log("facing_update", data);
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -67,8 +67,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("speed_update", (data) => {
-        // console.log("speed_update", data);
-
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -83,8 +81,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("spritesheet_update", (data) => {
-        console.log("spritesheet_update", data);
-        
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
@@ -97,6 +93,22 @@ io.on("connection", (socket) => {
             });
         }
     });
+
+    socket.on("name_update", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+
+        if (lobby_index !== null) {
+            lobbies[lobby_index].chat.server_message(`${lobbies[lobby_index].trainers[trainer_index].name} has changed their name to ${data.name}.`);
+            lobbies[lobby_index].trainers[trainer_index].name = data.name;
+    
+            socket.to(lobbies[lobby_index].id).emit('trainer_name', {
+                socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
+                name: lobbies[lobby_index].trainers[trainer_index].name,
+            });
+        }
+    });
+
 
     socket.on("player_encounter", (data) => {
         console.log("player_encounter", data);
@@ -162,6 +174,8 @@ io.on("connection", (socket) => {
                 io.to(trainers_in_sight[0].socket_id).emit('player_encountered', {
                     socket_id: player.socket_id,
                 });
+
+                lobbies[lobby_index].chat.server_message(`${player.name} has challenged ${trainers_in_sight[0].name} to a BATTLE!`);
             }
         }
     });
@@ -199,9 +213,19 @@ io.on("connection", (socket) => {
             let lobby_index = find_lobby_index(targeted_room),
                 trainer_index = find_trainer_index(lobby_index, socket.id);
 
+            lobbies[lobby_index].chat.server_message(`${lobbies[lobby_index].trainers[trainer_index].name} has disconnected.`);
             lobbies[lobby_index].trainers.splice(trainer_index, 1);
         }
 
         io.to(targeted_room).emit('trainer_disconnected', socket.id); // broadcast to everyone in the room    
     });
+
+    socket.on("chat_add_message", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+            
+        if (lobby_index !== null && trainer_index !== null) {
+            lobbies[lobby_index].chat.trainer_message(lobbies[lobby_index].trainers[trainer_index], data.message);
+        }
+    }); 
 });

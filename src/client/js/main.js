@@ -49,6 +49,7 @@ let multiplayer = {
     enabled: false,
     trainers: []
 };
+let chat = null;
 
 let socket = io();
 

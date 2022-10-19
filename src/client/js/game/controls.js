@@ -114,6 +114,10 @@ function controls_loop() {
     }
     
     if (keys["88"]) { // A Button
+        if (paused) {
+            return;
+        }
+
         if (dialogue.active) {
             if (dialogue.option_prompt_active) { 
                 let current_menu = menus[player.menu.current],
@@ -176,6 +180,10 @@ function controls_loop() {
     }
 
     if (keys["90"]) { // B Button
+        if (paused) {
+            return;
+        }
+        
         switch (player.controls) {
             case 'menu':
                 if (!player.menu.cooldown) {
@@ -202,7 +210,33 @@ function controls_loop() {
     }
 
     if (keys["13"]) { // Enter
-        if (!player.frozen) {
+        let input = document.querySelector('#chat-input');
+
+        if (!chat.cooldown) {
+            chat.cooldown = true;
+
+            if (document.activeElement === input) {
+                document.querySelector('#pkmn').focus();
+
+                if (input.value) {
+                    chat.emit_message(input.value);
+                    input.value = '';
+                }
+
+                paused = false;
+            } else {
+                input.focus();
+                paused = true;
+            }
+
+            setTimeout(() => {
+                chat.cooldown = false;
+            }, 300);
+        }
+    }
+
+    if (keys["77"]) { // M
+        if (!player.frozen && !paused) {
             if (!player.menu.cooldown) {
                 if (menu_container.visible) {
                     if (player.menu.history.length == 1) { // Viewing the start menu, can close with START
@@ -236,10 +270,6 @@ function controls_loop() {
                 player.menu.cooldown = true;
             }
         } 
-    }
-
-    if (keys["16"]) { // Shift
-        player.speed = 2;
     }
 }
 
