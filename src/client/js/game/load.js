@@ -10,15 +10,10 @@ function kanto_load() {
  * Loads the game assets.
  */
 function kanto_load_assets() {
-    // Items
-    let item_path = 'assets/graphics/items/';
-    for (let i = 1; i < item_sprite_amount; i++) {
-        app.loader.add(`item-sprite-${i}`, item_path + `${i}.png`);
-    }
-
     app.loader
         .add('tilemap', 'assets/graphics/tileset.png')
         .add('sprites', 'assets/graphics/sprites.png')
+        .add('items', 'assets/graphics/items.png')
         .add('message', 'assets/graphics/message.jpg')
         .add('start-menu', 'assets/graphics/start-menu.png')
         .add('emote-shock', 'assets/graphics/emotes/shock.png')
@@ -44,35 +39,6 @@ function kanto_fetch_game() {
         return res.json();
     }).then((data) => {
         kanto_load_game(data);
-    });
-}
-
-function kanto_upload_template() {
-    let req_body = kanto_game_export();
-
-    console.log(req_body);
-
-    fetch(`${window.location.protocol}//${window.location.host}/upload`, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: req_body // body data type must match "Content-Type" header
-    }).then((res) => {
-        return res.json();
-    }).then((data) => {
-        if (data.success) {
-            alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/play?g=${data.game_id}`);
-            meta.game_id = data.game_id;
-            store_data(meta.name, kanto_game_export());
-        } else {
-            alert('Game upload failed! Please try again later.');
-        }
     });
 }
 
@@ -170,8 +136,6 @@ function kanto_append_map(data) {
         }
     });
 
-    console.log(map);
-
     let kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.music, map.starting_position);
     
     console.log(kanto_map);
@@ -188,8 +152,9 @@ function kanto_map_export() {
     delete exported_map.id;
     delete exported_map.x;
     delete exported_map.y;
-
-    return saveTemplateAsFile(`kanto-map-export.json`, map);
+    delete exported_map.items;
+    
+    return JSON.stringify(map);
 }
 
 function kanto_game_export() {
@@ -220,14 +185,12 @@ function kanto_game_export() {
     return JSON.stringify(game_data);
 }
 
-
-function kanto_game_json_export() {
-    return saveTemplateAsFile(`kanto-game-export.json`, JSON.parse(kanto_game_export()));
+function kanto_json_map_export() {
+    return saveTemplateAsFile(`kanto-map-export.json`, JSON.parse(kanto_map_export()));
 }
 
-
-function kanto_editor_upload() {
-    console.log(kanto_game_export());
+function kanto_json_game_export() {
+    return saveTemplateAsFile(`kanto-game-export.json`, JSON.parse(kanto_game_export()));
 }
 
 /**
@@ -241,19 +204,10 @@ function kanto_start() {
 
     prepare_tilemap();
     prepare_spritesheets();
+    prepare_item_sprites();
     prepare_audio();
 
-    // Audio
-    Howler.mute(true); // Mute the volume across the game until user enables
-    
-    // Create player
-    let player_name = 'RED';
-
-    if (retrieve_data('player_name')) {
-        player_name = retrieve_data('player_name');
-    }
-
-    player = new Player(player_name, {map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
+    player = new Player({map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
     player.current_map = map;
 
     // Build the first map
@@ -266,12 +220,8 @@ function kanto_start() {
 
     // Create editor
     if (game_mode == 'create') {
-        editor = new Editor();
-        app.ticker.add(editor_controls_loop);
+        prepare_editor();
     }
-
-    // Focus on the canvas to enable the game controls
-    document.querySelector('#pkmn').focus();
 
     // Foreground
     prepare_menus();
@@ -282,6 +232,9 @@ function kanto_start() {
 
     // Multiplayer
     prepare_multiplayer();
+
+    // Browser elements
+    prepare_browser();
 }
 
 function prepare_atts_container() {
@@ -309,7 +262,6 @@ function prepare_npc_container() {
 
     app.stage.addChild(npc_container);
 }
-
 
 function prepare_multiplayer_container() {
     multiplayer_container.origin = {
@@ -348,6 +300,15 @@ function prepare_tilemap() {
         tile_textures[i] = new PIXI.Texture(tilemap, new PIXI.Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
     }
 }
+
+function prepare_item_sprites() {
+    let ssheet = new PIXI.Texture.from(app.loader.resources['items'].url);
+
+    for (let i = 0; i < ssheet.width / TILE_SIZE; i++) {
+        item_sprites.push(new PIXI.Texture(ssheet, new PIXI.Rectangle(i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)));
+    }
+}
+
 
 function prepare_spritesheets() {
     let ssheet = new PIXI.Texture.from(app.loader.resources['sprites'].url);
@@ -406,6 +367,8 @@ function prepare_spritesheets() {
 }
 
 function prepare_audio() {
+    Howler.mute(true); // Mute the volume across the game until user enables
+
     music = new Music();
     sfx = new Sfx();
 }
@@ -436,30 +399,6 @@ function prepare_dialogue() {
     message_text.scale.y = 0.5;
     message_text.resolution = 4;
 
-    // // Option container
-    // let message_options_container = new PIXI.Container();
-    // let menu_options_container_bg = new PIXI.Sprite(PIXI.Texture.WHITE);
-    // let message_options = ['YES', 'NO'];
-
-    // menu_options_container_bg.width = 48;
-    // menu_options_container_bg.height = 48;
-    // menu_options_container_bg.x = app.view.width - 52;
-    // menu_options_container_bg.y = 1 / message_bg.aspect * message_bg.width;
-    
-    // Add menu to menu container
-    // message_options_container.addChild(menu_options_container_bg);
-
-    // message_options.forEach((elem, i) => {
-    //     let menu_text = new PIXI.Text(elem, {fontFamily: 'pokemon_gbregular', fontSize: 8, fill : 0x000000, align : 'left'});
-    //     menu_text.x = menu_options_container_bg.x + 8;
-    //     menu_text.y = menu_options_container_bg.y + (15 * i) + 8;
-    //     menu_text.resolution = 4;
-    //     message_options_container.addChild(menu_text);
-    // });
-    // app.stage.addChild(message_options_container);
-
-
-
     // Hiding arrow
     let message_arrow_hide = new PIXI.Sprite(PIXI.Texture.WHITE);
     message_arrow_hide.name = "message_arrow";
@@ -468,7 +407,6 @@ function prepare_dialogue() {
     message_arrow_hide.y = message_bg.height - 18;
     message_arrow_hide.width = 7;
     message_arrow_hide.height = 6;
-    
 
     // Adding to the stage
     app.stage.addChild(message_container);
@@ -476,8 +414,6 @@ function prepare_dialogue() {
     message_container.addChild(message_text);
     message_container.addChild(message_arrow_hide);
     message_container.visible = false;
-
-
 
     dialogue = new Dialogue();
 }
@@ -615,42 +551,74 @@ function prepare_multiplayer() {
     // Auto join lobby
     if (!lobby_id) {
         lobby_id = GAME_ID;
-    }
-
-    if (lobby_id) {
-        multiplayer.enabled = true;
+    } else {
         meta.lobby_id = lobby_id;
-
         multiplayer_join_lobby(lobby_id);
     }
 
     // Chat
     chat = new Chat();
 
-    document.querySelector('#chat-input').addEventListener('focus', (e) => {
-        paused = true;
-    });
+    if (game_mode == 'create') {
+        chat.enabled = false;
+    }
 
-    document.querySelector('#chat-settings').addEventListener('click', (e) => {
-        let name = prompt('What would you like your name to be?');
-
-        if (name) {
-            store_data('player_name', name);
-            player.name = name; 
-            multiplayer_update_name();
+    if (chat.enabled) {   
+        if (document.querySelector('#chat-input')) {
+            document.querySelector('#chat-input').addEventListener('focus', (e) => {
+                paused = true;
+            });
         }
+
+        if (document.querySelector('#chat-settings')) {
+            document.querySelector('#chat-settings').addEventListener('click', (e) => {
+                let name = prompt('What would you like your name to be?');
+
+                if (name) {
+                    store_data('player_name', name);
+                    player.name = name; 
+                    multiplayer_update_name();
+                }
+            });
+        }
+    }
+}
+
+function prepare_editor() {
+    editor = new Editor();
+    app.ticker.add(editor_controls_loop);
+}
+
+function prepare_browser() {
+    // Disabling controls when element is clicked out of
+    if (game_mode == 'create') {
+        document.addEventListener('click', e => {
+            let game_elem = document.querySelector('#pkmn');
+
+            if (document.activeElement === game_elem) {
+                paused = false;
+            } else {
+                paused = true;
+            }
+        });
+    } else {
+        document.querySelector('#pkmn').addEventListener('click', e => {
+            paused = false;
+        });
+    }
+
+    // Mobile (Gamepad)
+    canvas.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
     });
-}
 
-function store_data(name, value) {
-    localStorage.setItem(name, value);
-}
+    window.addEventListener('contextmenu', e => {
+        e.preventDefault();
+    });
+    
+    document.getElementsByTagName("body")[0].addEventListener("touchstart",
+        function(e) { e.returnValue = false });
 
-function retrieve_data(name) {
-   return localStorage.getItem(name);
-}
-
-function url_parameter(name) {
-    let query_string = parse_query_string();
-    return query_string.get(name);
+    // Focus on the canvas to enable the game controls
+    document.querySelector('#pkmn').focus();
 }
