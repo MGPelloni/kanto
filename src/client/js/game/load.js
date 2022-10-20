@@ -11,7 +11,7 @@ function kanto_load() {
  */
 function kanto_load_assets() {
     app.loader
-        .add('tilemap', 'assets/graphics/tileset.png')
+        .add('tilemap', 'assets/graphics/tiles.png')
         .add('sprites', 'assets/graphics/sprites.png')
         .add('items', 'assets/graphics/items.png')
         .add('message', 'assets/graphics/message.jpg')
@@ -551,11 +551,11 @@ function prepare_multiplayer() {
     // Auto join lobby
     if (!lobby_id) {
         lobby_id = GAME_ID;
-    } else {
-        meta.lobby_id = lobby_id;
-        multiplayer_join_lobby(lobby_id);
     }
 
+    meta.lobby_id = lobby_id;
+    multiplayer_join_lobby(lobby_id);
+    
     // Chat
     chat = new Chat();
 
