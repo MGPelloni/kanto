@@ -427,7 +427,30 @@ class Editor {
     }
 
     publish() {
-        kanto_upload_template();
+        let req_body = kanto_game_export();
+
+        fetch(`${window.location.protocol}//${window.location.host}/upload`, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: req_body // body data type must match "Content-Type" header
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            if (data.success) {
+                alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/play?g=${data.game_id}`);
+                meta.game_id = data.game_id;
+                store_data(meta.name, kanto_game_export());
+            } else {
+                alert('Game upload failed! Please try again later.');
+            }
+        });
     }
 
     gather_data() {
@@ -449,7 +472,7 @@ class Editor {
                 }
             });
 
-            if (this.working_dialogue) {
+            if (this.working_dialogue.length > 0) {
                 data['dialogue'] = this.prepare_dialogue_data();
             }
 

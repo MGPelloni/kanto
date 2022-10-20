@@ -359,7 +359,7 @@ function move_loop() {
         }        
     });
 
-    multiplayer.trainers.forEach((trainer, i) => {
+    trainers.forEach((trainer, i) => {
         if (trainer.moving && trainer.can_move) {
             if (!trainer.colliding) {
                 switch (trainer.position.f) {
@@ -385,9 +385,9 @@ function move_loop() {
                 trainer.can_move = false;
 
                 setTimeout(() => {
-                    multiplayer.trainers[i].can_move = true;
-                    multiplayer.trainers[i].current_move_ticker = 0;
-                    multiplayer.trainers[i].position_update(multiplayer.trainers[i].next_position, multiplayer.trainers[i].facing);
+                    trainers[i].can_move = true;
+                    trainers[i].current_move_ticker = 0;
+                    trainers[i].position_update(trainers[i].next_position, trainers[i].facing);
                 }, (8 / trainer.speed))
             }
 

@@ -36,7 +36,3 @@ class Item {
         }
     }
 }
-
-function use_item() {
-
-}

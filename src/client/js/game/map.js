@@ -69,7 +69,7 @@ class Kanto_Map {
         if (this.atts[index].type == 7) {
           let item = {
             name: this.atts[index].name,
-            sprite: new PIXI.Sprite.from(app.loader.resources[`item-sprite-${this.atts[index].sprite}`].url),
+            sprite: new PIXI.Sprite.from(item_sprites[(this.atts[index].sprite - 1)]),
             position: {map: this.id, x: x, y: y, index: index},
             available: true
           }
@@ -328,7 +328,6 @@ class Kanto_Map {
   }
 
   server_sync() {
-    console.log('map_server_sync', {lobby_id: GAME_ID, map: this.id});
     socket.emit('map_server_sync', {lobby_id: GAME_ID, map: this.id});
   }
 

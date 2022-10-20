@@ -78,3 +78,16 @@ const delete_element_in_array = (arr, at) => {
 		throw new Error('There is no item in the array at index ' + from);
 	}
 };
+
+function store_data(name, value) {
+    localStorage.setItem(name, value);
+}
+
+function retrieve_data(name) {
+   return localStorage.getItem(name);
+}
+
+function url_parameter(name) {
+    let query_string = parse_query_string();
+    return query_string.get(name);
+}

@@ -5,9 +5,14 @@ class Chat {
         this.pattern = "^[^<>/]*$";
         this.regex = new RegExp(this.pattern);
         this.feed = document.querySelector('#chat-feed');
+        this.enabled = true;
     }
 
     trainer_message(name, message, atts) {
+        if (!chat.enabled) {
+            return false;
+        }
+        
         this.messages.push(`${name}: ${message}`);
 
         let chat_element = document.createElement('p');
@@ -18,6 +23,10 @@ class Chat {
     }
 
     server_message(message) {
+        if (!chat.enabled) {
+            return false;
+        }
+
         this.messages.push(`Server: ${message}`);
 
         let chat_element = document.createElement('p');
@@ -29,17 +38,16 @@ class Chat {
     }
 
     emit_message(message) {
-        if (this.test_message(message)) {
+        if (!chat.enabled) {
+            return false;
+        }
+        
+        if (this.validate_message(message)) {
             socket.emit('chat_add_message', {lobby_id: meta.lobby_id, message: message});
         }
     }
 
-    test_message(message) {
+    validate_message(message) {
         return this.regex.test(message);
     }
 }
-
-
-// document.querySelector('#kanto-view-chat').addEventListener('click', e => {
-//     document.querySelector('body').classList.toggle('-chat-active');
-// });

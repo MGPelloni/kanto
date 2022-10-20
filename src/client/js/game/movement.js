@@ -39,7 +39,7 @@ function collision_check(x, y) {
         }
     });
 
-    multiplayer.trainers.forEach(trainer => {
+    trainers.forEach(trainer => {
         if (player.position.map == trainer.position.map && x == trainer.position.x && y == trainer.position.y) {
             collision = true;
         }
@@ -101,21 +101,4 @@ function exit_check() {
     }
 
     return false;
-}
-
-// Disabling controls when element is clicked out of
-if (game_mode == 'create') {
-    document.addEventListener('click', e => {
-        let game_elem = document.querySelector('#pkmn');
-
-        if (document.activeElement === game_elem) {
-            paused = false;
-        } else {
-            paused = true;
-        }
-    });
-} else {
-    document.querySelector('#pkmn').addEventListener('click', e => {
-        paused = false;
-    });
 }

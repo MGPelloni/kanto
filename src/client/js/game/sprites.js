@@ -47,7 +47,6 @@ function create_water_spritesheet() {
     return animation;
 }
 
-
 function create_water_top_spritesheet() {
     let tilemap = new PIXI.BaseTexture.from(app.loader.resources['tilemap'].url);
     let w = TILE_SIZE;

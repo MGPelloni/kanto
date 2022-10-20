@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
         let lobby_index = find_lobby_index(data.lobby_id),
             trainer_index = find_trainer_index(lobby_index, socket.id);
 
-        if (lobby_index !== null) {
+        if (lobby_index !== null && trainer_index !== null) {
             lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
     
             socket.to(lobbies[lobby_index].id).emit('trainer_moved', {

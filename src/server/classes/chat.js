@@ -59,16 +59,4 @@ class Chat {
 
         return true;
     }
-
-    edit_message() {
-
-    }
-
-    delete_message() {
-
-    }
-
-    sync() {
-
-    }
 }

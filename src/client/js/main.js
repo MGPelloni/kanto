@@ -8,9 +8,6 @@ const GAME_HEIGHT = 160;
 const GAME_ID = url_parameter('g');
 const FPS = 60;
 const canvas = document.getElementById('pkmn');
-canvas.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-});
 
 // PIXI Application
 const app = new PIXI.Application({
@@ -31,31 +28,21 @@ let import_data = {
 let meta = {};
 let maps = [];
 let player; 
+let trainers = [];
 let npcs = [];
 let menus = [];
 let items = [];
-let initialized = false;
 let keys = {}; 
 let editor = {};
 let dialogue = {};
 let tile_textures = [];
 let spritesheets = [];
+let item_sprites = [];
 let message_text;
 let paused = false;
 let game_mode = window.location.pathname.slice(1);
-
-// Multiplayer
-let multiplayer = {
-    enabled: false,
-    trainers: []
-};
 let chat = null;
-
 let socket = io();
-
-// Node.JS Variables
-let mobile_ss_amount = 40;
-let item_sprite_amount = 8; // This will check how many sprites are available through node.js FS
 
 // Animation Containers
 let background = new PIXI.Container();
@@ -78,12 +65,5 @@ let kanto_gamepad = {
     action: false,
     back: false
 }
-
-window.addEventListener('contextmenu', e => {
-    e.preventDefault();
-});
-
-document.getElementsByTagName("body")[0].addEventListener("touchstart",
- function(e) { e.returnValue = false });
 
 kanto_load(); // game/load.js

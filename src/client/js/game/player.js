@@ -1,6 +1,6 @@
 class Player {
-    constructor(name = '', position = {map: 0, x: 0, y: 0, f: 2}, spritesheet_id = 0) {
-        this.name = name;
+    constructor(position = {map: 0, x: 0, y: 0, f: 2}, spritesheet_id = 0) {
+        this.name = retrieve_data('player_name') ?? 'RED';
         this.position = position;
 
         this.spritesheet_id = spritesheet_id;
@@ -292,12 +292,12 @@ class Player {
             map.build();
             this.position.map = map_id;
 
-            multiplayer.trainers.forEach((trainer, i) => {
+            trainers.forEach((trainer, i) => {
                 if (trainer.position.map == this.position.map) {
-                    multiplayer.trainers[i].sprite.visible = true;
-                    multiplayer.trainers[i].change_facing();
+                    trainers[i].sprite.visible = true;
+                    trainers[i].change_facing();
                 } else {
-                    multiplayer.trainers[i].sprite.visible = false;
+                    trainers[i].sprite.visible = false;
                 }
             });
         }
@@ -417,7 +417,7 @@ class Player {
 
     change_spritesheet(num = 0) {
         if (!num) {
-            num = Math.floor(Math.random() * mobile_ss_amount);
+            num = Math.floor(Math.random() * 40); // Mobile spritesheets
         }
 
         this.spritesheet_id = num;
@@ -466,10 +466,6 @@ class Player {
         if (editor.enabled) {
             editor.log();
         }
-
-        // if (multiplayer.enabled) {
-        //     multiplayer_update_position();
-        // }
     }
 
     use_item(name) {
