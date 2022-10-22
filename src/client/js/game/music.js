@@ -1,14 +1,38 @@
 class Music {
     constructor() {
-        this.enabled = false;
         this.path = '../assets/audio/music';
-        this.current_track = {
-            howl: null,
-            id: null,
-        }
-        this.next_track = {
-            howl: null,
-            id: null,
+        this.enabled = false;
+        this.tracks = {};
+        this.current_track = null;
+        this.next_track = null;
+        this.fading = false;
+        this.preload_tracks = [25, 32] // Encounter, Cycling
+        
+        // Looping music
+        this.track_loops = {};
+        this.loop_interval = null;
+        this.set_track_loops();
+    }
+
+    load(num) {
+        this.tracks[num] = new Howl({
+            src: [`${this.path}/${num}.mp3`],
+            loop: true,
+            volume: 0.5
+        });
+    }
+
+    heartbeat() {
+        let current_position = music.tracks[music.current_track].seek();
+        // console.log(current_position);
+
+        if (music.track_loops[music.current_track]) {
+            // console.log('Loop start', music.track_loops[music.current_track].start);
+            // console.log('Loop end', music.track_loops[music.current_track].end);
+    
+            if (current_position > music.track_loops[music.current_track].end) {
+                music.tracks[music.current_track].seek(music.track_loops[music.current_track].start);
+            }
         }
     }
 
@@ -17,82 +41,115 @@ class Music {
             return;
         }
 
-        if (!num || num == 0) { // No track selected
-            this.current_track.howl.fade(this.current_track.howl.volume(), 0, 1500);
+        // Loading
+        if (!this.tracks[num]) {
+            this.load(num);
         }
 
-        let track = new Howl({
-            src: [`${this.path}/${num}.mp3`],
-            loop: true,
-            volume: 0.5
-        });
+        this.next_track = num;
+
+        // New music incoming, fade out
+        if (this.current_track && this.current_track !== this.next_track) {
+            this.tracks[this.current_track].fade(this.tracks[this.current_track].volume(), 0, 1500);
+
+            if (!this.fading) {
+                setTimeout(() => {
+                    music.stop();
+    
+                    music.tracks[music.next_track].volume(0.5);
+                    music.tracks[music.next_track].play();
+                    music.current_track = music.next_track;
+                    music.fading = false;
+                }, 1500);
+
+                this.fading = true;
+            }
+        } else { // First song
+            this.current_track = num;
+            this.tracks[num].play();
+        }
+
+        if (this.loop_interval) {
+            clearInterval(this.loop_interval);
+        }
         
-        if (this.current_track.id === null) {
-            this.current_track.howl = track;
-            this.current_track.id = num;
-            this.current_track.howl.play();
-        } else if (this.next_track.id === null && this.current_track.id !== num) {
-            
-            // Enqueueing the next track
-            this.next_track.howl = track;
-            this.next_track.id = num;
-
-            // Fading the playing track out
-            this.current_track.howl.fade(this.current_track.howl.volume(), 0, 1500);
-
-            // Setting the current track to tne enqueued track and clearing the next track
-            setTimeout(() => {
-                this.current_track = this.next_track;
-                this.current_track.howl.play();
-
-                this.next_track = {
-                    id: null,
-                    howl: null
-                }
-            }, 1500)
+        if (this.track_loops[this.current_track]) { // Loop data available
+            this.loop_interval = setInterval(music.heartbeat, 100);
         }
     }
 
     immediate_play(num) {
+        this.current_track = num;
+
         if (!this.enabled) {
             return;
         }
+        
+        this.stop();
+        this.tracks[num].play();
+    }
 
-        if (this.current_track.howl) {
-            this.current_track.howl.stop();
+    stop() {
+        Object.entries(this.tracks).forEach(([key, howl]) => {
+            howl.stop();
+        });
+    }
+
+    enable() {
+        Howler.mute(false);
+        this.enabled = true;
+
+        if (!this.current_track) {
+            this.current_track = map.music;
         }
 
-        let track = new Howl({
-            src: [`${this.path}/${num}.mp3`],
-            loop: true,
-            volume: 0.5
-        });
+        this.play(this.current_track);
 
-        this.current_track.howl = track;
-        this.current_track.id = num;
-        this.current_track.howl.play();
-    }
-}
-
-document.querySelector('.toggle-volume').addEventListener('click', e => {
-    if (!music.enabled) {
-        enable_audio();
+        // Load event tracks
+        if (!this.tracks[this.preload_tracks[0]]) {
+            this.preload_tracks.forEach(track => {
+                this.load(track);
+            });
+        }
     }
 
-    if (Howler._muted) {
-        Howler.mute(false);
-        document.querySelector('.toggle-volume').classList.remove('-muted');
-    } else {
-        Howler.mute(true)
-        document.querySelector('.toggle-volume').classList.add('-muted');
+    disable() {
+        Howler.mute(true);
+        this.enabled = false;
+        this.stop();
+        clearInterval(this.loop_interval);
     }
 
-    // Refocus on canvas
-    document.querySelector('#pkmn').focus();
-});
+    set_track_loops() {
+        this.track_loops[16] = {
+            start: 29,
+            end: 57.9
+        }
 
-function enable_audio() {
-    music.enabled = true;
-    sfx.enabled = true;
-    music.play(map.music);
+        this.track_loops[25] = {
+            start: 1.4653333333333336,
+            end: 20.1
+        }
+
+        this.track_loops[26] = {
+            start: 0,
+            end: 83.3933
+        }
+
+        this.track_loops[28] = {
+            start: 32.008,
+            end: 61.672
+        }
+
+
+        this.track_loops[32] = {
+            start: 34.55733333333333,
+            end: 68.81066666666666
+        }
+
+        this.track_loops[37] = {
+            start: 1.7893333333333317,
+            end: 68.63066666666665
+        }
+    }
 }

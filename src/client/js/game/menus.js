@@ -137,7 +137,6 @@ function kanto_get_menu(menu_name) {
     let found_menu = false;
 
     menus.forEach(menu => {
-        console.log(menu.name, menu_name);
         if (menu.name == menu_name) {
             found_menu = menu;
         }

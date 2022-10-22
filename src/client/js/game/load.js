@@ -15,7 +15,6 @@ function kanto_load_assets() {
         .add('sprites', 'assets/graphics/sprites.png')
         .add('items', 'assets/graphics/items.png')
         .add('message', 'assets/graphics/message.jpg')
-        .add('start-menu', 'assets/graphics/start-menu.png')
         .add('emote-shock', 'assets/graphics/emotes/shock.png')
     app.loader.load(kanto_fetch_game);
 }
@@ -621,4 +620,20 @@ function prepare_browser() {
 
     // Focus on the canvas to enable the game controls
     document.querySelector('#pkmn').focus();
+
+    // Music
+    document.querySelector('.toggle-volume').addEventListener('click', e => {
+        if (!music.enabled) {
+            music.enable();
+            sfx.enabled = true;
+            document.querySelector('.toggle-volume').classList.remove('-muted');
+        } else {
+            music.disable();
+            sfx.enabled = false;
+            document.querySelector('.toggle-volume').classList.add('-muted');
+        }
+
+        // Refocus on canvas
+        document.querySelector('#pkmn').focus();
+    });
 }
