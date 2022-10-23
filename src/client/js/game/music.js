@@ -55,15 +55,18 @@ class Music {
         // New music incoming, fade out
         if (this.current_track && this.current_track !== this.next_track) {
             this.tracks[this.current_track].fade(this.tracks[this.current_track].volume(), 0, 1500);
+            this.fade_out_track = this.current_track;
 
             if (!this.fading) {
                 setTimeout(() => {
-                    music.stop();
-    
-                    music.tracks[music.next_track].volume(0.5);
-                    music.tracks[music.next_track].play();
-                    music.current_track = music.next_track;
-                    music.fading = false;
+                    if (this.fade_out_track == this.current_track) { // Music played between fade out and this
+                        music.stop();
+                        music.tracks[music.next_track].play();
+                        music.current_track = music.next_track;
+                        music.fading = false;
+                    } else {
+                        music.tracks[music.fade_out_track].stop();
+                    }
                 }, 1500);
 
                 this.fading = true;
@@ -101,6 +104,7 @@ class Music {
     stop() {
         Object.entries(this.tracks).forEach(([key, howl]) => {
             howl.stop();
+            howl.volume(0.5); // Reset all volumes
         });
     }
 
