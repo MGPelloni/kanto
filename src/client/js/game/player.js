@@ -286,6 +286,7 @@ class Player {
         this.emote.visible = true;
         this.in_battle = true;
         this.controls = 'battle';
+        battle.pokemon = pokemon;
 
         music.immediate_play(13);
         battle_prepare(pokemon.name, this.pokemon[0].name)
@@ -393,9 +394,7 @@ class Player {
                 let item = new Item(att_tile.name);
                 dialogue.add_message(`Found; ${att_tile.name}!`);
 
-                let found_sfx = new Sfx();
-                found_sfx.enabled = true;
-                found_sfx.play('item-found', 0.5);
+                sfx.play('item-found');
 
                 this.items.push(item);
 

@@ -19,9 +19,11 @@ class Trainer {
 
         switch (tile) {
             case 10:
-                let battle_roll = Math.floor(Math.random() * 6) + 1; // 16.6% chance
+            case 17:
+            case 46:
+                let battle_roll = Math.floor(Math.random() * 10) + 1; // 10% chance
 
-                if (battle_roll == 6) {
+                if (battle_roll == 10) {
                     this.wild_pokemon_battle();
                 }
                 break;
@@ -46,7 +48,7 @@ class Trainer {
 
     exiting_battle() {
         this.in_battle = false;
-        
+
         io.to(this.lobby_id).emit('trainer_exiting_battle', {
             socket_id: this.socket_id
         });

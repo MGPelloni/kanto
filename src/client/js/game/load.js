@@ -551,30 +551,20 @@ function prepare_menus() {
     }));
 
     // Pokemon
-    menus.push(new Menu('Pokemon', [
-        {
-            name: 'Squirtle',
+    let pokemon_options = [];
+
+    console.log(player.pokemon);
+
+    player.pokemon.forEach(pokemon => {
+        pokemon_options.push({
+            name: pokemon.name,
             type: 'Pokemon'
-        }, 
-        {
-            name: 'Bulbasaur',
-            type: 'Pokemon'
-        }, 
-        {
-            name: 'Pikachu',
-            type: 'Pokemon'
-        }, 
-        {
-            name: 'Pidgey',
-            type: 'Pokemon'
-        }, 
-        {
-            name: 'Wartortle',
-            type: 'Pokemon'
-        }, 
-    ], {
-        width: 160,
-        height: 160,
+        })
+    });
+
+    menus.push(new Menu('Pokemon', pokemon_options, {
+        width: GAME_WIDTH,
+        height: GAME_HEIGHT,
         x: 0,
         y: 0
     }));

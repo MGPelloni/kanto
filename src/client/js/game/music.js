@@ -15,6 +15,10 @@ class Music {
     }
 
     load(num) {
+        if (!this.enabled) {
+            return;
+        }
+
         this.tracks[num] = new Howl({
             src: [`${this.path}/${num}.mp3`],
             loop: true,
@@ -134,6 +138,16 @@ class Music {
     }
 
     set_track_loops() {
+        this.track_loops[13] = {
+            start: 44.4,
+            end: 75.688
+        }
+
+        this.track_loops[14] = {
+            start: 12.35,
+            end: 34.80799999999999,
+        }
+
         this.track_loops[16] = {
             start: 0,
             end: 57.8

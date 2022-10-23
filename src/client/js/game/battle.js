@@ -71,7 +71,12 @@ function battle_start() {
         battle_container.getChildByName('front_portrait').visible = true;
         battle_container.getChildByName('back_portrait').visible = true;
         dialogue.queue_messages([`Wild ${battle.portraits.front.toUpperCase()} appeared!`, `Go! ${player.pokemon[0].name.toUpperCase()}!`]);
+        sfx.cry(battle.pokemon.id);
     }, 2000)
+
+    setTimeout(() => {
+        sfx.cry(player.pokemon[0].id);
+    }, 5000)
 
     setTimeout(() => {
         battle_end();
@@ -96,7 +101,7 @@ function battle_end() {
         player.controls = 'walking';
         music.immediate_play(music.get_context());
         socket.emit('trainer_exiting_battle', {lobby_id: meta.lobby_id});
-    }, 10000)
+    }, 9500)
 }
 
 function battle_remove_portraits() {

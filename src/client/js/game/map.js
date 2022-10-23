@@ -369,9 +369,7 @@ function check_sprite_tile_actions(tile) {
       break;
     case 808:
     case 977:
-      let turn_on_pc = new Sfx();
-      turn_on_pc.enabled = true;
-      turn_on_pc.play('turn-on-pc', 0.5);
+      sfx.play('turn-on-pc');
 
       dialogue.queue_messages(["RED turned on the PC.", "...", "It doesn't seem to be working.."]);
       break;

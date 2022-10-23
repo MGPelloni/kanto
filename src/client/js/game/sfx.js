@@ -1,6 +1,6 @@
 class Sfx {
     constructor() {
-        this.path = '../assets/audio/sfx/misc';
+        this.path = '../assets/audio/sfx';
         this.enabled = false;
         this.tracks = {};
         this.timeout = 300;
@@ -8,13 +8,13 @@ class Sfx {
         this.preload_tracks = ['collision', 'start-menu', 'action', 'go-inside', 'go-outside', 'item-found'];
     }
 
-    play(name) {
+    play(name, type = 'misc') {
         if (!this.enabled) {
             return;
         }
 
         if (!this.tracks[name]) {
-            this.load(name);
+            this.load(name, type);
         }
 
         if (!this.tracks[name].active) {
@@ -27,9 +27,35 @@ class Sfx {
         }
     }
 
-    load(name) {
+    cry(id) {
+        let cry = '';
+
+        if (typeof id === "number") {
+            id = id.toString();
+        }
+        
+        switch (id.length) {
+            case 1:
+                cry = `00${id}`;
+                break;
+            case 2: 
+                cry = `0${id}`;
+                break;
+            default:
+                cry = id;
+                break;
+        }
+
+        this.play(cry, 'cries');
+    }
+
+    load(name, type = 'misc') {
+        if (!this.enabled) {
+            return;
+        }
+
         this.tracks[name] = new Howl({
-            src: [`${this.path}/${name}.wav`],
+            src: [`${this.path}/${type}/${name}.wav`],
             loop: false,
             volume: 0.5
         });
