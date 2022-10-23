@@ -24,11 +24,11 @@ class Music {
 
     heartbeat() {
         let current_position = music.tracks[music.current_track].seek();
-        console.log(current_position);
+        // console.log(current_position);
 
         if (music.track_loops[music.current_track]) {
-            console.log('Loop start', music.track_loops[music.current_track].start);
-            console.log('Loop end', music.track_loops[music.current_track].end);
+            // console.log('Loop start', music.track_loops[music.current_track].start);
+            // console.log('Loop end', music.track_loops[music.current_track].end);
     
             if (current_position > music.track_loops[music.current_track].end) {
                 music.tracks[music.current_track].seek(music.track_loops[music.current_track].start);

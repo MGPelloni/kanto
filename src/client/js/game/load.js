@@ -625,11 +625,11 @@ function prepare_browser() {
     document.querySelector('.toggle-volume').addEventListener('click', e => {
         if (!music.enabled) {
             music.enable();
-            sfx.enabled = true;
+            sfx.enable();
             document.querySelector('.toggle-volume').classList.remove('-muted');
         } else {
             music.disable();
-            sfx.enabled = false;
+            sfx.disable();
             document.querySelector('.toggle-volume').classList.add('-muted');
         }
 
