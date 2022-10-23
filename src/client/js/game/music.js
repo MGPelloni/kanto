@@ -24,11 +24,11 @@ class Music {
 
     heartbeat() {
         let current_position = music.tracks[music.current_track].seek();
-        // console.log(current_position);
+        console.log(current_position);
 
         if (music.track_loops[music.current_track]) {
-            // console.log('Loop start', music.track_loops[music.current_track].start);
-            // console.log('Loop end', music.track_loops[music.current_track].end);
+            console.log('Loop start', music.track_loops[music.current_track].start);
+            console.log('Loop end', music.track_loops[music.current_track].end);
     
             if (current_position > music.track_loops[music.current_track].end) {
                 music.tracks[music.current_track].seek(music.track_loops[music.current_track].start);
@@ -113,6 +113,14 @@ class Music {
         }
     }
 
+    get_context() {
+        if (player.speed == 2) {
+            return 32;
+        }
+
+        return map.music;
+    }
+
     disable() {
         Howler.mute(true);
         this.enabled = false;
@@ -122,8 +130,8 @@ class Music {
 
     set_track_loops() {
         this.track_loops[16] = {
-            start: 29,
-            end: 57.9
+            start: 0,
+            end: 57.8
         }
 
         this.track_loops[25] = {
@@ -137,10 +145,9 @@ class Music {
         }
 
         this.track_loops[28] = {
-            start: 32.008,
+            start: 2.3,
             end: 61.672
         }
-
 
         this.track_loops[32] = {
             start: 34.55733333333333,

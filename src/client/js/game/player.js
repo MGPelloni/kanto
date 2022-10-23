@@ -271,7 +271,7 @@ class Player {
     }
 
     start_battle() {
-        music.immediate_play(map.music);
+        music.immediate_play(music.get_context());
         this.frozen = false;
     }
 
@@ -281,7 +281,7 @@ class Player {
 
         setTimeout(() => {
             this.frozen = false;
-            music.immediate_play(map.music);
+            music.immediate_play(music.get_context());
         }, 5000);
     }
 
