@@ -2,7 +2,7 @@ io.on("connection", (socket) => {
     console.log('New socket: ', socket.id);
 
     socket.on("join_lobby", (data) => {
-        let trainer = new Trainer(socket.id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
+        let trainer = new Trainer(socket.id, data.lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
         let targeted_lobby_index = null;
         
         lobbies.forEach((lobby, i) => {
@@ -44,6 +44,8 @@ io.on("connection", (socket) => {
         if (lobby_index !== null && trainer_index !== null) {
             lobbies[lobby_index].trainers[trainer_index].position = data.trainer.position;
     
+            lobbies[lobby_index].trainers[trainer_index].check_tile(lobby_index);
+
             socket.to(lobbies[lobby_index].id).emit('trainer_moved', {
                 socket_id: lobbies[lobby_index].trainers[trainer_index].socket_id,
                 position: lobbies[lobby_index].trainers[trainer_index].position,
@@ -123,6 +125,10 @@ io.on("connection", (socket) => {
             switch (player.position.f) {
                 case 0: // North
                     lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.in_battle) {
+                            return;
+                        }
+
                         if (trainer.position.map == player.position.map && trainer.position.x == player.position.x && trainer.position.y < player.position.y) {
                             if (player.position.y - trainer.position.y <= 5) {
                                 trainers_in_sight.push(trainer);
@@ -132,6 +138,10 @@ io.on("connection", (socket) => {
                     break;
                 case 1: // East
                     lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.in_battle) {
+                            return;
+                        }
+                        
                         if (trainer.position.map == player.position.map && trainer.position.x > player.position.x && trainer.position.y == player.position.y) {
                             if (trainer.position.x - player.position.x <= 5) {
                                 trainers_in_sight.push(trainer);
@@ -141,6 +151,10 @@ io.on("connection", (socket) => {
                     break;
                 case 2: // South
                     lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.in_battle) {
+                            return;
+                        }
+
                         if (trainer.position.map == player.position.map && trainer.position.x == player.position.x && trainer.position.y > player.position.y) {
                             if (trainer.position.y - player.position.y <= 5) {
                                 trainers_in_sight.push(trainer);
@@ -150,6 +164,10 @@ io.on("connection", (socket) => {
                     break;
                 case 3: // West
                     lobbies[lobby_index].trainers.forEach(trainer => {
+                        if (trainer.in_battle) {
+                            return;
+                        }
+                        
                         if (trainer.position.map == player.position.map && trainer.position.x < player.position.x && trainer.position.y == player.position.y) {
                             if (player.position.x - trainer.position.x <= 5) {
                                 trainers_in_sight.push(trainer);
@@ -226,6 +244,15 @@ io.on("connection", (socket) => {
             
         if (lobby_index !== null && trainer_index !== null) {
             lobbies[lobby_index].chat.trainer_message(lobbies[lobby_index].trainers[trainer_index], data.message);
+        }
+    }); 
+
+    socket.on("trainer_exiting_battle", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id),
+            trainer_index = find_trainer_index(lobby_index, socket.id);
+            
+        if (lobby_index !== null && trainer_index !== null) {
+            lobbies[lobby_index].trainers[trainer_index].exiting_battle();
         }
     }); 
 });

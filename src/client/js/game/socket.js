@@ -91,6 +91,36 @@ socket.on('trainer_name', function(data){
     });
 });
 
+socket.on('trainer_entering_battle', function(data){
+    trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            trainers[i].emote.visible = true;
+            trainers[i].sprite.alpha = 0.75;
+            
+            trainers[i].battle_animation = setInterval(() => {
+                if (trainers[i].sprite.alpha == 0.75) {
+                    trainers[i].sprite.alpha = 0.55;
+                } else {
+                    trainers[i].sprite.alpha = 0.75;
+                }
+            }, 250);
+
+            trainers[i].in_battle = true;
+        }
+    });
+});
+
+socket.on('trainer_exiting_battle', function(data){
+    trainers.forEach((trainer, i) => {
+        if (trainer.socket_id == data.socket_id) {
+            trainers[i].emote.visible = false;
+            trainers[i].sprite.alpha = 1;
+            trainers[i].in_battle = false;
+            clearInterval(trainers[i].battle_animation);
+        }
+    });
+});
+
 socket.on("player_encounter", (data) => {
     let targeted_trainer = null;
 
@@ -121,4 +151,8 @@ socket.on('chat_trainer_message', function(data){
 
 socket.on('chat_server_message', function(data){
     chat.server_message(data.message);
+});
+
+socket.on('wild_pokemon_battle', function(data){
+    player.wild_pokemon_battle(data.pokemon);
 });

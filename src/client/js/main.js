@@ -33,6 +33,7 @@ let npcs = [];
 let menus = [];
 let items = [];
 let keys = {}; 
+let battle = {};
 let editor = {};
 let dialogue = {};
 let tile_textures = [];
@@ -48,9 +49,11 @@ let socket = io();
 let background = new PIXI.Container();
 let atts_container = new PIXI.Container();
 let npc_container = new PIXI.Container();
-let multiplayer_container = new PIXI.Container();
+let player_container = new PIXI.Container();
+let trainer_container = new PIXI.Container();
 let message_container = new PIXI.Container();
 let menu_container = new PIXI.Container();
+let battle_container = new PIXI.Container();
 
 // Audio
 let music;

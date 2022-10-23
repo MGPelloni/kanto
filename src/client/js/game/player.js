@@ -16,8 +16,12 @@ class Player {
         this.current_map = maps[0];
         this.last_position = {};
         this.speed = 1;
+        this.in_battle = false;
 
-        this.pokemon = [];
+        this.pokemon = [
+            POKEMON[Math.floor(Math.random() * 151)]
+        ];
+
         this.items = [];
         this.money = 0;
         this.history = {}; // Last spritesheet
@@ -32,8 +36,8 @@ class Player {
 
         this.set_sprite();
         this.set_emote();
-        app.stage.addChild(this.sprite);
-        app.stage.addChild(this.emote);
+        player_container.addChild(this.sprite);
+        player_container.addChild(this.emote);
         this.place(position.x, position.y);
     }
 
@@ -46,6 +50,7 @@ class Player {
         this.sprite.y = (app.view.height / 2) - 4;
         this.sprite.width = TILE_SIZE;
         this.sprite.height = TILE_SIZE;
+        this.sprite.zIndex = 1;
     }
 
     set_emote() {
@@ -56,6 +61,7 @@ class Player {
         this.emote.width = TILE_SIZE;
         this.emote.height = TILE_SIZE;
         this.emote.visible = false;
+        this.emote.zIndex = 2;
     }
 
     move(direction) {
@@ -275,6 +281,16 @@ class Player {
         this.frozen = false;
     }
 
+    wild_pokemon_battle(pokemon) {
+        this.frozen = true;
+        this.emote.visible = true;
+        this.in_battle = true;
+        this.controls = 'battle';
+
+        music.immediate_play(13);
+        battle_prepare(pokemon.name, this.pokemon[0].name)
+    }
+
     encountered() {
         this.frozen = true;
         music.immediate_play(25);
@@ -311,8 +327,8 @@ class Player {
         npc_container.x = npc_container.origin.x + ((x * TILE_SIZE) * -1);
         npc_container.y = npc_container.origin.y + ((y * TILE_SIZE) * -1);
 
-        multiplayer_container.x = multiplayer_container.origin.x + ((x * TILE_SIZE) * -1);
-        multiplayer_container.y = multiplayer_container.origin.y + ((y * TILE_SIZE) * -1);
+        trainer_container.x = trainer_container.origin.x + ((x * TILE_SIZE) * -1);
+        trainer_container.y = trainer_container.origin.y + ((y * TILE_SIZE) * -1);
 
         this.position.x = x;
         this.position.y = y;
@@ -410,6 +426,14 @@ class Player {
                     dialogue.queue_messages(npc.dialogue);
                 }
             };
+        });
+
+        trainers.forEach((trainer, i) => {
+            if (trainer.position.map == this.position.map) {
+                if (index == trainer.position.x + this.current_map.width * trainer.position.y) {
+                    dialogue.queue_messages(`${trainer.name}`);
+                };
+            }
         });
 
         console.log(att_tile);

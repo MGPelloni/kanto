@@ -5,7 +5,7 @@ class Sfx {
         this.tracks = {};
         this.timeout = 300;
 
-        this.preload_tracks = ['collision', 'start-menu', 'action', 'go-inside', 'go-outside'];
+        this.preload_tracks = ['collision', 'start-menu', 'action', 'go-inside', 'go-outside', 'item-found'];
     }
 
     play(name) {

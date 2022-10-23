@@ -39,8 +39,8 @@ class Trainer {
 
         this.set_sprite();
         this.set_emote();
-        multiplayer_container.addChild(this.sprite);
-        multiplayer_container.addChild(this.emote);
+        trainer_container.addChild(this.sprite);
+        trainer_container.addChild(this.emote);
         this.position_update(position);
     }
 
@@ -69,6 +69,7 @@ class Trainer {
         this.sprite.y = this.position.y * TILE_SIZE;
         this.sprite.width = TILE_SIZE;
         this.sprite.height = TILE_SIZE;
+        this.sprite.zIndex = 1;
     }
 
     set_emote() {
@@ -78,6 +79,7 @@ class Trainer {
         this.emote.width = TILE_SIZE;
         this.emote.height = TILE_SIZE;
         this.emote.visible = false;
+        this.emote.zIndex = 1;
     }
 
     encounter() {
@@ -252,7 +254,7 @@ class Trainer {
     }
 
     remove() {
-        multiplayer_container.removeChild(this.sprite);
+        trainer_container.removeChild(this.sprite);
     }
 
     face_sprite(direction) {

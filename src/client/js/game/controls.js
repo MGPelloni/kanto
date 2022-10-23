@@ -167,6 +167,9 @@ function controls_loop() {
                 }
 
                 break;
+            case 'battle':
+
+                break;
             default: // Walking
                 if (player.can_check_action) {
                     player.check_action(player.position.f);
@@ -281,7 +284,7 @@ function move_loop() {
             background.y += player.speed;
             atts_container.y += player.speed;
             npc_container.y += player.speed;
-            multiplayer_container.y += player.speed;
+            trainer_container.y += player.speed;
         }
 
         // Down
@@ -289,7 +292,7 @@ function move_loop() {
             background.y -= player.speed;
             atts_container.y -= player.speed;
             npc_container.y -= player.speed;
-            multiplayer_container.y -= player.speed;
+            trainer_container.y -= player.speed;
         }
 
         // Left
@@ -297,7 +300,7 @@ function move_loop() {
             background.x += player.speed;
             atts_container.x += player.speed;
             npc_container.x += player.speed;
-            multiplayer_container.x += player.speed;
+            trainer_container.x += player.speed;
         }
 
         // Right
@@ -305,7 +308,7 @@ function move_loop() {
             background.x -= player.speed;
             atts_container.x -= player.speed;
             npc_container.x -= player.speed;
-            multiplayer_container.x -= player.speed;
+            trainer_container.x -= player.speed;
         }
 
         if (player.current_move_ticker >= (16 / player.speed - 1)) {

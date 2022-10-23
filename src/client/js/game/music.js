@@ -6,7 +6,7 @@ class Music {
         this.current_track = null;
         this.next_track = null;
         this.fading = false;
-        this.preload_tracks = [25, 32] // Encounter, Cycling
+        this.preload_tracks = [25, 32, 13] // Encounter, Cycling, Battle
         
         // Looping music
         this.track_loops = {};
@@ -83,6 +83,11 @@ class Music {
 
         if (!this.enabled) {
             return;
+        }
+
+        // Loading
+        if (!this.tracks[num]) {
+            this.load(num);
         }
         
         this.stop();

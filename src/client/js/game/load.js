@@ -198,7 +198,8 @@ function kanto_json_game_export() {
 function kanto_start() {
     prepare_background();
     prepare_npc_container();
-    prepare_multiplayer_container();
+    prepare_player_container();
+    prepare_trainer_container();
     prepare_atts_container();
 
     prepare_tilemap();
@@ -206,7 +207,13 @@ function kanto_start() {
     prepare_item_sprites();
     prepare_audio();
 
-    player = new Player({map: map.id, x: map.starting_position.x, y: map.starting_position.y}, import_data.player.sprite);
+    let sprite = Math.floor(Math.random() * 40); // Mobile spritesheets
+    
+    // if (import_data.player.sprite) {
+    //    sprite = import_data.player.sprite;
+    // }
+
+    player = new Player({map: map.id, x: map.starting_position.x, y: map.starting_position.y, f: 2}, sprite);
     player.current_map = map;
 
     // Build the first map
@@ -223,6 +230,7 @@ function kanto_start() {
     }
 
     // Foreground
+    prepare_battle_container();
     prepare_menus();
     prepare_dialogue();
 
@@ -249,6 +257,34 @@ function prepare_atts_container() {
     app.stage.addChild(atts_container);
 }
 
+function prepare_battle_container() {
+    battle_container.x = 0
+    battle_container.y = 0
+    battle_container.width = GAME_WIDTH;
+    battle_container.height = GAME_HEIGHT;
+    battle_container.visible = true;
+
+    let battle_bg = new PIXI.Sprite(PIXI.Texture.WHITE);
+    battle_bg.x = 0
+    battle_bg.y = 0
+    battle_bg.width = GAME_WIDTH;
+    battle_bg.height = GAME_HEIGHT;
+    battle_bg.name = 'background';
+    battle_bg.visible = false;
+
+    let battle_transition = new PIXI.Sprite(PIXI.Texture.WHITE);
+    battle_transition.width = GAME_WIDTH;
+    battle_transition.height = GAME_HEIGHT;
+    battle_transition.tint = 0x000000;
+    battle_transition.name = 'transition';
+    battle_transition.visible = true;
+    battle_transition.alpha = 0;
+
+    app.stage.addChild(battle_container);
+    battle_container.addChild(battle_bg);
+    battle_container.addChild(battle_transition);
+}
+
 function prepare_npc_container() {
     npc_container.origin = {
         x: app.view.width / 2 - TILE_SIZE / 2,
@@ -262,17 +298,32 @@ function prepare_npc_container() {
     app.stage.addChild(npc_container);
 }
 
-function prepare_multiplayer_container() {
-    multiplayer_container.origin = {
+function prepare_player_container() {
+    player_container.origin = {
+        x: 0,
+        y: 0
+    }
+
+    player_container.width = GAME_WIDTH;
+    player_container.height = GAME_HEIGHT;
+
+    player_container.x = player_container.origin.x;
+    player_container.y = player_container.origin.y;
+
+    app.stage.addChild(player_container);
+}
+
+function prepare_trainer_container() {
+    trainer_container.origin = {
         x: app.view.width / 2 - TILE_SIZE / 2,
         y: (app.view.width / 2 - TILE_SIZE / 2)  - 4,
     }
 
-    multiplayer_container.x = multiplayer_container.origin.x;
-    multiplayer_container.y = multiplayer_container.origin.y;
-    multiplayer_container.visible = true;
+    trainer_container.x = trainer_container.origin.x;
+    trainer_container.y = trainer_container.origin.y;
+    trainer_container.visible = true;
 
-    app.stage.addChild(multiplayer_container);
+    app.stage.addChild(trainer_container);
 }
 
 function prepare_background() {

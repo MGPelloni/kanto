@@ -59,9 +59,12 @@ class Dialogue {
     next() {
         if (this.awaiting_action && !this.disable_next) {
             if (this.msg == null && this.queue.length == 0) { // Message is complete
-                message_container.visible = false;
+                if (!player.in_battle) {
+                    message_container.visible = false;
+                    player.frozen = false;
+                }
+                
                 message_text.text = '';
-                player.frozen = false;
                 npcs.forEach(npc => {
                     npc.frozen = false;
                 });
