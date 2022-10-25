@@ -82,9 +82,19 @@ class Trainer {
         this.emote.zIndex = 1;
     }
 
+    display_emote(name = 'shock', length = 1500) {
+        if (this.position.map == player.position.map) {
+            this.emote.visible = true;
+        }
+
+        setTimeout(() => {
+            this.emote.visible = false;
+        }, length, this);
+    }
+
     encounter() {
         this.frozen = true;
-        this.emote.visible = true;
+        this.display_emote('shock');
 
         setTimeout(() => {
             this.emote.visible = false;
@@ -157,99 +167,50 @@ class Trainer {
                 break;
         }
     }
-
+    
     move(direction) {
-        let next_position = {
-            x: this.position.x,
-            y: this.position.y
-        };
+        this.current_move_ticker = 0;
+        this.moving = true;
 
         switch (direction) {
             case 0:
-                next_position.y--;   
+                if (!this.sprite.playing || this.sprite.textures !== player.spritesheet.walkNorth) {
+                    this.sprite.textures = this.spritesheet.walkNorth;
+                    this.sprite.play();
+                }
+
                 break;
             case 1:
-                next_position.x++;  
+                if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkEast) {
+                    this.sprite.textures = this.spritesheet.walkEast;
+                    this.sprite.play();
+                }
+
                 break;
             case 2:
-                next_position.y++;   
+                if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkSouth) {
+                    this.sprite.textures = this.spritesheet.walkSouth;
+                    this.sprite.play();
+                }
+
                 break;
             case 3:
-                next_position.x--;   
+                if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkWest) {
+                    this.sprite.textures = this.spritesheet.walkWest;
+                    this.sprite.play();
+                }
+
                 break;
             default:
                 break;
         }
-
-        if (this.moving == false) {
-            this.moving = true;
-            this.current_move_ticker = 0;
-            this.colliding = trainer_collision_check(next_position.x, next_position.y);
-
-            switch (direction) {
-                case 0:
-                    if (!this.sprite.playing || this.sprite.textures !== player.spritesheet.walkNorth) {
-                        this.sprite.textures = this.spritesheet.walkNorth;
-                        this.sprite.play();
-                        this.facing = 'North';    
-                    }
-
-                    this.position.f = 0; 
-                    break;
-                case 1:
-                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkEast) {
-                        this.sprite.textures = this.spritesheet.walkEast;
-                        this.sprite.play();
-                        this.facing = 'East'; 
-                    }
-
-                    this.position.f = 1; 
-                    break;
-                case 2:
-                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkSouth) {
-                        this.sprite.textures = this.spritesheet.walkSouth;
-                        this.sprite.play();
-                        this.facing = 'South'; 
-                    }
-
-                    this.position.f = 2;
-                    break;
-                case 3:
-                    if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkWest) {
-                        this.sprite.textures = this.spritesheet.walkWest;
-                        this.sprite.play();
-                        this.facing = 'West'; 
-                    }
-
-                    this.position.f = 3;
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
-    position_update(next_position, facing) {
-        this.facing = facing;
-
-        if (next_position.map !== player.position.map) { // Trainer is not on player\'s map
-            // console.log('Trainer is not on player\'s map', next_position);
-            this.sprite.visible = false;
-        } else if (this.position.map !== player.position.map && next_position.map == player.position.map) { // Trainer is changing to player's map
-            // console.log('Trainer is changing to player\'s map', next_position);
-            this.sprite.visible = true;
-        } else { // Trainer is on player's map
-            // console.log('Trainer is on player\'s map', next_position);
-            this.sprite.visible = true;
-        }
-
-        this.sprite.x = next_position.x * TILE_SIZE;
-        this.sprite.y = next_position.y * TILE_SIZE;
-        this.emote.x = next_position.x * TILE_SIZE;
-        this.emote.y = next_position.y * TILE_SIZE - TILE_SIZE;
-
-        this.place(next_position.map, next_position.x, next_position.y);
-        // console.log('trainer -> position_update', next_position);
+    position_update(position) {
+        this.sprite.x = position.x * TILE_SIZE;
+        this.sprite.y = position.y * TILE_SIZE;
+        this.emote.x = position.x * TILE_SIZE;
+        this.emote.y = position.y * TILE_SIZE - TILE_SIZE;
         return;
     }
 

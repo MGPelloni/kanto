@@ -91,7 +91,15 @@ class Player {
                         multiplayer_update_position();
                     } else {
                         if (exit_check()) { // Check if the player is at an exit
-                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            let exit = this.current_map.atts[this.position.index];
+                            this.place(exit.x, exit.y, exit.map);
+
+                            if (collision_check(exit.x, exit.y - 1, exit.map) == false) {
+                                this.direction = 'North';
+                                this.moving = true;
+                                this.position.y--;
+                            }
+
                             multiplayer_update_position(true);
                             sfx.play('go-outside');
                         } else { // Collision into a barrier
@@ -117,7 +125,15 @@ class Player {
                         multiplayer_update_position();
                     } else {
                         if (exit_check()) { // Check if the player is at an exit
-                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            let exit = this.current_map.atts[this.position.index];
+                            this.place(exit.x, exit.y, exit.map);
+
+                            if (collision_check(exit.x + 1, exit.y, exit.map) == false) {
+                                this.direction = 'East';
+                                this.moving = true;
+                                this.position.x++;
+                            }
+
                             sfx.play('go-outside');
                             multiplayer_update_position(true);
                         } else { // Collision into a barrier
@@ -143,7 +159,15 @@ class Player {
                         multiplayer_update_position();
                     } else {
                         if (exit_check()) { // Check if the player is at an exit
-                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            let exit = this.current_map.atts[this.position.index];
+                            this.place(exit.x, exit.y, exit.map);
+
+                            if (collision_check(exit.x, exit.y + 1, exit.map) == false) {
+                                this.position.y++;
+                                this.direction = 'South';
+                                this.moving = true;    
+                            }
+
                             multiplayer_update_position(true);
                             sfx.play('go-outside');
                         } else { // Collision into a barrier
@@ -169,7 +193,15 @@ class Player {
                         multiplayer_update_position();
                     } else {
                         if (exit_check()) { // Check if the player is at an exit
-                            this.place(this.current_map.atts[this.position.index].x, this.current_map.atts[this.position.index].y, this.current_map.atts[this.position.index].map);
+                            let exit = this.current_map.atts[this.position.index];
+                            this.place(exit.x, exit.y, exit.map);
+
+                            if (collision_check(exit.x - 1, exit.y, exit.map) == false) {
+                                this.direction = 'West';
+                                this.moving = true;
+                                this.position.x--;
+                            }
+
                             multiplayer_update_position(true);
                             sfx.play('go-outside');
                         } else { // Collision into a barrier

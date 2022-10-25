@@ -25,20 +25,25 @@ function multiplayer_update_position(is_exiting = false) {
             f: player.position.f
         },
     };
+
     
+    trainer.exiting = is_exiting;
+
     switch (att.type) {
         case 2: // Warp
             trainer.position = {
                 map: att.map,
                 x: att.x,
-                y: att.y
+                y: att.y,
+                f: player.position.f
             }
+
+            trainer.exiting = true;
             break;
         default:
             break;
     }
 
-    trainer.exiting = is_exiting;
     
     socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
 }

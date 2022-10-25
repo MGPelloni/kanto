@@ -61,6 +61,7 @@ class Music {
                 setTimeout(() => {
                     if (this.fade_out_track == this.current_track) { // Music played between fade out and this
                         music.stop();
+                        music.tracks[music.next_track].volume(0.5);
                         music.tracks[music.next_track].play();
                         music.current_track = music.next_track;
                         music.fading = false;
@@ -104,7 +105,6 @@ class Music {
     stop() {
         Object.entries(this.tracks).forEach(([key, howl]) => {
             howl.stop();
-            howl.volume(0.5); // Reset all volumes
         });
     }
 
