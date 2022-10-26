@@ -20,7 +20,7 @@ class Sfx {
         if (!this.tracks[name].active) {
             this.tracks[name].active = true;     
             this.tracks[name].play();
-    
+     
             setTimeout(() => {
                 this.tracks[name].active = false;
             }, this.timeout, name);

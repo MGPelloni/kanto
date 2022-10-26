@@ -41,6 +41,15 @@ app.get('/reset', (req, res) => { // Create View
     res.send('Success');
 });
 
+app.get('/delete', (req, res) => { 
+    db.query('DROP TABLE users;', function(err, result){
+        if (err){
+            console.log(err.toString());
+        }
+    });
+});
+
+
 app.get('/games', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
     db.query('SELECT * FROM games;', function(err, result){

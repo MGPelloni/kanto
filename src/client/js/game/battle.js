@@ -70,28 +70,45 @@ function battle_start() {
     setTimeout(() => {
         battle_container.getChildByName('front_portrait').visible = true;
         battle_container.getChildByName('back_portrait').visible = true;
-        dialogue.queue_messages([`Wild ${battle.portraits.front.toUpperCase()} appeared!`, `Go! ${player.pokemon[0].name.toUpperCase()}!`]);
-        sfx.cry(battle.pokemon.id);
+        dialogue.queue_messages([{
+            text: `Wild ${battle.portraits.front.toUpperCase()} appeared!`,
+            pre_callback: {
+                name: 'dialogue_cry_sfx',
+                args: {
+                    id: battle.pokemon.id
+                }
+            }
+        }, {
+            text: `Go! ${player.pokemon[0].name.toUpperCase()}!`,
+            pre_callback: {
+                name: 'dialogue_cry_sfx',
+                args: {
+                    id: player.pokemon[0].id
+                }
+            },
+            post_callback: {
+                name: 'battle_complete'
+            }
+        }]);
     }, 2000)
+}
 
-    setTimeout(() => {
-        sfx.cry(player.pokemon[0].id);
-    }, 5000)
-
-    setTimeout(() => {
-        battle_end();
-    }, 10000);
+function battle_complete() {
+    music.immediate_play(14);
+    dialogue.queue_messages([{
+        text: `Enemy ${battle.portraits.front.toUpperCase()} fainted!`
+    }, {
+        text:`${player.pokemon[0].name.toUpperCase()} gained 117 EXP. Points!`,
+        post_callback: {
+            name: 'battle_end'
+        }
+    }]);
 }
 
 function battle_end() {
-    music.immediate_play(14);
-    dialogue.queue_messages([`Enemy ${battle.portraits.front.toUpperCase()} fainted!`, `${player.pokemon[0].name.toUpperCase()} gained 117 EXP. Points!`]);
-
-    setTimeout(() => {
-        battle_remove_portraits();
-        message_container.visible = false;
-        music.stop();
-    }, 9000)
+    battle_remove_portraits();
+    message_container.visible = false;
+    music.stop();
 
     setTimeout(() => {
         battle_container.getChildByName('background').visible = false;
@@ -101,7 +118,7 @@ function battle_end() {
         player.controls = 'walking';
         music.immediate_play(music.get_context());
         socket.emit('trainer_exiting_battle', {lobby_id: meta.lobby_id});
-    }, 9500)
+    }, 500);
 }
 
 function battle_remove_portraits() {

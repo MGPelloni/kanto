@@ -27,6 +27,16 @@ class Dialogue {
             if (message.options) {
                 queued_options = message.options;
             }
+
+            if (message.pre_callback) {
+                if (typeof window[message.pre_callback.name] === "function") { 
+                    window[message.pre_callback['name']](message.pre_callback['args']);
+                }
+            }
+
+            if (message.post_callback) {
+                this.post_callback = message.post_callback;
+            }
         } else if (typeof message === 'string') { // Legacy
             queued_message = message;
         }
@@ -40,10 +50,11 @@ class Dialogue {
     }
 
     queue_messages(messages) {
+        console.log(messages);
         if (Array.isArray(messages)) { // Check for multiple messages
-            this.queue = [...messages]; 
+            this.queue.push(...messages); 
         } else {
-            this.queue = [messages];
+            this.queue.push(messages);
         }
         
         this.process_queue();
@@ -68,11 +79,20 @@ class Dialogue {
                 npcs.forEach(npc => {
                     npc.frozen = false;
                 });
-                
+
+                if (this.post_callback) {
+                    if (typeof window[this.post_callback.name] === "function") { 
+                        window[this.post_callback['name']](this.post_callback['args']);
+                    }
+
+                    this.post_callback = null;
+                }
+
                 setTimeout(() => {
-                    this.active = false;
+                    if (dialogue.queue.length == 0) {
+                        dialogue.active = false;
+                    }
                 }, 600);
-                
             } else if (this.msg == null && this.queue.length > 0) {
                 this.process_queue();
             } else {

@@ -4591,6 +4591,12 @@
             "facing": "South",
             "movement_state": "Static",
             "dialogue": [{
+                "pre_callback": {
+                    "name": "dialogue_cry_sfx",
+                    "args": {
+                        "id": 151
+                    }
+                },
                 "text": "Hey.."
             }, {
                 "text": "You're not with TEAM ROCKET, are you?",
@@ -4602,7 +4608,13 @@
                 }, {
                     "option": "NO",
                     "dialogue": [{
-                        "text": "Through the back here, there's a secret tunnel to the POWER PLANT."
+                        "text": "Through the back here, there's a secret tunnel to the POWER PLANT.",
+                        "post_callback": {
+                            "name": "dialogue_cry_sfx",
+                            "args": {
+                                "id": 100
+                            }
+                        }
                     }, {
                         "text": "Don't tell anyone!"
                     }]
