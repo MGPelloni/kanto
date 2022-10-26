@@ -18,6 +18,16 @@ socket.on('map_server_sync', function(data){
     });
 });
 
+socket.on('set_game_id', function(data){
+    game_id = data.game_id;
+    meta.game_id = data.game_id;
+
+    let url = new URL(window.location);
+    url.searchParams.set('g', game_id);
+    window.history.pushState({}, '', url);
+});
+
+
 socket.on('create_current_trainers', function(data){
     data.forEach(trainer => {
         let new_trainer = new Trainer(trainer.name, trainer.position, trainer.spritesheet_id, trainer.socket_id);

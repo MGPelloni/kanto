@@ -2,17 +2,26 @@ io.on("connection", (socket) => {
     console.log('New socket: ', socket.id);
 
     socket.on("join_lobby", (data) => {
-        let trainer = new Trainer(socket.id, data.lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
         let targeted_lobby_index = null;
-        
-        lobbies.forEach((lobby, i) => {
-            if (data.lobby_id == lobby.id) {
-                targeted_lobby_index = i;
-            }
-        });
+        let new_game = false;
+
+        if (!data.lobby_id) {
+            data.game_id = generate_game_id();
+            data.lobby_id = data.game_id;
+            new_game = true;
+            io.to(socket.id).emit('set_game_id', {game_id: data.game_id});
+        } else {
+            lobbies.forEach((lobby, i) => {
+                if (data.lobby_id == lobby.id) {
+                    targeted_lobby_index = i;
+                }
+            });
+        }
+
+        let trainer = new Trainer(socket.id, data.lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
 
         if (targeted_lobby_index === null) { // Creating a new lobby
-            let new_lobby = new Lobby(data.lobby_id, data.game_id, [trainer]);
+            let new_lobby = new Lobby(data.lobby_id, data.game_id, [trainer], new_game);
             lobbies.push(new_lobby)
         } else { // Lobby ID exists, joining current lobby
             socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
@@ -32,7 +41,6 @@ io.on("connection", (socket) => {
             socket_id: socket.id
         });
 
-        let lobby_index = find_lobby_index(data.lobby_id);
         // console.log(lobbies[lobby_index].game.maps);
         // console.log(io.sockets.adapter.rooms);
     }); 

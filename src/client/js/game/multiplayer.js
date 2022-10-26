@@ -10,7 +10,7 @@ function multiplayer_join_lobby() {
         spritesheet_id: player.spritesheet_id,
     };
 
-    socket.emit('join_lobby', {lobby_id: meta.lobby_id, game_id: GAME_ID, trainer: trainer});
+    socket.emit('join_lobby', {lobby_id: meta.lobby_id, game_id: game_id, trainer: trainer});
 }
 
 function multiplayer_update_position(is_exiting = false) {

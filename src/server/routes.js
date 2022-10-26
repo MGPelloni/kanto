@@ -160,6 +160,12 @@ app.post('/upload', (req, res) => {
                         console.log(err.toString());
                     }
                 });
+            } else {
+                db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [req.body.meta.name, game_id, req.body], function(err, result){
+                    if (err){
+                        console.log(err.toString());
+                    }
+                });
             }
         });
     } else {

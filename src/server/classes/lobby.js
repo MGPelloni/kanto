@@ -1,23 +1,40 @@
 class Lobby {
-    constructor(id = null, game_id = null, trainers = []) {
+    constructor(id = null, game_id = null, trainers = [], new_game = false) {
         this.id = id;
         this.game_id = game_id;
         this.trainers = trainers;
-        
         this.game = false;
-        this.import_data = this.retrieve_game(game_id);
         this.loaded = false;
-        
-        this.import_data.then(
-            result => this.generate_game(result), 
-            error => console.log('Error importing game:', game_id)
-        );
+
+        if (new_game) {
+            this.new_game();
+        } else {
+            this.import_data = this.retrieve_game(game_id);
+            this.import_data.then(
+                result => this.generate_game(result), 
+                error => console.log('Error importing game:', game_id)
+            );
+        }
     }
 
     async retrieve_game(game_id) {
         console.log('Retrieving game..', game_id);
         let res = await db.query('SELECT * FROM games WHERE game_id=$1;', [game_id]);
         return res.rows[0];
+    }
+
+    new_game() {
+        this.game = JSON.parse('{ "meta": {}, "maps": [{ "name": "Untitled Map", "height": 5, "width": 5, "starting_position": { "x": 0, "y": 0 }, "tiles": [2, 2, 3, 2, 2, 3, 3, 1, 2, 1, 2, 3, 2, 1, 2, 1, 2, 1, 3, 3, 1, 2, 1, 3, 2], "atts": [{ "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }], "music": 0 }] }');
+        this.npcs = [];
+        this.items = [];
+        this.chat = new Chat(this.id);
+
+        this.game.maps.forEach((map, i) => {
+            map.id = i;
+            this.build_npcs(map);
+        });
+
+        this.loaded = true;
     }
 
     /**

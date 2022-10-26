@@ -23,7 +23,7 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_fetch_game() {
-    if (game_mode == 'create' && !GAME_ID) { // No game has been selected, and we are in create mode
+    if (game_mode == 'create' && !game_id) { // No game has been selected, and we are in create mode
         kanto_new_game();
         return;
     }
@@ -33,7 +33,7 @@ function kanto_fetch_game() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({'game': GAME_ID}),
+        body: JSON.stringify({'game': game_id}),
     }).then((res) => {
         return res.json();
     }).then((data) => {
@@ -550,10 +550,44 @@ function prepare_menus() {
         y: 48
     }));
 
+    menus.push(new Menu('Battle', [
+        {
+            name: 'Fight',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'PKMN',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'Item',
+            type: 'menu',
+            callback: () => {
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'Run',
+            type: 'menu',
+            callback: () => {
+                sfx.play('run')
+            }
+        },
+    ], {
+        width: 96,
+        height: 64,
+        x: GAME_WIDTH - 96,
+        y: GAME_HEIGHT - 64
+    }));
+
     // Pokemon
     let pokemon_options = [];
-
-    console.log(player.pokemon);
 
     player.pokemon.forEach(pokemon => {
         pokemon_options.push({
@@ -590,7 +624,7 @@ function prepare_multiplayer() {
 
     // Auto join lobby
     if (!lobby_id) {
-        lobby_id = GAME_ID;
+        lobby_id = game_id;
     }
 
     meta.lobby_id = lobby_id;
