@@ -54,10 +54,16 @@ class Sfx {
             return;
         }
 
+        let volume = 0.5;
+
+        if (name == 'item-received') {
+            volume = 0.2;
+        }
+
         this.tracks[name] = new Howl({
             src: [`${this.path}/${type}/${name}.wav`],
             loop: false,
-            volume: 0.5
+            volume: volume
         });
     }
 

@@ -95,9 +95,15 @@ class Editor {
                 });
             }
 
-            if (document.querySelector('#editor-message-add-callback')) {
-                document.querySelector('#editor-message-add-callback').addEventListener('click', e => {
-                    editor.add_message_field('callback');
+            if (document.querySelector('#editor-message-add-pre-callback')) {
+                document.querySelector('#editor-message-add-pre-callback').addEventListener('click', e => {
+                    editor.add_message_field('pre_callback');
+                });
+            }
+
+            if (document.querySelector('#editor-message-add-post-callback')) {
+                document.querySelector('#editor-message-add-post-callback').addEventListener('click', e => {
+                    editor.add_message_field('post_callback');
                 });
             }
 
@@ -520,8 +526,14 @@ class Editor {
                 });
             }
 
-            if (message.callback) {
-                prepared_message.callback = message.callback;
+            if (message.pre_callback) {
+                prepared_message.pre_callback = message.pre_callback;
+                prepared_message.pre_callback.args = this.prepare_callback_args(prepared_message.pre_callback.name, prepared_message.pre_callback.args);
+            }
+
+            if (message.post_callback) {
+                prepared_message.post_callback = message.post_callback;
+                prepared_message.post_callback.args = this.prepare_callback_args(prepared_message.post_callback.name, prepared_message.post_callback.args);
             }
 
             if (message.response) {
@@ -570,6 +582,9 @@ class Editor {
 
         if (inputs) {
             inputs.forEach(input => {
+
+                console.log(input);
+                
                 if (!input.value) {
                     return;
                 }
@@ -582,12 +597,35 @@ class Editor {
 
                         data.options.push(input.value);
                         break;
-                    case 'callback':
-                        if (!data.callback) {
-                            data.callback = [];
+                    case 'pre_callback':
+                        console.log(input.options);
+                        if (!data.pre_callback) {
+                            data.pre_callback = {name: input.options[input.selectedIndex].text};
+                        } else {
+                            data.pre_callback.name = input.options[input.selectedIndex].text;
                         }
-
-                        data.callback.push(input.value);                
+                        break;
+                    case 'pre_callback_args': 
+                        if (!data.pre_callback) {
+                            data.pre_callback = {args: input.value};
+                        } else {
+                            data.pre_callback.args = input.value
+                        }
+                        break;
+                    case 'post_callback':
+                        if (!data.post_callback) {
+                            data.post_callback = {name: input.options[input.selectedIndex].text};
+                        } else {
+                            data.post_callback.name = input.options[input.selectedIndex].text;
+                        }
+                        break;
+                    case 'post_callback_args': 
+                        if (!data.post_callback) {
+                            data.post_callback = {args: input.value};
+                        } else {
+                            data.post_callback.args = input.value
+                        }
+                        break;
                     default:
                         data[input.name] = input.value;
                         break;
@@ -653,8 +691,11 @@ class Editor {
             case 'option':
                 message_container.innerHTML = '<div><span>Option:</span><input type="text" name="option"></div>';
                 break;
-            case 'callback':
-                message_container.innerHTML = '<div><span>Callback:</span><input type="text" name="callback"></div>';
+            case 'pre_callback':
+                message_container.innerHTML = '<div><span>Pre Callback:</span>' + this.callback_options('pre') + '<input type="text" name="pre_callback_args"></div>';
+                break;
+            case 'post_callback':
+                message_container.innerHTML = '<div><span>Post Callback:</span>' + this.callback_options('post') + '<input type="text" name="post_callback_args"></div>';
                 break;
             case 'response':
                 message_container.innerHTML = '<div><span>Response:</span><input type="text" name="response"></div>';
@@ -663,6 +704,30 @@ class Editor {
         }
 
         message_form.appendChild(message_container);
+    }
+
+    callback_options(type = 'pre') {
+        return `
+        <select name="${type}_callback">
+            <option>dialogue_sfx</option>
+            <option>dialogue_cry_sfx</option>
+            <option>dialogue_give_item</option>
+        </select>`;
+    }
+
+    prepare_callback_args(name, args) {
+        switch (name) {
+            case 'dialogue_sfx':
+            case 'dialogue_give_item':
+                return {name: args};
+                break;             
+            case 'dialogue_cry_sfx':
+                return {id: args};
+                break;                     
+            default:
+                return {name: args};
+                break;
+        }
     }
 
     update_working_dialogue_list() {

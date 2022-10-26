@@ -45,6 +45,10 @@ class Music {
             return;
         }
 
+        if (!num) {
+            num = this.current_track;
+        }
+
         // Loading
         if (!this.tracks[num]) {
             this.load(num);
@@ -99,7 +103,14 @@ class Music {
         }
         
         this.stop();
+        this.reset_volumes();
         this.tracks[num].play();
+    }
+
+    reset_volumes() {
+        Object.entries(this.tracks).forEach(([key, howl]) => {
+            howl.volume(0.5);
+        });
     }
 
     stop() {

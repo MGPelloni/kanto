@@ -145,8 +145,6 @@ app.post('/upload', (req, res) => {
         game_id = req.body.meta.game_id;
     }
 
-    console.log(game_id, req.body);
-
     if (game_id) {
         db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result) { // TODO: Add author check here
             if (err){
