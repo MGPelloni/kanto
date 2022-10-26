@@ -61,6 +61,7 @@ class Editor {
                     editor.selected_attribute = parseInt(elem.dataset.att);
                     set_att_editor(editor.selected_attribute);
                     editor.clear_working_dialogue();
+                    editor.clear_working_pokemon();
                 });
             });
             
@@ -87,7 +88,7 @@ class Editor {
                     editor.add_message_to_dialogue();
                 });
             }
-                        
+
             if (document.querySelector('#editor-message-add-option')) {
                 document.querySelector('#editor-message-add-option').addEventListener('click', e => {
                     editor.add_message_field('option');
@@ -103,6 +104,12 @@ class Editor {
             if (document.querySelector('#editor-message-add-response')) {
                 document.querySelector('#editor-message-add-response').addEventListener('click', e => {
                     editor.add_message_field('response');
+                });
+            }
+
+            if (document.querySelector('#editor-add-pokemon')) {
+                document.querySelector('#editor-add-pokemon').addEventListener('click', e => {
+                    editor.add_pokemon_to_tile();
                 });
             }
         }
@@ -222,6 +229,9 @@ class Editor {
                         case 7:
                             atts_container.children[sprite.game_position.index].tint = '0xDAA520';
                             break;
+                        case 8:
+                            atts_container.children[sprite.game_position.index].tint = '0x35530A';
+                            break;
                         default:
                             break;
                     }
@@ -260,6 +270,9 @@ class Editor {
                             break;
                         case 7:
                             atts_container.children[sprite.game_position.index].tint = '0xDAA520';
+                            break;
+                        case 8:
+                            atts_container.children[sprite.game_position.index].tint = '0x35530A';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -369,6 +382,9 @@ class Editor {
             case 7:
               color = '0xDAA520';
               break;
+            case 8:
+              color = '0x35530A';
+              break;
             default:
               color = '0xEEEEEE';
               break;
@@ -476,6 +492,10 @@ class Editor {
                 data['dialogue'] = this.prepare_dialogue_data();
             }
 
+            if (this.working_pokemon.length > 0) {
+                data['pokemon'] = this.working_pokemon;
+            }
+
             return data;
         }
 
@@ -581,7 +601,7 @@ class Editor {
             });
 
             this.working_dialogue.push(data);
-            this.reset_dialogue_editor();
+            this.reset_editors();
 
             document.querySelector('#message-editor').classList.add('_hidden');
         }
@@ -589,9 +609,38 @@ class Editor {
         this.update_working_dialogue_list();
     }
 
-    reset_dialogue_editor() {
+    add_pokemon_to_tile() {
+        let inputs = document.querySelectorAll('#pokemon-editor input, #pokemon-editor textarea, #pokemon-editor select');
+        let data = {};
+
+        if (inputs) {
+            inputs.forEach(input => {
+                if (!input.value) {
+                    return;
+                }
+
+                switch (input.name) {      
+                    default:
+                        data[input.name] = input.value;
+                        break;
+                }
+            });
+
+            this.working_pokemon.push(data);
+            this.reset_editors();
+
+            document.querySelector('#pokemon-editor').classList.add('_hidden');
+        }
+
+        this.update_working_pokemon_list();
+    }
+
+    reset_editors() {
         let message_form = document.querySelector('.editor-message-form');
         message_form.innerHTML = '<div class="editor-data-line"><span>Text:</span><textarea name="text"></textarea></div>';
+
+        let pokemon_form = document.querySelector('.editor-pokemon-form');
+        pokemon_form.innerHTML = '<div class="editor-data-line"> <span>ID:</span> <input type="number" name="id"></input> </div> <div class="editor-data-line"> <span>Level:</span> <input type="number" name="level"></input> </div>';
     }
 
     add_message_field(type) {
@@ -684,8 +733,57 @@ class Editor {
         });
     }
 
+    update_working_pokemon_list() {
+        let working_pokemon_list = document.querySelector('.editor.-active .pokemon-editor-list');
+
+        working_pokemon_list.innerHTML = '';
+        
+        let depth = 0;
+
+        this.working_pokemon.forEach((pokemon, i) => {
+            let li = document.createElement('li');
+            li.setAttribute('data-index', i);
+
+            if (pokemon.id) {
+                li.innerHTML += `${pokemon.id}: Level ${pokemon.level}`;
+            }
+
+            // Options
+            let options = document.createElement('div');
+
+            let buttons = ['x'];
+
+            buttons.forEach(option => {
+                let button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add(`pokemon-option-${option}`);
+
+                switch (option) {
+                    case 'x':
+                        button.addEventListener('click', e => {
+                            let targeted_index = parseInt(e.target.closest('li').getAttribute('data-index'));
+                            delete_element_in_array(this.working_pokemon, targeted_index);
+                            editor.update_working_pokemon_list();
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
+                options.appendChild(button);
+            });
+
+            li.appendChild(options);
+            working_pokemon_list.appendChild(li);
+        });
+    }
+
     clear_working_dialogue() {
         this.working_dialogue = [];
+    }
+
+    clear_working_pokemon() {
+        this.working_pokemon = [];
     }
 
     create_new_map() {
@@ -1102,6 +1200,12 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><input name="name" type="text"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
             break;
+        case 8:
+            display_editor.innerHTML += '<h5>Wild Battle</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="8" disabled></div>';
+            display_editor.innerHTML += '<ol class="pokemon-editor-list"></ol>';
+            display_editor.innerHTML += '<div class="pokemon-editor-options"><button class="pokemon-editor-add">Add Pokemon</button></div>';
+            break;
         default:
             break;
     }
@@ -1142,7 +1246,7 @@ function editor_event_listeners() {
         document.querySelectorAll('.modal-close').forEach(elem => {
             elem.addEventListener('click', e => {
                 e.target.closest('._modal').classList.add('_hidden');
-                editor.reset_dialogue_editor();
+                editor.reset_editors();
             });
         });
     }
@@ -1151,6 +1255,14 @@ function editor_event_listeners() {
         document.querySelectorAll('.dialogue-editor-add').forEach(elem => {
             elem.addEventListener('click', e => {
                 document.querySelector('#message-editor').classList.remove('_hidden');
+            });
+        });
+    }
+
+    if (document.querySelector('.pokemon-editor-add')) {
+        document.querySelectorAll('.pokemon-editor-add').forEach(elem => {
+            elem.addEventListener('click', e => {
+                document.querySelector('#pokemon-editor').classList.remove('_hidden');
             });
         });
     }

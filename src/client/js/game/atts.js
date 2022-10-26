@@ -7,5 +7,6 @@
  * 5: NPC [Map, X, Y]
  * 6: NPC Wall
  * 7: Item
+ * 8: Wild Battle
  * ?: Force Direction
  */

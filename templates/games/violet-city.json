@@ -1428,8 +1428,16 @@
             "type": 0
         }, {
             "type": 5,
-            "dialogue": ["CLEFAIRY!"],
-            "sprite": 3,
+            "dialogue": [{
+                "text": "CLEFAIRY!",
+                "pre_callback": {
+                    "name": "dialogue_cry_sfx",
+                    "args": {
+                        "id": 35
+                    }
+                }
+            }],
+            "sprite": 21,
             "facing": "West",
             "movement_state": "Active"
         }, {

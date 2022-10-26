@@ -76,6 +76,7 @@
                                     <button data-att="5">NPC</button>
                                     <button data-att="6">NPC Wall</button>
                                     <button data-att="7">Item</button>
+                                    <button data-att="8">Wild Battle</button>
                                 </div>
                             </div>
                             <div id="properties-editor" class="editor">
@@ -120,9 +121,31 @@
                                         <div class="editor-message-options-options">
                                             <button id="editor-message-add-option">Add Option</button>
                                             <button id="editor-message-add-response">Add Response</button>
-                                            <button id="editor-message-add-callback">Add Callback</button>
+                                            <button id="editor-message-add-pre-callback">Add Pre Callback</button>
+                                            <button id="editor-message-add-post-callback">Add Post Callback</button>
                                         </div>
                                         <button id="editor-add-message">Add To Dialogue</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="pokemon-editor" class="_modal _hidden">
+                                <div class="modal-inner">
+                                    <button class="modal-close">X</button>
+                                    <div class="general-editor-display">
+                                        <h3>New Pokemon</h3>
+                                        <div class="editor-pokemon-form">
+                                            <div class="editor-data-line">
+                                                <span>ID:</span>
+                                                <input type="number" name="id"></input>
+                                            </div>
+                                            <div class="editor-data-line">
+                                                <span>Level:</span>
+                                                <input type="number" name="level"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="general-editor-options">
+                                        <button id="editor-add-pokemon">Add Pokemon</button>
                                     </div>
                                 </div>
                             </div>

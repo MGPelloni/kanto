@@ -290,6 +290,9 @@ class Kanto_Map {
           case 7: 
             sprite.tint = '0xDAA520';
             break;
+          case 8:
+            sprite.tint = '0x35530A';
+            break;
           default:
             sprite.tint = '0xEEEEEE';
             sprite.alpha = 0;
@@ -328,7 +331,7 @@ class Kanto_Map {
   }
 
   server_sync() {
-    socket.emit('map_server_sync', {lobby_id: GAME_ID, map: this.id});
+    socket.emit('map_server_sync', {lobby_id: game_id, map: this.id});
   }
 
   build() {

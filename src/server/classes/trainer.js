@@ -15,16 +15,15 @@ class Trainer {
     check_tile(lobby_index) {
         let map = lobbies[lobby_index].game.maps[this.position.map],
             index = this.position.x + map.width * this.position.y,
-            tile = map.tiles[index];
+            tile = map.atts[index];
 
-        switch (tile) {
-            case 10:
-            case 17:
-            case 46:
+        switch (tile.type) {
+            case 8:
                 let battle_roll = Math.floor(Math.random() * 10) + 1; // 10% chance
 
                 if (battle_roll == 10) {
-                    this.wild_pokemon_battle();
+                    let pokemon_roll = Math.floor(Math.random() * tile.pokemon.length); // Selecting a PKMN from the list
+                    this.wild_pokemon_battle(tile.pokemon[pokemon_roll].id, tile.pokemon[pokemon_roll].level);
                 }
                 break;
             default:
@@ -32,10 +31,14 @@ class Trainer {
         }
     }
 
-    wild_pokemon_battle() {
+    wild_pokemon_battle(id = null, level = 5) {
+        if (!id) {
+            id = Math.floor(Math.random() * 151);
+        }
+
         this.in_battle = true;
         this.battle.type = 'wild';
-        this.battle.pokemon = new Pokemon(Math.floor(Math.random() * 151));
+        this.battle.pokemon = new Pokemon(id, level);
 
         io.to(this.lobby_id).emit('trainer_entering_battle', {
             socket_id: this.socket_id
