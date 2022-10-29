@@ -2,16 +2,16 @@ function battle_prepare(front, back) {
     let path = '../assets/graphics/pokemon';
 
     battle.portraits = {
-        front: front,
-        back: back
+        front: front.toLowerCase(),
+        back: back.toLowerCase()
     };
 
     if (!app.loader.resources[`front_portrait_${battle.portraits.front}`]) {
-        app.loader.add(`front_portrait_${front}`, `${path}/${front}.png`)
+        app.loader.add(`front_portrait_${battle.portraits.front}`, `${path}/${battle.portraits.front}.png`)
     }
 
     if (!app.loader.resources[`back_portrait_${battle.portraits.back}`]) {
-        app.loader.add(`back_portrait_${back}`, `${path}/${back}b.png`);
+        app.loader.add(`back_portrait_${battle.portraits.back}`, `${path}/${battle.portraits.back}b.png`);
     }
 
     music.load(14);
