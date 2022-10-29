@@ -293,6 +293,9 @@ class Kanto_Map {
           case 8:
             sprite.tint = '0x35530A';
             break;
+          case 9:
+            sprite.tint = '0x561D5E';
+            break;
           default:
             sprite.tint = '0xEEEEEE';
             sprite.alpha = 0;

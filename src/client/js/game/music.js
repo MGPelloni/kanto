@@ -19,11 +19,13 @@ class Music {
             return;
         }
 
-        this.tracks[num] = new Howl({
-            src: [`${this.path}/${num}.mp3`],
-            loop: true,
-            volume: 0.5
-        });
+        if (!this.tracks[num]) {
+            this.tracks[num] = new Howl({
+                src: [`${this.path}/${num}.mp3`],
+                loop: true,
+                volume: 0.5
+            });
+        }
     }
 
     heartbeat() {
@@ -50,10 +52,7 @@ class Music {
         }
 
         // Loading
-        if (!this.tracks[num]) {
-            this.load(num);
-        }
-
+        this.load(num);
         this.next_track = num;
 
         // New music incoming, fade out
@@ -76,7 +75,7 @@ class Music {
 
                 this.fading = true;
             }
-        } else { // First song
+        } else if (!this.tracks[num].playing()) {
             this.current_track = num;
             this.tracks[num].play();
         }
@@ -123,11 +122,11 @@ class Music {
         Howler.mute(false);
         this.enabled = true;
 
-        if (!this.current_track) {
-            this.current_track = map.music;
+        if (this.current_track) {
+            this.play(this.current_track);
+        } else if (map.music) {
+            this.play(map.music);
         }
-
-        this.play(this.current_track);
 
         // Load event tracks
         if (!this.tracks[this.preload_tracks[0]]) {
@@ -191,6 +190,11 @@ class Music {
         this.track_loops[37] = {
             start: 1.7893333333333317,
             end: 68.63066666666665
+        }
+
+        this.track_loops[1000] = {
+            start: 13.0118820861678,
+            end: 130.10430839002268
         }
     }
 }

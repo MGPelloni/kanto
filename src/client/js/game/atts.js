@@ -8,5 +8,5 @@
  * 6: NPC Wall
  * 7: Item
  * 8: Wild Battle
- * ?: Force Direction
+ * 9: Tile Event
  */

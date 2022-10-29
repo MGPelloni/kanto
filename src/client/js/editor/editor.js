@@ -238,6 +238,9 @@ class Editor {
                         case 8:
                             atts_container.children[sprite.game_position.index].tint = '0x35530A';
                             break;
+                        case 9:
+                            atts_container.children[sprite.game_position.index].tint = '0x561D5E';
+                            break;
                         default:
                             break;
                     }
@@ -279,6 +282,9 @@ class Editor {
                             break;
                         case 8:
                             atts_container.children[sprite.game_position.index].tint = '0x35530A';
+                            break;
+                        case 9:
+                            atts_container.children[sprite.game_position.index].tint = '0x561D5E';
                             break;
                         default:
                             atts_container.children[sprite.game_position.index].tint = '0xEEEEEE';
@@ -391,6 +397,9 @@ class Editor {
             case 8:
               color = '0x35530A';
               break;
+            case 9:
+              color = '0x561D5E';
+              break;
             default:
               color = '0xEEEEEE';
               break;
@@ -494,13 +503,18 @@ class Editor {
                 }
             });
 
-            if (this.working_dialogue.length > 0) {
-                data['dialogue'] = this.prepare_dialogue_data();
+            if (this.working_dialogue) {
+                if (this.working_dialogue.length > 0) {
+                    data['dialogue'] = this.prepare_dialogue_data();
+                }
             }
 
-            if (this.working_pokemon.length > 0) {
-                data['pokemon'] = this.working_pokemon;
+            if (this.working_pokemon) {
+                if (this.working_pokemon.length > 0) {
+                    data['pokemon'] = this.working_pokemon;
+                }
             }
+
 
             return data;
         }
@@ -527,12 +541,12 @@ class Editor {
             }
 
             if (message.pre_callback) {
-                prepared_message.pre_callback = message.pre_callback;
+                prepared_message.pre_callback = {...message.pre_callback};
                 prepared_message.pre_callback.args = this.prepare_callback_args(prepared_message.pre_callback.name, prepared_message.pre_callback.args);
             }
 
             if (message.post_callback) {
-                prepared_message.post_callback = message.post_callback;
+                prepared_message.post_callback = {...message.post_callback};
                 prepared_message.post_callback.args = this.prepare_callback_args(prepared_message.post_callback.name, prepared_message.post_callback.args);
             }
 
@@ -712,6 +726,10 @@ class Editor {
             <option>dialogue_sfx</option>
             <option>dialogue_cry_sfx</option>
             <option>dialogue_give_item</option>
+            <option>dialogue_force_move_north</option>
+            <option>dialogue_force_move_east</option>
+            <option>dialogue_force_move_south</option>
+            <option>dialogue_force_move_west</option>
         </select>`;
     }
 
@@ -723,7 +741,13 @@ class Editor {
                 break;             
             case 'dialogue_cry_sfx':
                 return {id: args};
-                break;                     
+                break;   
+            case 'dialogue_force_move_north':
+            case 'dialogue_force_move_east':
+            case 'dialogue_force_move_south':
+            case 'dialogue_force_move_west':
+                return {spaces: args};
+                break;                         
             default:
                 return {name: args};
                 break;
@@ -1270,6 +1294,12 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="8" disabled></div>';
             display_editor.innerHTML += '<ol class="pokemon-editor-list"></ol>';
             display_editor.innerHTML += '<div class="pokemon-editor-options"><button class="pokemon-editor-add">Add Pokemon</button></div>';
+            break;
+        case 9:
+            display_editor.innerHTML += '<h5>Tile Event</h5>';
+            display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="9" disabled></div>';
+            display_editor.innerHTML += '<ol class="dialogue-editor-list"></ol>';
+            display_editor.innerHTML += '<div class="dialogue-editor-options"><button class="dialogue-editor-add">Add to Dialogue</button></div>';
             break;
         default:
             break;

@@ -161,7 +161,7 @@ class Message {
       this.options = options;
       this.index = 0;
       this.tick = 0;
-      this.row_limit = 18;
+      this.row_limit = 17;
       this.length = text.length;
       this.words = text.split(' ');
       this.rows = [];
