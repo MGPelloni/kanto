@@ -17,6 +17,7 @@ class Player {
         this.last_position = {};
         this.speed = 1;
         this.in_battle = false;
+        this.automove = {};
 
         this.pokemon = [
             POKEMON[Math.floor(Math.random() * 151)]
@@ -90,6 +91,10 @@ class Player {
                         this.position.y--;
                         multiplayer_update_position();
                     } else {
+                        if (this.automove.active) {
+                            this.stop_forced_movement();
+                        }
+
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
@@ -124,6 +129,10 @@ class Player {
                         this.position.x++;
                         multiplayer_update_position();
                     } else {
+                        if (this.automove.active) {
+                            this.stop_forced_movement();
+                        }
+
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
@@ -158,6 +167,10 @@ class Player {
                         this.position.y++;
                         multiplayer_update_position();
                     } else {
+                        if (this.automove.active) {
+                            this.stop_forced_movement();
+                        }
+
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
@@ -192,6 +205,10 @@ class Player {
                         this.position.x--;
                         multiplayer_update_position();
                     } else {
+                        if (this.automove.active) {
+                            this.stop_forced_movement();
+                        }
+
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
@@ -216,10 +233,70 @@ class Player {
         }
     }
 
+    stop_forced_movement() {
+        clearInterval(player.automove.interval);
+        this.frozen = false;
+        this.automove.active = false;
+    }
+
+    force_move(direction, spaces) {
+        if (this.automove.active) {
+            return false;
+        }
+
+        this.frozen = true;
+        this.automove.active = true;
+        this.automove.position = {...this.position};
+
+        switch (direction) {
+            case 0: // North
+                this.automove.position.y -= spaces;
+                this.automove.interval = setInterval(() => {
+                    this.move(direction);
+        
+                    if (player.position.y <= player.automove.position.y) {
+                        this.stop_forced_movement();
+                    }
+                }, 16);
+                break;
+            case 1: // East
+                this.automove.position.x += spaces;
+                this.automove.interval = setInterval(() => {
+                    this.move(direction);
+        
+                    if (player.position.x >= player.automove.position.x) {
+                        this.stop_forced_movement();
+                    }
+                }, 16);
+                break;
+            case 2: // South
+                this.automove.position.y += spaces;
+                this.automove.interval = setInterval(() => {
+                    this.move(direction);
+        
+                    if (player.position.y >= player.automove.position.y) {
+                        this.stop_forced_movement();
+                    }
+                }, 16);
+                break;
+            case 3: // West
+                this.automove.position.x -= spaces;
+                this.automove.interval = setInterval(() => {
+                    this.move(direction);
+        
+                    if (player.position.x <= player.automove.position.x) {
+                        this.stop_forced_movement();
+                    }
+                }, 16);
+                break;
+        }
+
+    }
+
     move_to_trainer(direction, trainer) {
         switch (direction) {
             case 0: // North
-                this.automove = setInterval(() => {
+                this.automove.interval = setInterval(() => {
                     if (this.position.y - trainer.position.y > 1) {
                         this.move(0);
                     } else {
@@ -227,12 +304,12 @@ class Player {
                             player.start_battle();
                         }, 5000);
 
-                        clearInterval(this.automove);
+                        clearInterval(this.automove.interval);
                     }
                 }, 16);
                 break;
             case 1: // East
-                this.automove = setInterval(() => {
+                this.automove.interval = setInterval(() => {
                     if (trainer.position.x - this.position.x > 1) {
                         this.move(1);
                     } else {
@@ -240,12 +317,12 @@ class Player {
                             player.start_battle();
                         }, 5000);
 
-                        clearInterval(this.automove);
+                        clearInterval(this.automove.interval);
                     }
                 }, 16);
                 break;
             case 2: // South
-                this.automove = setInterval(() => {
+                this.automove.interval = setInterval(() => {
                     if (trainer.position.y - this.position.y > 1) {
                         this.move(2);
                     } else {
@@ -253,12 +330,12 @@ class Player {
                             player.start_battle();
                         }, 5000);
 
-                        clearInterval(this.automove);
+                        clearInterval(this.automove.interval);
                     }
                 }, 16);
                 break;
             case 3: // East
-                this.automove = setInterval(() => {
+                this.automove.interval = setInterval(() => {
                     if (this.position.x - trainer.position.x > 1) {
                         this.move(3);
                     } else {
@@ -266,7 +343,7 @@ class Player {
                             player.start_battle();
                         }, 5000);
                         
-                        clearInterval(this.automove);
+                        clearInterval(this.automove.interval);
                     }
                 }, 16);
                 break;
@@ -514,6 +591,8 @@ class Player {
                 this.place(this.position.att.x, this.position.att.y, this.position.att.map);
                 this.freeze();
                 break;
+            case 9: // Event
+                dialogue.queue_messages(this.position.att.dialogue);
             default:
                 break;
         }
