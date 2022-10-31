@@ -56,7 +56,7 @@ class Sfx {
 
         let volume = 0.5;
 
-        if (name == 'item-received') {
+        if (name == 'item-received' || name == 'item-found') {
             volume = 0.2;
         }
 

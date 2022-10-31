@@ -9,11 +9,15 @@ class Item {
 
         switch (this.name) {
             case 'BICYCLE':
+            case 'BIKE':
                 if (player.speed == 1) {
                     player.history.spritesheet_id = player.spritesheet_id;
                     player.change_spritesheet(4);
                     player.speed = 2;
-                    music.immediate_play(32);
+
+                    if (this.name != 'BIKE') {
+                        music.immediate_play(32);
+                    }
                 } else {
                     if (player.history.spritesheet_id) {
                         player.change_spritesheet(player.history.spritesheet_id);
@@ -22,16 +26,17 @@ class Item {
                     }
                     
                     player.speed = 1;
-                    music.immediate_play(map.music);
+
+                    if (this.name != 'BIKE') {
+                        music.immediate_play(map.music);
+                    }
                 }
 
                 multiplayer_update_speed();
                 kanto_close_menus();
                 break;
-            case 'GREAT BALL':
-                dialogue.queue_messages(["OAK: This isn't the time to use this!"]);
-                break;
             default:
+                dialogue.queue_messages(["OAK: This isn't the time to use this!"]);
                 break;
         }
     }
