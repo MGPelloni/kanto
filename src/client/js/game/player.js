@@ -77,12 +77,17 @@ class Player {
             switch (direction) {
                 case 0: // North
                     if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkNorth) {
-                        this.sprite.textures = this.spritesheet.walkNorth;
-                        this.sprite.play();
-                        this.facing = 'North';
+                        if (!this.automove.spin) {
+                            this.sprite.textures = this.spritesheet.walkNorth;
+                            this.sprite.play();
+                            this.facing = 'North';
+                        }   
                     }
 
-                    this.position.f = 0;
+                    if (!this.automove.spin) {
+                        this.position.f = 0;
+                    }
+                    
                     next_position.y--;
 
                     if (collision_check(next_position.x, next_position.y) == false) {
@@ -115,13 +120,18 @@ class Player {
                     break;
                 case 1: // East
                     if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkEast) {
-                        this.sprite.textures = this.spritesheet.walkEast;
-                        this.sprite.play();       
-                        this.facing = 'East';      
+                        if (!this.automove.spin) {
+                            this.sprite.textures = this.spritesheet.walkEast;
+                            this.sprite.play();       
+                            this.facing = 'East';     
+                        } 
+                    }
+
+                    if (!this.automove.spin) {
+                        this.position.f = 1;
                     }
 
                     next_position.x++;
-                    this.position.f = 1;
 
                     if (collision_check(next_position.x, next_position.y) == false) {
                         this.direction = 'East';
@@ -153,14 +163,19 @@ class Player {
                     break;
                 case 2: // South
                     if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkSouth) {
-                        this.sprite.textures = this.spritesheet.walkSouth;
-                        this.sprite.play();
-                        this.facing = 'South';
+                        if (!this.automove.spin) {
+                            this.sprite.textures = this.spritesheet.walkSouth;
+                            this.sprite.play();
+                            this.facing = 'South';
+                        }
+                    }
+
+                    if (!this.automove.spin) {
+                        this.position.f = 2;
                     }
 
                     next_position.y++;
-                    this.position.f = 2;
-
+                    
                     if (collision_check(next_position.x, next_position.y) == false) {
                         this.direction = 'South';
                         this.moving = true;
@@ -191,13 +206,18 @@ class Player {
                     break;
                 case 3: // West
                     if (!this.sprite.playing || this.sprite.textures !== this.spritesheet.walkWest) {
-                        this.sprite.textures = this.spritesheet.walkWest;
-                        this.sprite.play();
-                        this.facing = 'West';
+                        if (!this.automove.spin) {
+                            this.sprite.textures = this.spritesheet.walkWest;
+                            this.sprite.play();
+                            this.facing = 'West';
+                        }
+                    }
+
+                    if (!this.automove.spin) {
+                        this.position.f = 3;
                     }
 
                     next_position.x--;
-                    this.position.f = 3;
 
                     if (collision_check(next_position.x, next_position.y) == false) {
                         this.direction = 'West';
@@ -237,25 +257,68 @@ class Player {
         clearInterval(player.automove.interval);
         this.frozen = false;
         this.automove.active = false;
+        this.automove.spin = false;
     }
 
-    force_move(direction, spaces) {
+    face(direction) {
+        switch (direction) {
+            case 0:
+                this.position.f = 0;
+                this.sprite.textures = this.spritesheet.standNorth;
+                break;
+            case 1:
+                this.position.f = 1;
+                this.sprite.textures = this.spritesheet.standEast;
+                break;
+            case 2:
+                this.position.f = 2;
+                this.sprite.textures = this.spritesheet.standSouth;
+                break;
+            case 3:
+                this.position.f = 3;
+                this.sprite.textures = this.spritesheet.standWest;
+                break;
+            default:
+                break;
+        }
+    }
+
+    force_move(direction, spaces, spin = false) {
         if (this.automove.active) {
-            return false;
+            this.stop_forced_movement();
         }
 
         this.frozen = true;
         this.automove.active = true;
         this.automove.position = {...this.position};
+        this.automove.spin = spin;
 
         switch (direction) {
             case 0: // North
                 this.automove.position.y -= spaces;
                 this.automove.interval = setInterval(() => {
                     this.move(direction);
-        
+
                     if (player.position.y <= player.automove.position.y) {
                         this.stop_forced_movement();
+                    }
+
+                    if (this.automove.spin) {
+                        if (!this.automove.spin_cooldown) {
+                            this.automove.spin_cooldown = true;
+
+                            let f = player.position.f + 1;
+
+                            if (f > 3) {
+                                f = 0;
+                            }
+
+                            this.face(f);
+                            
+                            setTimeout(() => {
+                                player.automove.spin_cooldown = false;
+                            }, 100)
+                        }
                     }
                 }, 16);
                 break;
@@ -267,6 +330,24 @@ class Player {
                     if (player.position.x >= player.automove.position.x) {
                         this.stop_forced_movement();
                     }
+
+                    if (this.automove.spin) {
+                        if (!this.automove.spin_cooldown) {
+                            this.automove.spin_cooldown = true;
+
+                            let f = player.position.f + 1;
+
+                            if (f > 3) {
+                                f = 0;
+                            }
+
+                            this.face(f);
+                            
+                            setTimeout(() => {
+                                player.automove.spin_cooldown = false;
+                            }, 100)
+                        }
+                    }
                 }, 16);
                 break;
             case 2: // South
@@ -277,6 +358,24 @@ class Player {
                     if (player.position.y >= player.automove.position.y) {
                         this.stop_forced_movement();
                     }
+
+                    if (this.automove.spin) {
+                        if (!this.automove.spin_cooldown) {
+                            this.automove.spin_cooldown = true;
+
+                            let f = player.position.f + 1;
+
+                            if (f > 3) {
+                                f = 0;
+                            }
+
+                            this.face(f);
+                            
+                            setTimeout(() => {
+                                player.automove.spin_cooldown = false;
+                            }, 100)
+                        }
+                    }
                 }, 16);
                 break;
             case 3: // West
@@ -286,6 +385,24 @@ class Player {
         
                     if (player.position.x <= player.automove.position.x) {
                         this.stop_forced_movement();
+                    }
+
+                    if (this.automove.spin) {
+                        if (!this.automove.spin_cooldown) {
+                            this.automove.spin_cooldown = true;
+
+                            let f = player.position.f + 1;
+
+                            if (f > 3) {
+                                f = 0;
+                            }
+
+                            this.face(f);
+                            
+                            setTimeout(() => {
+                                player.automove.spin_cooldown = false;
+                            }, 100)
+                        }
                     }
                 }, 16);
                 break;
