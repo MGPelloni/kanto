@@ -730,6 +730,10 @@ class Editor {
             <option>dialogue_force_move_east</option>
             <option>dialogue_force_move_south</option>
             <option>dialogue_force_move_west</option>
+            <option>dialogue_force_spin_north</option>
+            <option>dialogue_force_spin_east</option>
+            <option>dialogue_force_spin_south</option>
+            <option>dialogue_force_spin_west</option>
         </select>`;
     }
 
@@ -746,6 +750,10 @@ class Editor {
             case 'dialogue_force_move_east':
             case 'dialogue_force_move_south':
             case 'dialogue_force_move_west':
+            case 'dialogue_force_spin_north':
+            case 'dialogue_force_spin_east':
+            case 'dialogue_force_spin_south':
+            case 'dialogue_force_spin_west':                
                 return {spaces: args};
                 break;                         
             default:

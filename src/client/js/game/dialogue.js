@@ -41,12 +41,14 @@ class Dialogue {
             queued_message = message;
         }
 
-        this.active = true;
-        this.msg = new Message(queued_message, queued_options);
-        player.frozen = true;
-        message_container.visible = true;
-        message_text.text = '';
-        write_game_text();
+        if (message.text) {
+            this.active = true;
+            this.msg = new Message(queued_message, queued_options);
+            player.frozen = true;
+            message_container.visible = true;
+            message_text.text = '';
+            write_game_text();
+        }
     }
 
     queue_messages(messages) {
@@ -60,7 +62,84 @@ class Dialogue {
         this.process_queue();
     }
 
+    analyze_queue() {
+        // Defaults
+        this.conditional_active = false;
+
+        // Check to see if we are dealing in conditionals
+        this.queue.forEach(message => {
+            if (message.conditional) {
+                this.conditional_active = true;
+            }
+        });
+
+        if (!this.conditional_active) {
+            return;
+        }
+
+        // Check to see if any conditional is met
+        let conditional_met = false;
+
+        this.queue.forEach((message, i) => {
+            if (!message.conditional) {
+                return;
+            }
+
+            switch (message.conditional) {
+                case 'has_item':
+                    player.items.forEach(item => {
+                        if (item.name == message.arguments) {
+                            conditional_met = true;
+                        }
+                    });
+
+                    if (!conditional_met) {
+                        return;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            conditional_met = true;
+        }); 
+
+        // If a conditional is met, only leave those messages in
+        // If no conditional is met, remove all conditional messages except for those without conditionals
+        let new_queue = [];
+
+        if (conditional_met) {
+            this.queue.forEach((message, i) => {
+                if (!message.conditional) {
+                    return;
+                }
+
+                switch (message.conditional) {
+                    case 'has_item':
+                        player.items.forEach(item => {
+                            if (item.name == message.arguments) {
+                                new_queue.push(message);
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        } else {
+            this.queue.forEach((message, i) => {
+                if (!message.conditional) {
+                    new_queue.push(message);
+                }
+            });
+        }
+
+        this.queue = new_queue;
+    }
+
     process_queue() {
+        this.analyze_queue();
+
         if (this.queue.length > 0) {
             this.add_message(this.queue[0]);
             this.queue.shift();
