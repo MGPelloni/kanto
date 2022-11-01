@@ -41,14 +41,16 @@ class Dialogue {
             queued_message = message;
         }
 
-        if (message.text) {
-            this.active = true;
-            this.msg = new Message(queued_message, queued_options);
-            player.frozen = true;
-            message_container.visible = true;
-            message_text.text = '';
-            write_game_text();
+        if (typeof message === 'object' && !message.text) {
+            return;
         }
+        
+        this.active = true;
+        this.msg = new Message(queued_message, queued_options);
+        player.frozen = true;
+        message_container.visible = true;
+        message_text.text = '';
+        write_game_text();
     }
 
     queue_messages(messages) {
