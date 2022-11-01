@@ -60,11 +60,13 @@ class Sfx {
             volume = 0.2;
         }
 
-        this.tracks[name] = new Howl({
-            src: [`${this.path}/${type}/${name}.wav`],
-            loop: false,
-            volume: volume
-        });
+        if (!this.tracks[name]) {
+            this.tracks[name] = new Howl({
+                src: [`${this.path}/${type}/${name}.wav`],
+                loop: false,
+                volume: volume
+            });
+        }
     }
 
     stop() {
@@ -76,12 +78,24 @@ class Sfx {
     enable() {
         this.enabled = true;
 
-        // Load event tracks
-        if (!this.tracks[this.preload_tracks[0]]) {
-            this.preload_tracks.forEach(track => {
-                this.load(track);
-            });
+        // Load event tracks, delay mobile preload to keep size down
+        if (check_mobile()) {
+            setTimeout(() => {
+                sfx.preload();
+            }, 5000);
+        } else {
+            this.preload();
         }
+    }
+
+    preload() {
+        if (!this.enabled) {
+            return;
+        }
+
+        this.preload_tracks.forEach(track => {
+            this.load(track);
+        });
     }
 
     disable() {

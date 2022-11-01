@@ -128,12 +128,22 @@ class Music {
             this.play(map.music);
         }
 
-        // Load event tracks
-        if (!this.tracks[this.preload_tracks[0]]) {
-            this.preload_tracks.forEach(track => {
-                this.load(track);
-            });
+        // Load event tracks if music is still enabled, do not preload music tracks on mobile data
+        if (!check_mobile()) {
+            setTimeout(() => {
+                music.preload();
+            }, 5000);
         }
+    }
+
+    preload() {
+        if (!this.enabled) {
+            return;
+        }
+
+        this.preload_tracks.forEach(track => {
+            this.load(track);
+        });
     }
 
     get_context() {
