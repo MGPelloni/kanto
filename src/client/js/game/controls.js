@@ -30,6 +30,12 @@ function keysDown(e) {
             case 'action':
                 e.keyCode = 88;
                 break;
+            case 'back':
+                e.keyCode = 90;
+                break;
+            case 'start':
+                e.keyCode = 77;
+                break;
             default:
                 break;
         }
@@ -57,6 +63,12 @@ function keysUp(e) {
                 break;
             case 'action':
                 e.keyCode = 88;
+                break;
+            case 'back':
+                e.keyCode = 90;
+                break;
+            case 'start':
+                e.keyCode = 77;
                 break;
             default:
                 break;
