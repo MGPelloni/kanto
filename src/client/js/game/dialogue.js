@@ -5,6 +5,7 @@ class Dialogue {
         this.ticker = null;
         this.text = null;
         this.active = false;
+        this.cooldown = false;
         this.speed = 3;
         this.arrow = {
             animation: 0,
@@ -169,9 +170,12 @@ class Dialogue {
                     this.post_callback = null;
                 }
 
+                dialogue.cooldown = true;
+                dialogue.active = false;
+
                 setTimeout(() => {
                     if (dialogue.queue.length == 0) {
-                        dialogue.active = false;
+                        dialogue.cooldown = false;
                     }
                 }, 600);
             } else if (this.msg == null && this.queue.length > 0) {

@@ -255,7 +255,13 @@ class Player {
 
     stop_forced_movement() {
         clearInterval(player.automove.interval);
-        this.frozen = false;
+
+        if (!dialogue.active) {   
+            this.frozen = false;
+        }
+
+        console.log(this.position, this.frozen);
+        
         this.automove.active = false;
         this.automove.spin = false;
     }
@@ -607,12 +613,12 @@ class Player {
 
         switch (att_tile.type) {
             case 1:
-                if (!dialogue.active) {
+                if (!dialogue.active && !dialogue.cooldown) {
                     check_sprite_tile_actions(map_tile);
                 }
                 break;
             case 3:
-                if (!dialogue.active) {
+                if (!dialogue.active && !dialogue.cooldown) {
                     dialogue.queue_messages(att_tile.dialogue);
                 }
                 break;
@@ -645,7 +651,7 @@ class Player {
 
         npcs.forEach((npc, i) => {
             if (index == npc.position.index) {
-                if (!dialogue.active) {
+                if (!dialogue.active && !dialogue.cooldown) {
                     npc.frozen = true;
                     npc.face_player();
                     dialogue.queue_messages(npc.dialogue);
