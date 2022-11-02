@@ -41,11 +41,11 @@ class Dialogue {
         } else if (typeof message === 'string') { // Legacy
             queued_message = message;
         }
-
-        if (typeof message === 'object' && !message.text) {
+        
+        if (typeof message === 'object' && !message.text && !message.options && !message.post_callback) { // Message only contains a pre-callback
             return;
         }
-        
+
         this.active = true;
         this.msg = new Message(queued_message, queued_options);
         player.frozen = true;
@@ -55,7 +55,6 @@ class Dialogue {
     }
 
     queue_messages(messages) {
-        console.log(messages);
         if (Array.isArray(messages)) { // Check for multiple messages
             this.queue.push(...messages); 
         } else {
@@ -171,11 +170,11 @@ class Dialogue {
                 }
 
                 dialogue.cooldown = true;
-                dialogue.active = false;
-
+                 
                 setTimeout(() => {
                     if (dialogue.queue.length == 0) {
                         dialogue.cooldown = false;
+                        dialogue.active = false;
                     }
                 }, 600);
             } else if (this.msg == null && this.queue.length > 0) {
