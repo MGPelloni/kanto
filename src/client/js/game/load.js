@@ -23,22 +23,43 @@ function kanto_load_assets() {
  * Fetches the JSON formatted map data and initializes the game start when complete.
  */
 function kanto_fetch_game() {
-    if (game_mode == 'create' && !game_id) { // No game has been selected, and we are in create mode
+    if (!game_id && !lobby_id && game_mode == 'play') { // No game or lobby has been provided, return user to homepage
+        window.location = `${window.location.protocol}//${window.location.host}/`;
+        return;
+    }
+
+    if (lobby_id) {
+        fetch(`${window.location.protocol}//${window.location.host}/lobby-game`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({'lobby': lobby_id, 'game': game_id}),
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            if (data.message) {
+                kanto_new_game();
+            } else {
+                kanto_load_game(data);
+            }
+        });
+    } else if (game_id) {
+        fetch(`${window.location.protocol}//${window.location.host}/game`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }, 
+            body: JSON.stringify({'game': game_id}),
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+            kanto_load_game(data);
+        });
+    } else if (game_mode == 'create' && !game_id) { // No game has been selected, and we are in create mode
         kanto_new_game();
         return;
     }
-    
-    fetch(`${window.location.protocol}//${window.location.host}/game`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'game': game_id}),
-    }).then((res) => {
-        return res.json();
-    }).then((data) => {
-        kanto_load_game(data);
-    });
 }
 
 function kanto_new_game() {
@@ -51,6 +72,7 @@ function kanto_new_game() {
     maps.push(map);
 
     // Loading is complete, start the game
+    kanto_prepare();
     kanto_start();
 }
 
@@ -74,6 +96,7 @@ function kanto_load_game(data) {
     map = maps[0];
 
     // Loading is complete, start the game
+    kanto_prepare();
     kanto_start();
 }
 
@@ -158,9 +181,8 @@ function kanto_map_export() {
 
 function kanto_game_export() {
     let exported_meta = meta;
-    delete exported_meta.lobby_id;
-
     let exported_maps = maps.map(object => ({ ...object })) // clone the maps data without object references
+    
     exported_maps.forEach(exported_map => {
         // Format the data by deleting added properties
         delete exported_map.id;
@@ -176,6 +198,7 @@ function kanto_game_export() {
     };
 
     let game_data = {
+        game_id: game_id,
         meta: exported_meta,
         player: exported_player,
         maps: exported_maps
@@ -192,10 +215,7 @@ function kanto_json_game_export() {
     return saveTemplateAsFile(`kanto-game-export.json`, JSON.parse(kanto_game_export()));
 }
 
-/**
- * Initializes the game.
- */
-function kanto_start() {
+function kanto_prepare() {
     prepare_background();
     prepare_npc_container();
     prepare_player_container();
@@ -206,7 +226,12 @@ function kanto_start() {
     prepare_spritesheets();
     prepare_item_sprites();
     prepare_audio();
+}
 
+/**
+ * Initializes the game.
+ */
+function kanto_start() {
     let sprite = Math.floor(Math.random() * 40); // Mobile spritesheets
     
     if (import_data.player) {
@@ -629,7 +654,6 @@ function prepare_multiplayer() {
         lobby_id = game_id;
     }
 
-    meta.lobby_id = lobby_id;
     multiplayer_join_lobby(lobby_id);
     
     // Chat

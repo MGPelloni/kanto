@@ -43,7 +43,7 @@ class Chat {
         }
         
         if (this.validate_message(message)) {
-            socket.emit('chat_add_message', {lobby_id: meta.lobby_id, message: message});
+            socket.emit('chat_add_message', {lobby_id: lobby_id, message: message});
         }
     }
 

@@ -476,7 +476,7 @@ class Editor {
         }).then((data) => {
             if (data.success) {
                 alert(`Game upload successful. You may now view this game at the URL: ${window.location.protocol}//${window.location.host}/play?g=${data.game_id}`);
-                meta.game_id = data.game_id;
+                game_id = data.game_id;
                 store_data(meta.name, kanto_game_export());
             } else {
                 alert('Game upload failed! Please try again later.');

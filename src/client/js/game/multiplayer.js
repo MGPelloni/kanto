@@ -10,7 +10,7 @@ function multiplayer_join_lobby() {
         spritesheet_id: player.spritesheet_id,
     };
 
-    socket.emit('join_lobby', {lobby_id: meta.lobby_id, game_id: game_id, trainer: trainer});
+    socket.emit('join_lobby', {lobby_id: lobby_id, game_id: game_id, trainer: trainer});
 }
 
 function multiplayer_update_position(is_exiting = false) {
@@ -45,29 +45,29 @@ function multiplayer_update_position(is_exiting = false) {
     }
 
     
-    socket.emit('position_update', {lobby_id: meta.lobby_id, trainer: trainer});
+    socket.emit('position_update', {lobby_id: lobby_id, trainer: trainer});
 }
 
 
 function multiplayer_update_facing() {
     if (player.position.f !== player.last_position.f) {
         player.last_position.f = player.position.f;
-        socket.emit('facing_update', {lobby_id: meta.lobby_id, f: player.position.f});
+        socket.emit('facing_update', {lobby_id: lobby_id, f: player.position.f});
     }
 }
 
 function multiplayer_update_speed() {
-    socket.emit('speed_update', {lobby_id: meta.lobby_id, s: player.speed});
+    socket.emit('speed_update', {lobby_id: lobby_id, s: player.speed});
 }
 
 function multiplayer_update_spritesheet() {
-    socket.emit('spritesheet_update', {lobby_id: meta.lobby_id, spritesheet_id: player.spritesheet_id});
+    socket.emit('spritesheet_update', {lobby_id: lobby_id, spritesheet_id: player.spritesheet_id});
 }
 
 function multiplayer_update_name() {
-    socket.emit('name_update', {lobby_id: meta.lobby_id, name: player.name});
+    socket.emit('name_update', {lobby_id: lobby_id, name: player.name});
 }
 
 function multiplayer_player_encounter() {
-    socket.emit('player_encounter', {lobby_id: meta.lobby_id});
+    socket.emit('player_encounter', {lobby_id: lobby_id});
 }

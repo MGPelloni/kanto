@@ -53,12 +53,12 @@ function dialogue_take_item(args) {
 
 function dialogue_wild_battle(args) {
     console.log('callback event: dialogue_wild_battle', args);
-    socket.emit('dialogue_wild_battle', {lobby_id: meta.lobby_id, trainer: trainer});
+    socket.emit('dialogue_wild_battle', {lobby_id: lobby_id, trainer: trainer});
 }
 
 function dialogue_trainer_battle(args) {
     console.log('callback event: dialogue_trainer_battle', args);
-    socket.emit('dialogue_trainer_battle', {lobby_id: meta.lobby_id, trainer: trainer});
+    socket.emit('dialogue_trainer_battle', {lobby_id: lobby_id, trainer: trainer});
 }
 
 function dialogue_force_move_north(args) {

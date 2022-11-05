@@ -334,7 +334,7 @@ class Kanto_Map {
   }
 
   server_sync() {
-    socket.emit('map_server_sync', {lobby_id: game_id, map: this.id});
+    socket.emit('map_server_sync', {lobby_id: lobby_id, map: this.id});
   }
 
   build() {

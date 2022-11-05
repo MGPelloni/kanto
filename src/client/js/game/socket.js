@@ -20,16 +20,22 @@ socket.on('map_server_sync', function(data){
 
 socket.on('set_game_id', function(data){
     game_id = data.game_id;
-    meta.game_id = data.game_id;
-    meta.lobby_id = data.game_id;
 
     let url = new URL(window.location);
     url.searchParams.set('g', game_id);
     window.history.pushState({}, '', url);
 });
 
+socket.on('set_lobby_id', function(data){
+    lobby_id = data.lobby_id
+
+    let url = new URL(window.location);
+    url.searchParams.set('l', lobby_id);
+    window.history.pushState({}, '', url);
+});
+
 socket.on('lobby_loaded', function(data){
-    socket.emit('map_server_sync', {lobby_id: game_id, map: player.position.map});
+    socket.emit('map_server_sync', {lobby_id: lobby_id, map: player.position.map});
 });
 
 

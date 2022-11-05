@@ -2,27 +2,42 @@ io.on("connection", (socket) => {
     console.log('New socket: ', socket.id);
 
     socket.on("join_lobby", (data) => {
+        let lobby_id = null;
+        let game_id = data.game_id;
+
         let targeted_lobby_index = null;
         let new_game = false;
 
-        if (!data.lobby_id) {
-            data.game_id = generate_game_id();
-            data.lobby_id = data.game_id;
-            new_game = true;
-            io.to(socket.id).emit('set_game_id', {game_id: data.game_id});
-        } else {
+        // Check to see if the lobby exists
+        if (data.lobby_id) {
             lobbies.forEach((lobby, i) => {
                 if (data.lobby_id == lobby.id) {
+                    lobby_id = lobby.id
                     targeted_lobby_index = i;
                 }
             });
         }
 
-        let trainer = new Trainer(socket.id, data.lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
-        socket.join(data.lobby_id);
+        // They sent a game ID, but no lobby was found
+        if (!lobby_id && game_id) {
+            lobby_id = generate_game_id();
+            io.to(socket.id).emit('set_lobby_id', {lobby_id: lobby_id});
+        }
+
+        // They sent no game ID or lobby ID
+        if (!lobby_id && !game_id) {
+            game_id = generate_game_id();
+            lobby_id = generate_game_id();
+            new_game = true;
+            io.to(socket.id).emit('set_lobby_id', {lobby_id: lobby_id});
+            io.to(socket.id).emit('set_game_id', {game_id: game_id});
+        }
+
+        let trainer = new Trainer(socket.id, lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
+        socket.join(lobby_id);
 
         if (targeted_lobby_index === null) { // Creating a new lobby
-            let new_lobby = new Lobby(data.lobby_id, data.game_id, [trainer], new_game);
+            let new_lobby = new Lobby(lobby_id, game_id, [trainer], new_game);
             lobbies.push(new_lobby);
         } else { // Lobby ID exists, joining current lobby
             socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
@@ -34,7 +49,7 @@ io.on("connection", (socket) => {
         // const clients = io.sockets.adapter.rooms.get(data.lobby_id);
         // Rooms
         
-        socket.to(data.lobby_id).emit('trainer_joined', {
+        socket.to(lobby_id).emit('trainer_joined', {
             name: trainer.name,
             position: trainer.position,
             spritesheet_id: data.trainer.spritesheet_id, 

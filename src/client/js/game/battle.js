@@ -143,7 +143,7 @@ function battle_end() {
         player.emote.visible = false;
         player.controls = 'walking';
         music.immediate_play(music.get_context());
-        socket.emit('trainer_exiting_battle', {lobby_id: meta.lobby_id});
+        socket.emit('trainer_exiting_battle', {lobby_id: lobby_id});
     }, 500);
 }
 

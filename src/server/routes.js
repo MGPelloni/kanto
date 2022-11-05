@@ -128,11 +128,46 @@ app.post('/game', (req, res) => {
                 console.log(err.toString());
             }
 
-            res.json(result.rows[0]);
+            res.json(result.rows[0].game_data);
             return;
         });
     }
    
+});
+
+
+app.post('/lobby-game', (req, res) => {
+    let lobby_id = req.body.lobby;
+    let game_id = req.body.game;
+
+    if (lobby_id) {
+        let lobby_index = find_lobby_index(lobby_id);
+
+        console.log(lobbies, lobby_index);
+
+        if (lobby_index !== null) {
+            res.json(JSON.stringify(lobbies[lobby_index].game));
+            return;
+        } else {
+            if (game_id) {
+                db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result){
+                    if (err){
+                        console.log(err.toString());
+                        return;
+                    }
+            
+                    if (result.rows.length > 0) {
+                        res.json(result.rows[0].game_data);
+                        return;
+                    } else {
+                        res.json({message: 'Lobby and game both do not exist.'});
+                    }
+                });
+            } else {
+                res.json({message: 'Lobby and game both do not exist.'});
+            }
+        }
+    }
 });
 
 app.post('/upload', (req, res) => {
@@ -141,8 +176,8 @@ app.post('/upload', (req, res) => {
 
     let game_id = null;
   
-    if (req.body.meta.game_id) {
-        game_id = req.body.meta.game_id;
+    if (req.body.game_id) {
+        game_id = req.body.game_id;
     }
 
     if (game_id) {
@@ -168,7 +203,7 @@ app.post('/upload', (req, res) => {
         });
     } else {
         game_id = generate_game_id();
-        req.body.meta.game_id = game_id;
+        req.body.game_id = game_id;
 
         db.query('INSERT INTO games (name, game_id, game_data) values ($1, $2, $3);', [req.body.meta.name, game_id, req.body], function(err, result){
             if (err){
