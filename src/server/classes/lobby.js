@@ -29,12 +29,11 @@ class Lobby {
         this.items = [];
         this.chat = new Chat(this.id);
 
-        this.game.maps.forEach((map, i) => {
-            map.id = i;
-            this.build_npcs(map);
-        });
-
         this.loaded = true;
+        console.log('Lobby loaded:', this.id);
+        io.to(this.id).emit('chat_server_message', {
+            message: `Welcome to Kanto. There are 0 other players in this game.`
+        });
     }
 
     /**
@@ -52,7 +51,10 @@ class Lobby {
         });
 
         this.loaded = true;
-        // console.log(this.npcs);
+        console.log('Lobby loaded:', this.id);
+        io.to(this.id).emit('lobby_loaded', true);
+
+        this.chat.server_message(`Welcome to Kanto. There are 0 other players in this game.`);
     }
 
     build_npcs(map) {

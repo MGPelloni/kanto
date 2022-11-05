@@ -635,10 +635,6 @@ function prepare_multiplayer() {
     // Chat
     chat = new Chat();
 
-    if (game_mode == 'create') {
-        chat.enabled = false;
-    }
-
     if (chat.enabled) {   
         if (document.querySelector('#chat-input')) {
             document.querySelector('#chat-input').addEventListener('focus', (e) => {

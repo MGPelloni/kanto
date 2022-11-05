@@ -19,10 +19,11 @@ io.on("connection", (socket) => {
         }
 
         let trainer = new Trainer(socket.id, data.lobby_id, data.trainer.name, data.trainer.position, data.trainer.spritesheet_id);
+        socket.join(data.lobby_id);
 
         if (targeted_lobby_index === null) { // Creating a new lobby
             let new_lobby = new Lobby(data.lobby_id, data.game_id, [trainer], new_game);
-            lobbies.push(new_lobby)
+            lobbies.push(new_lobby);
         } else { // Lobby ID exists, joining current lobby
             socket.emit('create_current_trainers', lobbies[targeted_lobby_index].trainers);
             lobbies[targeted_lobby_index].chat.direct_message(socket.id, `Welcome to Kanto. There are ${lobbies[targeted_lobby_index].trainers.length} other players in this game.`);
@@ -31,9 +32,8 @@ io.on("connection", (socket) => {
         }
 
         // const clients = io.sockets.adapter.rooms.get(data.lobby_id);
-        
         // Rooms
-        socket.join(data.lobby_id);
+        
         socket.to(data.lobby_id).emit('trainer_joined', {
             name: trainer.name,
             position: trainer.position,
