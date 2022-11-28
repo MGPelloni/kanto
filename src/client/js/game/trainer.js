@@ -117,6 +117,11 @@ class Trainer {
         this.position.map = map;
         this.position.x = x;
         this.position.y = y;
+
+        this.sprite.x = x * TILE_SIZE;
+        this.sprite.y = y * TILE_SIZE;
+        this.emote.x = x * TILE_SIZE;
+        this.emote.y = y * TILE_SIZE - TILE_SIZE;
     }
 
     freeze(ms = 250) {

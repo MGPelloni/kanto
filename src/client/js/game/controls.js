@@ -314,10 +314,10 @@ function editor_controls_loop() {
 
         if (keys["69"]) { // E
             if (!editor.action_timeout && !player.moving) {
-                
                 expand_map(player.facing);
-
+                socket.emit('server_expand_map', {lobby_id: lobby_id, game_id: game_id, map: map.id, direction: player.facing});
                 editor.action_timeout = true;
+
                 setTimeout(() => {
                     editor.action_timeout = false;
                 }, 250)
@@ -326,10 +326,10 @@ function editor_controls_loop() {
 
         if (keys["84"]) { // T
             if (!editor.action_timeout && !player.moving) {
-                
                 condense_map(player.facing);
-
+                socket.emit('server_condense_map', {lobby_id: lobby_id, game_id: game_id, map: map.id, direction: player.facing});
                 editor.action_timeout = true;
+                
                 setTimeout(() => {
                     editor.action_timeout = false;
                 }, 250)

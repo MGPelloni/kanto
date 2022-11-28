@@ -278,4 +278,93 @@ io.on("connection", (socket) => {
             lobbies[lobby_index].trainers[trainer_index].exiting_battle();
         }
     }); 
+
+    // socket.on("create_mode_update_game", (data) => {
+    //     let lobby_index = find_lobby_index(data.lobby_id);
+
+    //     if (lobby_index !== null) {
+    //         if (lobbies[lobby_index].game_id == data.game_id) {
+    //             console.log('UPDATED', lobbies[lobby_index].game, data.game);
+    //             lobbies[lobby_index].game = JSON.parse(data.game);
+    //         }
+    //     }
+    // }); 
+
+    socket.on("server_adjust_tile", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+
+        if (lobby_index !== null) {
+            if (lobbies[lobby_index].game_id == data.game_id) {
+                lobbies[lobby_index].game.maps[data.map].tiles[data.index] = data.tile;
+                console.log(lobbies[lobby_index].game.maps[data.map].tiles);
+
+                socket.to(lobbies[lobby_index].id).emit('server_adjust_tile', {
+                    map: data.map,
+                    index: data.index,
+                    tile: data.tile,
+                });
+            }
+        }
+    }); 
+
+    socket.on("server_adjust_att", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+
+        if (lobby_index !== null) {
+            if (lobbies[lobby_index].game_id == data.game_id) {
+                lobbies[lobby_index].game.maps[data.map].atts[data.index] = data.att;
+                console.log(lobbies[lobby_index].game.maps[data.map].atts);
+                
+                socket.to(lobbies[lobby_index].id).emit('server_adjust_att', {
+                    map: data.map,
+                    index: data.index,
+                    att: data.att,
+                });
+            }
+        }
+    }); 
+        
+    socket.on("server_expand_map", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+
+        if (lobby_index !== null) {
+            if (lobbies[lobby_index].game_id == data.game_id) {
+                lobbies[lobby_index].game.maps[data.map] = expand_map(lobbies[lobby_index].game.maps[data.map], data.direction);
+
+                socket.to(lobbies[lobby_index].id).emit('server_expand_map', {
+                    map: data.map,
+                    direction: data.direction,
+                });
+            }
+        }
+    });
+
+    socket.on("server_condense_map", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+
+        if (lobby_index !== null) {
+            if (lobbies[lobby_index].game_id == data.game_id) {
+                lobbies[lobby_index].game.maps[data.map] = condense_map(lobbies[lobby_index].game.maps[data.map], data.direction);
+
+                socket.to(lobbies[lobby_index].id).emit('server_condense_map', {
+                    map: data.map,
+                    direction: data.direction,
+                });
+            }
+        }
+    });
+
+    socket.on("server_create_map", (data) => {
+        let lobby_index = find_lobby_index(data.lobby_id);
+
+        if (lobby_index !== null) {
+            if (lobbies[lobby_index].game_id == data.game_id) {
+                lobbies[lobby_index].game.maps.push(data.map)
+
+                socket.to(lobbies[lobby_index].id).emit('server_create_map', {
+                    map: data.map,
+                });
+            }
+        }
+    });
 });

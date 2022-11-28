@@ -1,4 +1,4 @@
-socket.on('npc_moved', function(data){
+socket.on('npc_moved', (data) => {
     npcs.forEach((npc) => { 
         if (npc.uid == data.uid) {
             npc.move(data.moving);
@@ -6,7 +6,7 @@ socket.on('npc_moved', function(data){
     });
 });
 
-socket.on('map_server_sync', function(data){
+socket.on('map_server_sync', (data) => {
     data.npcs.forEach(npc_server_data => {
         npcs.forEach(npc => {
             if (npc_server_data.uid == npc.uid) {
@@ -18,7 +18,7 @@ socket.on('map_server_sync', function(data){
     });
 });
 
-socket.on('set_game_id', function(data){
+socket.on('set_game_id', (data) => {
     game_id = data.game_id;
 
     let url = new URL(window.location);
@@ -26,7 +26,7 @@ socket.on('set_game_id', function(data){
     window.history.pushState({}, '', url);
 });
 
-socket.on('set_lobby_id', function(data){
+socket.on('set_lobby_id', (data) => {
     lobby_id = data.lobby_id
 
     let url = new URL(window.location);
@@ -34,19 +34,19 @@ socket.on('set_lobby_id', function(data){
     window.history.pushState({}, '', url);
 });
 
-socket.on('lobby_loaded', function(data){
+socket.on('lobby_loaded', (data) => {
     socket.emit('map_server_sync', {lobby_id: lobby_id, map: player.position.map});
 });
 
 
-socket.on('create_current_trainers', function(data){
+socket.on('create_current_trainers', (data) => {
     data.forEach(trainer => {
         let new_trainer = new Trainer(trainer.name, trainer.position, trainer.spritesheet_id, trainer.socket_id);
         trainers.push(new_trainer);
     });
 });
 
-socket.on('trainer_moved', function(data){
+socket.on('trainer_moved', (data) => {
     console.log('[trainer_moved]', data.position);
 
     trainers.forEach((trainer, i) => {
@@ -81,12 +81,12 @@ socket.on('trainer_moved', function(data){
     });
 });
 
-socket.on('trainer_joined', function(data){
+socket.on('trainer_joined', (data) => {
     let new_trainer = new Trainer(data.name, data.position, data.spritesheet_id, data.socket_id);
     trainers.push(new_trainer);
 });
 
-socket.on('trainer_disconnected', function(data){
+socket.on('trainer_disconnected', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data) {
             trainers[i].remove();
@@ -95,7 +95,7 @@ socket.on('trainer_disconnected', function(data){
     });
 });
 
-socket.on('trainer_faced', function(data){
+socket.on('trainer_faced', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].face_sprite(data.f)
@@ -103,7 +103,7 @@ socket.on('trainer_faced', function(data){
     });
 });
 
-socket.on('trainer_speed', function(data){
+socket.on('trainer_speed', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].speed = data.s
@@ -111,7 +111,7 @@ socket.on('trainer_speed', function(data){
     });
 });
 
-socket.on('trainer_sprite', function(data){
+socket.on('trainer_sprite', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].change_spritesheet(data.spritesheet_id);
@@ -119,7 +119,7 @@ socket.on('trainer_sprite', function(data){
     });
 });
 
-socket.on('trainer_name', function(data){
+socket.on('trainer_name', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].name = data.name;
@@ -127,7 +127,7 @@ socket.on('trainer_name', function(data){
     });
 });
 
-socket.on('trainer_entering_battle', function(data){
+socket.on('trainer_entering_battle', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].display_emote('shock');
@@ -146,7 +146,7 @@ socket.on('trainer_entering_battle', function(data){
     });
 });
 
-socket.on('trainer_exiting_battle', function(data){
+socket.on('trainer_exiting_battle', (data) => {
     trainers.forEach((trainer, i) => {
         if (trainer.socket_id == data.socket_id) {
             trainers[i].emote.visible = false;
@@ -181,14 +181,60 @@ socket.on("player_encountered", (data) => {
     }); 
 });
 
-socket.on('chat_trainer_message', function(data){
+socket.on('chat_trainer_message', (data) => {
     chat.trainer_message(data.name, data.message, data.atts);
 });
 
-socket.on('chat_server_message', function(data){
+socket.on('chat_server_message', (data) => {
     chat.server_message(data.message);
 });
 
-socket.on('wild_pokemon_battle', function(data){
+socket.on('wild_pokemon_battle', (data) => {
     player.wild_pokemon_battle(data.pokemon);
+});
+
+socket.on('server_adjust_tile', (data) => {
+    maps[data.map].tiles[data.index] = data.tile;
+
+    if (map.id == data.map) {
+        map.tiles[data.index] = data.tile;        
+        background.children[data.index].texture = tile_textures[data.tile];
+    }
+});
+
+socket.on('server_adjust_att', (data) => {
+    maps[data.map].atts[data.index] = data.att;
+
+    if (map.id == data.map) {
+        map.atts[data.index] = data.att;    
+        console.log(data.att);
+        atts_container.children[data.index].tint = editor.get_att_color(data.att.type);
+
+        if (data.att.type == 0) {
+            atts_container.children[data.index].alpha = 0;
+        } else {
+            atts_container.children[data.index].alpha = 1;
+        }
+        
+        map.build_npcs(); // reset npcs
+        map.server_sync();
+    }
+});
+
+socket.on("server_expand_map", (data) => {
+    if (map.id == data.map) {
+        expand_map(data.direction);
+    }
+});
+
+socket.on("server_condense_map", (data) => {
+    if (map.id == data.map) {
+        condense_map(data.direction);
+    }
+});
+
+socket.on("server_create_map", (data) => {
+    let kanto_map = new Kanto_Map(data.map.id, data.map.name, data.map.width, data.map.height, data.map.tiles, data.map.atts, data.map.music, data.map.starting_position);
+    maps.push(kanto_map);
+    editor.update();
 });

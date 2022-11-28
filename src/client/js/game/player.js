@@ -256,14 +256,9 @@ class Player {
     stop_forced_movement() {
         clearInterval(player.automove.interval);
 
-        if (!dialogue.active) {   
-            this.frozen = false;
-        }
-
-        console.log(this.position, this.frozen);
-        
         this.automove.active = false;
         this.automove.spin = false;
+        this.frozen = false;
     }
 
     face(direction) {

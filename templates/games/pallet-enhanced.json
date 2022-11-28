@@ -2639,7 +2639,7 @@
             "type": 1
         }, {
             "type": 3,
-            "dialogue": ["There’s an email dialogue here!;", "...;", "Calling all POKeMON trainers!", "The elite trainers of POKeMON LEAGUE are ready to take on all comers!", "Bring your best POKeMON and see how you rate as a trainer!", "POKeMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
+            "dialogue": ["There’s an email message here!;", "...;", "Calling all POKeMON trainers!", "The elite trainers of POKeMON LEAGUE are ready to take on all comers!", "Bring your best POKeMON and see how you rate as a trainer!", "POKeMON LEAGUE HQ INDIGO PLATEAU", "PS: PROF. OAK, please visit us!; ..."]
         }, {
             "type": 1
         }, {

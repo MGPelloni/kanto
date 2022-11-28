@@ -21,8 +21,12 @@
 
 .kanto-create {
     ._container > ._grid {
-        grid-template-columns: 1fr 400px;
+        grid-template-columns: 400px 1fr;
         grid-gap: 10px;
+
+        @media (max-width: 1200px) {
+            grid-template-columns: 100%;
+        }
     }
 }
 

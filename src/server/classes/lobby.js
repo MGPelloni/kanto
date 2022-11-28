@@ -78,3 +78,134 @@ class Lobby {
 
     }
 }
+
+function expand_map(map, direction) {
+    if (!direction) {
+        return;
+    }
+
+    let new_width,
+        new_height,
+        splice_index;
+        
+    switch (direction) {
+        case 'North':
+            new_width = map.width;
+            new_height = map.height + 1;
+            splice_index = 0;
+            break;
+        case 'South':
+            new_width = map.width;
+            new_height = map.height + 1;
+            splice_index = new_height - 1;
+            break;
+        case 'West':
+            new_width = map.width + 1;
+            new_height = map.height;
+            splice_index = 0;
+            break;
+        case 'East':
+            new_width = map.width + 1;
+            new_height = map.height;
+            splice_index = new_width - 1;
+            break;
+        default:
+            break;
+    }
+
+    if (direction == 'North' || direction == 'South') {
+        for (let y = 0; y < new_height; y++) {
+            for (let x = 0; x < new_width; x++) {
+                let index = x + new_width * y;
+                
+                if (y == splice_index) {
+                    map.tiles.splice(index, 0, 0);
+                    map.atts.splice(index, 0, {type: 0});
+                }
+            }
+        }
+    } else {
+        for (let y = 0; y < new_height; y++) {
+            for (let x = 0; x < new_width; x++) {
+                let index = x + new_width * y;
+                
+                if (x == splice_index) {
+                    map.tiles.splice(index, 0, 0);
+                    map.atts.splice(index, 0, {type: 0});
+                }
+            }
+        }
+    }
+
+    map.width = new_width;
+    map.height = new_height;
+    return map;
+}
+
+
+function condense_map(map, direction) {
+    if (!direction) {
+        return;
+    }
+
+    let new_width,
+        new_height,
+        splice_index;
+        
+    switch (direction) {
+        case 'North':
+            new_width = map.width;
+            new_height = map.height - 1;
+            splice_index = 0;
+            break;
+        case 'South':
+            new_width = map.width;
+            new_height = map.height - 1;
+            splice_index = new_height + 1;
+            break;
+        case 'West':
+            new_width = map.width - 1;
+            new_height = map.height;
+            splice_index = 0;
+            break;
+        case 'East':
+            new_width = map.width - 1;
+            new_height = map.height;
+            splice_index = new_width;
+            break;
+        default:
+            break;
+    }
+
+    let offset = 0;
+
+    if (direction == 'North' || direction == 'South') {
+        for (let y = 0; y < map.height; y++) {
+            for (let x = 0; x < map.width; x++) {
+                let index = x + map.width * y;
+                
+                if (y == splice_index) {
+                    map.tiles.splice(index + offset, 1);
+                    map.atts.splice(index + offset, 1);
+                    offset--;
+                }
+            }
+        }
+    } else {
+        for (let y = 0; y < map.height; y++) {
+            for (let x = 0; x < map.width; x++) {
+                let index = x + map.width * y;
+                
+                if (x == splice_index) {
+                    map.tiles.splice(index + offset, 1);
+                    map.atts.splice(index + offset, 1);
+                    offset--;
+                }
+            }
+        }
+    }
+
+    map.width = new_width;
+    map.height = new_height;
+    return map;
+}

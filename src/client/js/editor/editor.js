@@ -318,6 +318,7 @@ class Editor {
                 let selected_map = maps[index];
 
                 player.place(selected_map.starting_position.x, selected_map.starting_position.y, selected_map.id);
+                multiplayer_update_position(true);
                 this.update_editor_properties();
                 document.querySelector('#pkmn').focus(); // Shift focus to viewport
             });
@@ -361,7 +362,9 @@ class Editor {
 
         maps[sprite.game_position.map].tiles[sprite.game_position.index] = this.selected_texture;
         map = maps[sprite.game_position.map];
-        return;
+
+        socket.emit('server_adjust_tile', {lobby_id: lobby_id, game_id: game_id, tile: this.selected_texture, map: sprite.game_position.map, index: sprite.game_position.index});
+        return; 
     }
 
     /**
@@ -371,39 +374,7 @@ class Editor {
      */
     adjust_attribute(position, type) {
         // Adjust visual
-        let color = '';
-        switch (type) {
-            case 1:
-              color = '0xFF0000';
-              break;
-            case 2: 
-              color = '0x0000FF';
-              break;
-            case 3: 
-              color = '0x00FF00';
-              break;
-            case 4:
-              color = '0xFFA500';
-              break;
-            case 5:
-              color = '0x000000';
-              break;
-            case 6:
-              color = '0xFFD5D5';
-              break;
-            case 7:
-              color = '0xDAA520';
-              break;
-            case 8:
-              color = '0x35530A';
-              break;
-            case 9:
-              color = '0x561D5E';
-              break;
-            default:
-              color = '0xEEEEEE';
-              break;
-        }
+        let color = this.get_att_color(type);
 
         // Adjust map data
         if (type) {
@@ -414,7 +385,43 @@ class Editor {
 
         map = maps[position.map];
         atts_container.children[position.index].tint = color;
+        socket.emit('server_adjust_att', {lobby_id: lobby_id, game_id: game_id, att: maps[position.map].atts[position.index], map: position.map, index: position.index});
         return;
+    }
+
+    get_att_color(att_type) {
+        switch (att_type) {
+            case 1:
+              return '0xFF0000';
+              break;
+            case 2: 
+              return '0x0000FF';
+              break;
+            case 3: 
+              return '0x00FF00';
+              break;
+            case 4:
+              return '0xFFA500';
+              break;
+            case 5:
+              return '0x000000';
+              break;
+            case 6:
+              return '0xFFD5D5';
+              break;
+            case 7:
+              return '0xDAA520';
+              break;
+            case 8:
+              return '0x35530A';
+              break;
+            case 9:
+              return '0x561D5E';
+              break;
+            default:
+              return '0xEEEEEE';
+              break;
+        }
     }
 
     adjust_property(key, value) {
@@ -454,7 +461,8 @@ class Editor {
     }
 
     save() {
-        store_data(meta.name, kanto_game_export());
+        let game_export = kanto_game_export();
+        store_data(meta.name, game_export);
     }
 
     publish() {
@@ -886,6 +894,7 @@ class Editor {
     create_new_map() {
         let new_map = new Kanto_Map();
         maps.push(new_map);
+        socket.emit('server_create_map', {lobby_id: lobby_id, game_id: game_id, map: new_map});
         player.place(new_map.starting_position.x, new_map.starting_position.y, new_map.id);
         this.update();
     }
@@ -1120,9 +1129,19 @@ function expand_map(direction) {
     switch (direction) {
         case 'North':
             player.place(player.position.x, player.position.y + 1);
+            trainers.forEach(trainer => {
+                if (trainer.position.map == player.position.map) {
+                    trainer.place(trainer.position.map, trainer.position.x, trainer.position.y + 1);
+                }                
+            });
             break;
         case 'West':
             player.place(player.position.x + 1, player.position.y);
+            trainers.forEach(trainer => {
+                if (trainer.position.map == player.position.map) {
+                    trainer.place(trainer.position.map, trainer.position.x + 1, trainer.position.y);
+                }                
+            });
             break;
         default:
             break;
@@ -1204,9 +1223,19 @@ function condense_map(direction) {
     switch (direction) {
         case 'North':
             player.place(player.position.x, player.position.y - 1);
+            trainers.forEach(trainer => {
+                if (trainer.position.map == player.position.map) {
+                    trainer.place(trainer.position.map, trainer.position.x, trainer.position.y - 1);
+                }                
+            });
             break;
         case 'West':
             player.place(player.position.x - 1, player.position.y);
+            trainers.forEach(trainer => {
+                if (trainer.position.map == player.position.map) {
+                    trainer.place(trainer.position.map, trainer.position.x - 1, trainer.position.y);
+                }                
+            });
             break;
         default:
             break;

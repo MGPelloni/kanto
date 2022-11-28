@@ -160,8 +160,8 @@ function kanto_append_map(data) {
 
     let kanto_map = new Kanto_Map(map.id, map.name, map.width, map.height, map.tiles, map.atts, map.music, map.starting_position);
     
-    console.log(kanto_map);
     maps.push(kanto_map);
+    socket.emit('server_create_map', {lobby_id: lobby_id, game_id: game_id, map: kanto_map});
     editor.update();
     
     return maps;
