@@ -240,7 +240,7 @@
         }, {
             "type": 5,
             "dialogue": ["MOM: Right. All boys leave home some day. It said so on TV.", "PROF.OAK, next door, is looking for you."],
-            "sprite": 41,
+            "sprite": 6,
             "facing": "West",
             "movement_state": "Frozen"
         }, {

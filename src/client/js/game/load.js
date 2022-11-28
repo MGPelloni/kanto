@@ -235,7 +235,7 @@ function kanto_start() {
     let sprite = Math.floor(Math.random() * 40); // Mobile spritesheets
     
     if (import_data.player) {
-        if (import_data.player.sprite) {
+        if (import_data.player.sprite !== null) {
             sprite = import_data.player.sprite;
         }  
     }

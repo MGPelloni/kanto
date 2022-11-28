@@ -24,6 +24,25 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/lobbies', function (req, res) {
+    let public_lobbies = [];
+
+    lobbies.forEach(lobby => {
+        if (lobby.public) {
+            public_lobbies.push({
+                name: lobby.name,
+                id: lobby.id,
+                game: lobby.game.meta.name,
+                count: lobby.trainers.length
+            });
+        }
+    });
+
+    res.render('lobbies', {
+        lobbies: public_lobbies
+    });
+});
+
 app.get('/play', (req, res) => {  // Play View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 	console.log('Connection attempt from ' + requesting_ip + " accepted.");
@@ -132,7 +151,6 @@ app.post('/game', (req, res) => {
             return;
         });
     }
-   
 });
 
 
@@ -142,8 +160,6 @@ app.post('/lobby-game', (req, res) => {
 
     if (lobby_id) {
         let lobby_index = find_lobby_index(lobby_id);
-
-        console.log(lobbies, lobby_index);
 
         if (lobby_index !== null) {
             res.json(JSON.stringify(lobbies[lobby_index].game));
