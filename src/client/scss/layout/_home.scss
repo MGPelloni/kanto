@@ -3,6 +3,10 @@
     h1 {
         letter-spacing: -4px;
         margin: 0;
+
+        @media (max-width: 768px) {
+            margin: 0 0 2rem;
+        }
     }
 }
 
@@ -10,16 +14,81 @@
     margin: 6rem 0 0;
 
     header {
-        padding: 2rem;
+        padding: 2rem 0;
 
         ._container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            @media (max-width: 768px) {
+                display: block;
+            }
         }
     }
 
     a {
         color: #fff;
+    }
+
+    main > ._grid.-col-2 {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+.kanto-home-content {
+    background-color: #212121;
+    margin: 0;
+
+    p {
+        margin: 0 0 1rem;
+    }
+}
+
+.kanto-social-media {
+    padding: 1rem 0;
+
+    a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    svg {
+        width: 1.6rem;
+    }
+
+    span {
+        font-size: 1.4rem;
+        color: #a9a9a9;
+        margin: 0 0 0 0.5rem;
+        border-bottom: 1px solid;
+    }
+}
+
+.kanto-table-container {
+    margin: 0 0 2rem;
+
+    table {
+        margin-bottom: 0.5rem;
+    }
+
+    > div {
+        text-align: right;
+
+        a {
+            font-style: italic;
+            color: #a9a9a9;
+            font-size: 1.4rem;
+
+            span,
+            svg {
+                vertical-align: middle;
+            }
+
+            svg {
+                height: 1.4rem;
+            }
+        }
     }
 }

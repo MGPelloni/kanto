@@ -86,6 +86,10 @@ table {
     border: 2px solid #484848;
     color: #fff;
     text-align: left;
+
+    &.-fixed {
+        table-layout: fixed;
+    }
 }
   
   th {

@@ -35,6 +35,18 @@
 	&.-gap-35 {
 		grid-gap: 35px;
     }
+
+    &.-brk-md {
+        @media (max-width: 768px) {
+            grid-template-columns: 100% !important;    
+        }
+    }
+
+    &.-brk-sm {
+        @media (max-width: 521px) {
+            grid-template-columns: 100% !important;    
+        }
+    }
 }
 
 ._well {

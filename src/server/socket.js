@@ -135,7 +135,7 @@ io.on("connection", (socket) => {
     });
 
 
-    socket.on("player_encounter", (data) => {
+    socket.on("player_encounter", (data) => { // TODO: Need to check if walls are in the way of encounter
         console.log("player_encounter", data);
         
         let lobby_index = find_lobby_index(data.lobby_id),
@@ -296,7 +296,6 @@ io.on("connection", (socket) => {
         if (lobby_index !== null) {
             if (lobbies[lobby_index].game_id == data.game_id) {
                 lobbies[lobby_index].game.maps[data.map].tiles[data.index] = data.tile;
-                console.log(lobbies[lobby_index].game.maps[data.map].tiles);
 
                 socket.to(lobbies[lobby_index].id).emit('server_adjust_tile', {
                     map: data.map,
@@ -313,7 +312,6 @@ io.on("connection", (socket) => {
         if (lobby_index !== null) {
             if (lobbies[lobby_index].game_id == data.game_id) {
                 lobbies[lobby_index].game.maps[data.map].atts[data.index] = data.att;
-                console.log(lobbies[lobby_index].game.maps[data.map].atts);
                 
                 socket.to(lobbies[lobby_index].id).emit('server_adjust_att', {
                     map: data.map,

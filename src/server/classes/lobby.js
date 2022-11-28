@@ -24,7 +24,7 @@ class Lobby {
     }
 
     new_game() {
-        this.game = JSON.parse('{ "meta": {}, "maps": [{ "name": "Untitled Map", "height": 5, "width": 5, "starting_position": { "x": 0, "y": 0 }, "tiles": [2, 2, 3, 2, 2, 3, 3, 1, 2, 1, 2, 3, 2, 1, 2, 1, 2, 1, 3, 3, 1, 2, 1, 3, 2], "atts": [{ "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }], "music": 0 }] }');
+        this.game = JSON.parse('{ "meta": { "name": "Untitled Game" }, "maps": [{ "name": "Untitled Map", "height": 5, "width": 5, "starting_position": { "x": 0, "y": 0 }, "tiles": [2, 2, 3, 2, 2, 3, 3, 1, 2, 1, 2, 3, 2, 1, 2, 1, 2, 1, 3, 3, 1, 2, 1, 3, 2], "atts": [{ "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }, { "type": 0 }], "music": 0 }] }');
         this.npcs = [];
         this.items = [];
         this.chat = new Chat(this.id);

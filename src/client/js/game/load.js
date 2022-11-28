@@ -64,7 +64,7 @@ function kanto_fetch_game() {
 
 function kanto_new_game() {
     meta = {
-        name: ''
+        name: 'Untitled Game'
     };
 
     // Create the first map

@@ -13,45 +13,89 @@
                 <h1>Kanto</h1>
                 <nav>
                     <a class="_button" href="/create">Create New Game</a>
+                    <a class="_button" href="/create">Login</a>
                 </nav>
             </div>
         </header>
-        <div class="kanto-featured-games">
-            <div class="_container">
-                <table>
-                    <thead>
-                        <th>Featured Games</th>
+        <main>
+            <div class="_container _grid -col-2 -gap-15 -brk-md">
+                <div>
+                    <div id="content" class="kanto-home-content entry-content _well character-oak">
+                        <p>To <strong>play</strong> a game, click on a link within the games table.</p> 
+                        <p>To <strong>create</strong> a game, click the "Create New Game" button.</p> 
+                        <p>If you would like to play with a friend, send them the link in your web browser.</p>
+                        <p>You can also play with others online by joining a public lobby.</p>
+                    </div>
+                    <div class="kanto-social-media">
+                        <a href="https://reddit.com/r/kanto/"><svg xmlns="http://www.w3.org/2000/svg" aria-label="Reddit" role="img" viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#f40"/><g fill="#fff"><ellipse cx="256" cy="307" rx="166" ry="117"/><circle cx="106" cy="256" r="42"/><circle cx="407" cy="256" r="42"/><circle cx="375" cy="114" r="32"/></g><g stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="m256 196 23-101 73 15" stroke="#fff" stroke-width="16"/><path d="m191 359c33 25 97 26 130 0" stroke="#f40" stroke-width="13"/></g><g fill="#f40"><circle cx="191" cy="287" r="31"/><circle cx="321" cy="287" r="31"/></g></svg><span>https://reddit.com/r/kanto/</span></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="kanto-featured-games kanto-table-container">
+                        <table>
+                            <thead>
+                                <th>Featured Games</th>
 
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <% featured_games.forEach(function(game) { %>
-                            <tr>
-                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
-                            </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <% featured_games.forEach(function(game) { %>
+                                    <tr>
+                                        <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                        <div>
+                            <a href="/featured/"><span>.. more featured games</span> <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16m0 0l-6 6m6-6l-6-6"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="kanto-user-created-games kanto-table-container">
+                        <table>
+                            <thead>
+                                <th>User Created</th>
+                                <th>Author</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <% user_games.forEach(function(game) { %>
+                                    <tr>
+                                        <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
+                                        <td width="20%">Anonymous</td>  
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                        <div>
+                            <a href="/user-created/"><span>.. more user created games</span> <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16m0 0l-6 6m6-6l-6-6"/></svg></a>
+                        </div>
+                    </div>
+                    <div class="kanto-public-lobbies kanto-table-container">
+                        <table class="-fixed">
+                            <thead>
+                                <th>Public Lobbies</th>
+                                <th>Game Name</th>
+                                <th>Players</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td width="80%"><a href="#">Get In HEre</a></td>  
+                                    <td width="80%">Frontier Village Dali</td>  
+                                    <td width="80%">25</td>  
+                                </tr>
+                                <tr>
+                                    <td width="80%"><a href="#">Chill Lobby</a></td>  
+                                    <td width="80%">Pallet Town</td>  
+                                    <td width="80%">57</td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <a href="/lobbies/"><span>.. more public lobbies </span><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16m0 0l-6 6m6-6l-6-6"/></svg></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="kanto-user-created-games">
-            <div class="_container">
-                <table>
-                    <thead>
-                        <th>User Created</th>
-                        <th>Author</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <% user_games.forEach(function(game) { %>
-                            <tr>
-                                <td width="80%"><a href="/play?g=<%= game.game_id %>"><%= game.name %></a></td>  
-                                <td width="20%">Anonymous</td>  
-                            </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </body>
 </html>
