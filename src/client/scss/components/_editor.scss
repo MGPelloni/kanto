@@ -185,3 +185,12 @@
 .editor-message-options-options {
     text-align: left;
 }
+
+.sprite-preview {
+    width: 16px;
+    height: 16px;
+    transform: scale(2);
+    display: inline-block;
+    margin: 0 0 0 2rem;
+    background-repeat: no-repeat;
+}

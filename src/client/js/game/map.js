@@ -69,7 +69,7 @@ class Kanto_Map {
         if (this.atts[index].type == 7) {
           let item = {
             name: this.atts[index].name,
-            sprite: new PIXI.Sprite.from(item_sprites[(this.atts[index].sprite - 1)]),
+            sprite: new PIXI.Sprite.from(item_sprites[(this.atts[index].sprite)]),
             position: {map: this.id, x: x, y: y, index: index},
             available: true
           }

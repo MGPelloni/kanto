@@ -1310,7 +1310,7 @@ function set_att_editor(type) {
         case 5:
             display_editor.innerHTML += '<h5>NPC</h5>';
             display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="5" disabled></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number" min="0" value="0"><div class="sprite-preview" style="background-image: url(/assets/graphics/sprites.png)"></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Facing:</label><select name="facing"><option>North</option><option>South</option><option>West</option><option>East</option></select></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Movement State:</label><select name="movement_state"><option>Active</option><option>Static</option><option>Frozen</option></select></div>';
             display_editor.innerHTML += '<ol class="dialogue-editor-list"></ol>';
@@ -1324,7 +1324,7 @@ function set_att_editor(type) {
             display_editor.innerHTML += '<h5>Item</h5>';
             display_editor.innerHTML += '<div class="editor-data-line _hidden"><label>Type:</label><input name="type" type="number" value="7" disabled></div>';
             display_editor.innerHTML += '<div class="editor-data-line"><label>Name:</label><input name="name" type="text"></div>';
-            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number"></div>';
+            display_editor.innerHTML += '<div class="editor-data-line"><label>Sprite:</label><input name="sprite" type="number" min="0" value="0"><div class="sprite-preview" style="background-image: url(/assets/graphics/items.png)"></div></div>';
             break;
         case 8:
             display_editor.innerHTML += '<h5>Wild Battle</h5>';
@@ -1395,6 +1395,16 @@ function editor_event_listeners() {
         document.querySelectorAll('.pokemon-editor-add').forEach(elem => {
             elem.addEventListener('click', e => {
                 document.querySelector('#pokemon-editor').classList.remove('_hidden');
+            });
+        });
+    }
+
+    // Sprite preview
+    if (document.querySelector('input[name="sprite"]')) {
+        document.querySelectorAll('input[name="sprite"]').forEach(elem => {
+            elem.addEventListener('change', e => {
+                let offset = e.target.value * -16;
+                e.target.nextElementSibling.style.backgroundPositionX = `${offset}px`;
             });
         });
     }
