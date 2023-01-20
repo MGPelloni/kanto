@@ -677,6 +677,20 @@ function prepare_multiplayer() {
                 }
             });
         }
+
+        // Auto open chat on desktop
+        if (window.innerWidth > 768) {
+            document.body.classList.add('-chat-active');
+        }
+
+        // Set toggle events for buttons to open/close chat
+        if (document.querySelectorAll('.chat-toggle')) {
+            document.querySelectorAll('.chat-toggle').forEach(elem => {
+                elem.addEventListener('click', (e) => {
+                    document.body.classList.toggle('-chat-active');
+                });
+            });
+        }
     }
 }
 

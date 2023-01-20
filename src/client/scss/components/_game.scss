@@ -30,7 +30,8 @@
     }
 }
 
-.toggle-volume {
+.toggle-volume,
+button#chat-open-mobile {
     border: none;
     padding: 0;
     outline: none;
@@ -44,7 +45,9 @@
     svg {
         height: 3.5rem;
     }
+}
 
+.toggle-volume {
     .volume-off {
         display: none;
     }
@@ -57,6 +60,18 @@
         .volume-off {
             display: inline-block;
         }
+    }
+}
+
+button#chat-open-mobile {
+    display: none;
+
+    svg {
+        height: 3.75rem;
+    }
+
+    @include breakpoint('sm') {
+        display: block;
     }
 }
 

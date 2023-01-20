@@ -7,7 +7,7 @@
         <title>Kanto</title>
         <link rel="stylesheet" href="dist/kanto.min.css">
     </head>
-    <body class="-chat-active">
+    <body>
         <div id="kanto" class="kanto-play">
             <div class="_container">
                 <div id="game">
@@ -19,7 +19,7 @@
                                 <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512" class="volume-on"><path fill="currentColor" d="M215.03 71.05L126.06 160H24c-13.26 0-24 10.74-24 24v144c0 13.25 10.74 24 24 24h102.06l88.97 88.95c15.03 15.03 40.97 4.47 40.97-16.97V88.02c0-21.46-25.96-31.98-40.97-16.97zM480 256c0-63.53-32.06-121.94-85.77-156.24-11.19-7.14-26.03-3.82-33.12 7.46s-3.78 26.21 7.41 33.36C408.27 165.97 432 209.11 432 256s-23.73 90.03-63.48 115.42c-11.19 7.14-14.5 22.07-7.41 33.36 6.51 10.36 21.12 15.14 33.12 7.46C447.94 377.94 480 319.53 480 256zm-141.77-76.87c-11.58-6.33-26.19-2.16-32.61 9.45-6.39 11.61-2.16 26.2 9.45 32.61C327.98 228.28 336 241.63 336 256c0 14.38-8.02 27.72-20.92 34.81-11.61 6.41-15.84 21-9.45 32.61 6.43 11.66 21.05 15.8 32.61 9.45 28.23-15.55 45.77-45 45.77-76.88s-17.54-61.32-45.78-76.86z" class=""></path></svg>
                             </button>
                         </div>
-                        <div>
+                        <div>                            
                             <button id="kanto-view-controls-info" class="-sans-uppercase">Controls</button>
                             <div id="kanto-controls-info">
                                 <div class="_well character-oak">
@@ -32,6 +32,7 @@
                                         </ul>
                                 </div>
                             </div>
+                            <button id="chat-open-mobile" class="chat-open-button chat-toggle" aria-label="Open chat"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-chats"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M9.882 15C13.261 15 16 12.538 16 9.5S13.261 4 9.882 4C6.504 4 3.765 6.462 3.765 9.5c0 .818.198 1.594.554 2.292L3 15l3.824-.736c.9.468 1.944.736 3.058.736z"/><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.804 18.124a6.593 6.593 0 003.314.876 6.623 6.623 0 003.059-.736L21 19l-1.32-3.208a5.02 5.02 0 00.555-2.292c0-1.245-.46-2.393-1.235-3.315-.749-.89-1.792-1.569-3-1.92"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 13 9.5)"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 10 9.5)"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 7 9.5)"/></svg></button>
                         </div>
                     </div>
                     <div id="gamepad">
@@ -55,7 +56,7 @@
         </div>
         <section id="chat">
             <header>
-                <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-align-objects-right"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 4v16m-3-8H6m11 0l-3-3m3 3l-3 3"/></svg></button>
+                <button id="chat-close" class="chat-toggle" aria-label="Close chat"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-align-objects-right"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 4v16m-3-8H6m11 0l-3-3m3 3l-3 3"/></svg></button>
                 <span class="_sans-uppercase">Chat</span>
                 <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-users"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 19v-1.25C13 15.679 11.081 14 8.714 14H7.286C4.919 14 3 15.679 3 17.75V19m12.286-5h1.428C19.081 14 21 15.679 21 17.75V19M15 5.17a3 3 0 110 5.659M11 8a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
             </header>
@@ -65,6 +66,7 @@
                 <button id="chat-settings"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-cog"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10.47 4.32c.602-1.306 2.458-1.306 3.06 0l.218.473a1.684 1.684 0 002.112.875l.49-.18c1.348-.498 2.66.814 2.162 2.163l-.18.489a1.684 1.684 0 00.875 2.112l.474.218c1.305.602 1.305 2.458 0 3.06l-.474.218a1.684 1.684 0 00-.875 2.112l.18.49c.498 1.348-.814 2.66-2.163 2.162l-.489-.18a1.684 1.684 0 00-2.112.875l-.218.473c-.602 1.306-2.458 1.306-3.06 0l-.218-.473a1.684 1.684 0 00-2.112-.875l-.49.18c-1.348.498-2.66-.814-2.163-2.163l.181-.489a1.684 1.684 0 00-.875-2.112l-.474-.218c-1.305-.602-1.305-2.458 0-3.06l.474-.218a1.684 1.684 0 00.875-2.112l-.18-.49c-.498-1.348.814-2.66 2.163-2.163l.489.181a1.684 1.684 0 002.112-.875l.218-.474z"/></svg></button>
             </footer>
         </section>
+        <button id="chat-open-desktop" class="chat-open-button chat-toggle" aria-label="Open chat"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="humbleicons hi-chats"><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M9.882 15C13.261 15 16 12.538 16 9.5S13.261 4 9.882 4C6.504 4 3.765 6.462 3.765 9.5c0 .818.198 1.594.554 2.292L3 15l3.824-.736c.9.468 1.944.736 3.058.736z"/><path xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.804 18.124a6.593 6.593 0 003.314.876 6.623 6.623 0 003.059-.736L21 19l-1.32-3.208a5.02 5.02 0 00.555-2.292c0-1.245-.46-2.393-1.235-3.315-.749-.89-1.792-1.569-3-1.92"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 13 9.5)"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 10 9.5)"/><circle xmlns="http://www.w3.org/2000/svg" r="1" fill="currentColor" transform="matrix(-1 0 0 1 7 9.5)"/></svg></button>
         <script src="dist/kanto.min.js"></script>
     </body>
 </html>

@@ -50,6 +50,22 @@
             font-size: 1.3rem;
         }
     }
+
+    @include breakpoint('md') {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        height: 100vh;
+    }
+
+    @include breakpoint('sm') {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: calc(100vh - 100vw - 3.5rem); // 100vw is the height of the canvas, 3.5rem is the height of the button controls
+        max-width: none;
+    }
 }
 
 body.-chat-active {
@@ -60,12 +76,8 @@ body.-chat-active {
         display: block;
     }
 
-    @media (max-width: 800px) {
+    @include breakpoint('md') {
         display: block;
-        
-        #chat {
-            display: none;
-        }
     }
 }
 
@@ -89,4 +101,25 @@ body.-chat-active {
             color: #797979;
         }
     }
+}
+
+button#chat-open-desktop {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0;
+    border-radius: 100%;
+    padding: 10px;
+
+    svg {
+        height: 3rem;
+    }
+    
+    @include breakpoint('sm') {
+        display: none;
+    }
+}
+
+body.-chat-active #chat-open-desktop {
+    display: none;
 }
