@@ -78,16 +78,13 @@
                                 <th>Players</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td width="80%"><a href="#">Get In HEre</a></td>  
-                                    <td width="80%">Frontier Village Dali</td>  
-                                    <td width="80%">25</td>  
-                                </tr>
-                                <tr>
-                                    <td width="80%"><a href="#">Chill Lobby</a></td>  
-                                    <td width="80%">Pallet Town</td>  
-                                    <td width="80%">57</td>  
-                                </tr>
+                                <% lobbies.forEach(function(lobby) { %>
+                                    <tr>
+                                        <td><a href="/play?l=<%= lobby.id %>"><%= lobby.name %></a></td>  
+                                        <td><%= lobby.game %></td>  
+                                        <td><%= lobby.count %></td>  
+                                    </tr>
+                                <% }); %>
                             </tbody>
                         </table>
                         <div>

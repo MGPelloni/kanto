@@ -6,7 +6,7 @@ class Lobby {
         this.game = false;
         this.loaded = false;
         this.name = 'Untitled Lobby';
-        this.public = false;
+        this.public = true;
 
         if (new_game) {
             this.new_game();

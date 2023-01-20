@@ -14,11 +14,24 @@ app.get('/', function (req, res) {
             }
 
             let user_games = result.rows;
+            let public_lobbies = [];
+
+            lobbies.forEach(lobby => {
+                if (lobby.public) {
+                    public_lobbies.push({
+                        name: lobby.name,
+                        id: lobby.id,
+                        game: lobby.game.meta.name,
+                        count: lobby.trainers.length
+                    });
+                }
+            });
 
             res.render('home', {
                 // EJS variable and server-side variable
                 featured_games: featured_games,
-                user_games: user_games
+                user_games: user_games,
+                lobbies: public_lobbies
             });
         });
     });
