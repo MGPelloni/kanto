@@ -691,6 +691,39 @@ function prepare_multiplayer() {
                 });
             });
         }
+
+        if (document.querySelector('#chat-players-panel-toggle')) {
+            document.querySelector('#chat-players-panel-toggle').addEventListener('click', (e) => {
+                let panel = document.querySelector('#chat-players');
+                panel.classList.toggle('_hidden');
+
+                if (!panel.classList.contains('_hidden')) {
+                    // Clear list
+                    panel.querySelector('ul').innerHTML = '';
+
+                    // Add user
+                    let li = document.createElement('li');
+                    li.innerHTML = player.name;
+                    panel.querySelector('ul').appendChild(li);
+
+                    // Add players
+                    trainers.forEach(trainer => {
+                        let li = document.createElement('li');
+                        li.innerHTML = trainer.name;
+                        panel.querySelector('ul').appendChild(li);
+                    });
+
+                    // Update count
+                    panel.querySelector('h3').innerHTML = `Players (${trainers.length + 1})`;
+                }
+            });
+        }
+
+        if (document.querySelector('#chat-options-panel-toggle')) {
+            document.querySelector('#chat-options-panel-toggle').addEventListener('click', (e) => {
+                document.querySelector('#chat-options').classList.toggle('_hidden');
+            });
+        }
     }
 }
 
