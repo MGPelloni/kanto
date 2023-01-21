@@ -76,23 +76,11 @@ function generate_game_id(length = 11) {
     return str;    
 }
 
-function find_lobby_index(id) {
-    let targeted_lobby_index = null;
-        
-    lobbies.forEach((lobby, i) => {
-        if (lobby.id == id) {
-            targeted_lobby_index = i;
-        }
-    });
-
-    return targeted_lobby_index;
-}
-
-function find_trainer_index(lobby_index, trainer_socket) {
+function find_trainer_index(lobby_key, trainer_socket) {
     let targeted_trainer_index = null;
         
-    if (lobbies[lobby_index]) {
-        lobbies[lobby_index].trainers.forEach((trainer, i) => {
+    if (lobbies[lobby_key]) {
+        lobbies[lobby_key].trainers.forEach((trainer, i) => {
             if (trainer_socket == trainer.socket_id) {
                 targeted_trainer_index = i;
             }

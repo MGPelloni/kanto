@@ -107,7 +107,7 @@ class Npc {
     }
 
     collision_check(x, y) {
-        let lobby_index = find_lobby_index(this.lobby_id),
+        let lobby_key = this.lobby_id,
             collision = false;
 
         // x-axis boundary check   
@@ -133,13 +133,13 @@ class Npc {
         }
     
         // Player checks
-        lobbies[lobby_index].trainers.forEach(trainer => {
+        lobbies[lobby_key].trainers.forEach(trainer => {
             if (x == trainer.position.x && y == trainer.position.y) {
                 collision = true;
             }       
         });
     
-        lobbies[lobby_index].npcs.forEach(npc => {
+        lobbies[lobby_key].npcs.forEach(npc => {
             if (this.position.map == npc.position.map && x == npc.position.x && y == npc.position.y) {
                 collision = true;
             }

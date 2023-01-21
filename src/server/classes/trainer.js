@@ -12,8 +12,8 @@ class Trainer {
         this.battle = {};
     }
 
-    check_tile(lobby_index) {
-        let map = lobbies[lobby_index].game.maps[this.position.map],
+    check_tile(lobby_key) {
+        let map = lobbies[lobby_key].game.maps[this.position.map],
             index = this.position.x + map.width * this.position.y,
             tile = map.atts[index];
 

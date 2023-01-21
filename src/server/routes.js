@@ -16,16 +16,18 @@ app.get('/', function (req, res) {
             let user_games = result.rows;
             let public_lobbies = [];
 
-            lobbies.forEach(lobby => {
-                if (lobby.public) {
-                    public_lobbies.push({
-                        name: lobby.name,
-                        id: lobby.id,
-                        game: lobby.game.meta.name,
-                        count: lobby.trainers.length
-                    });
-                }
-            });
+            if (Object.keys(lobbies).length > 0) {
+                for ([key, lobby] of Object.entries(lobbies)) {
+                    if (lobby.public) {
+                        public_lobbies.push({
+                            name: lobby.name,
+                            id: lobby.id,
+                            game: lobby.game.meta.name,
+                            count: lobby.trainers.length
+                        });
+                    }
+                };
+            }
 
             res.render('home', {
                 // EJS variable and server-side variable
@@ -40,7 +42,7 @@ app.get('/', function (req, res) {
 app.get('/lobbies', function (req, res) {
     let public_lobbies = [];
 
-    lobbies.forEach(lobby => {
+    for ([key, lobby] of Object.entries(lobbies)) {
         if (lobby.public) {
             public_lobbies.push({
                 name: lobby.name,
@@ -49,7 +51,7 @@ app.get('/lobbies', function (req, res) {
                 count: lobby.trainers.length
             });
         }
-    });
+    };
 
     res.render('lobbies', {
         lobbies: public_lobbies
@@ -172,10 +174,10 @@ app.post('/lobby-game', (req, res) => {
     let game_id = req.body.game;
 
     if (lobby_id) {
-        let lobby_index = find_lobby_index(lobby_id);
+        let lobby_key = lobby_id;
 
-        if (lobby_index !== null) {
-            res.json(JSON.stringify(lobbies[lobby_index].game));
+        if (lobby_key !== null) {
+            res.json(JSON.stringify(lobbies[lobby_key].game));
             return;
         } else {
             if (game_id) {
