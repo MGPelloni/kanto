@@ -7,6 +7,8 @@ class Lobby {
         this.loaded = false;
         this.name = 'Untitled Lobby';
         this.public = true;
+        this.timestamp = Date.now();
+        this.monitor = setInterval(this.monitor_lobby, 10000, this);
 
         if (new_game) {
             this.new_game();
@@ -75,9 +77,22 @@ class Lobby {
         }
     }
 
-    // Closes the current lobby
-    close() {
+    monitor_lobby(lobby) {
+        if (lobby.trainers == 0) {
+            lobby.shutdown();
+        }
+    }
 
+    shutdown() {
+        // Clear all intervals
+        this.npcs.forEach(npc => {
+            clearInterval(npc.wander_interval);
+        });
+
+        clearInterval(this.monitor);
+
+        // Delete lobby from global lobbies object
+        delete lobbies[this.id];
     }
 }
 
