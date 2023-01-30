@@ -678,9 +678,9 @@ function prepare_multiplayer() {
             });
         }
 
-        // Auto open chat on desktop
-        if (window.innerWidth > 768) {
-            document.body.classList.add('-chat-active');
+        // Close chat on mobile
+        if (window.innerWidth < 768) {
+            document.body.classList.remove('-chat-active');
         }
 
         // Set toggle events for buttons to open/close chat
