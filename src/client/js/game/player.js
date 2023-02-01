@@ -23,6 +23,12 @@ class Player {
             POKEMON[Math.floor(Math.random() * 151)]
         ];
 
+        this.pokedex = new Set();
+
+        this.pokemon.forEach(pokemon => {
+            this.pokedex.add(pokemon.id);
+        });
+
         this.items = [];
         this.money = 0;
         this.history = {}; // Last spritesheet
@@ -514,6 +520,7 @@ class Player {
         this.in_battle = true;
         this.controls = 'battle';
         battle.pokemon = pokemon;
+        player.pokedex.add(pokemon.id);
 
         music.immediate_play(13);
         battle_prepare(pokemon.name, this.pokemon[0].name)

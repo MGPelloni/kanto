@@ -252,6 +252,7 @@ function kanto_get_menu(menu_name) {
 }
 
 function kanto_update_menus() {
+    // Items
     let items_menu = kanto_get_menu('Items');
     let item_options = [];
 
@@ -273,6 +274,56 @@ function kanto_update_menus() {
     )
 
     items_menu.update_options(item_options);
+
+    // Pokemon
+    let pokemon_menu = kanto_get_menu('Pokemon');
+    let pokemon_options = [];
+
+    player.pokemon.forEach(pokemon => {
+        pokemon_options.push({
+            name: pokemon.name.toUpperCase(),
+            type: 'Pokemon',
+        })
+    });
+
+    pokemon_menu.update_options(pokemon_options);
+
+    // Pokedex
+    let pokedex_menu = kanto_get_menu('Pokedex');
+    let pokedex_options = [];
+
+    POKEMON.forEach((pokemon, i) => {
+        let entry_id = pokemon.id;
+
+        if (typeof entry_id === "number") {
+            entry_id = entry_id.toString();
+        }
+
+        switch (entry_id.length) {
+            case 1:
+                entry_id = `00${entry_id}`;
+                break;
+            case 2: 
+                entry_id = `0${entry_id}`;
+                break;
+            default:
+                break;
+        }
+
+        if (player.pokedex.has(pokemon.id)) {
+            pokedex_options.push({
+                name: `${entry_id} ${pokemon.name.toUpperCase()}`,
+                type: 'Pokedex'
+            });
+        } else {
+            pokedex_options.push({
+                name: `${entry_id} _______________________`,
+                type: 'Pokedex'
+            });
+        }
+    });
+
+    pokedex_menu.update_options(pokedex_options);
 }
 
 function kanto_close_menus() {

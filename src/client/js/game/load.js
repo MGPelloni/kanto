@@ -616,7 +616,7 @@ function prepare_menus() {
 
     player.pokemon.forEach(pokemon => {
         pokemon_options.push({
-            name: pokemon.name,
+            name: pokemon.name.toUpperCase(),
             type: 'Pokemon'
         })
     });
@@ -650,7 +650,7 @@ function prepare_menus() {
         }
 
         pokedex_options.push({
-            name: `${entry_id} ${pokemon.name.toUpperCase()}`,
+            name: `${entry_id} _______________________`,
             type: 'Pokedex'
         });
     });
