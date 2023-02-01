@@ -515,9 +515,7 @@ function prepare_menus() {
         {
             name: 'POKéDEX',
             type: 'menu',
-            callback: () => {
-                dialogue.queue_messages(["Your POKéDEX doesn't seem to be working.."]);
-            }
+            open_menu: 'Pokedex'
         }, 
         {
             name: 'POKéMON',
@@ -571,10 +569,10 @@ function prepare_menus() {
             }
         }
     ], {
-        width: 96,
-        height: 64,
+        width: 128,
+        height: 96,
         x: 32,
-        y: 48
+        y: 16
     }));
 
     menus.push(new Menu('Battle', [
@@ -624,6 +622,40 @@ function prepare_menus() {
     });
 
     menus.push(new Menu('Pokemon', pokemon_options, {
+        width: GAME_WIDTH,
+        height: GAME_HEIGHT,
+        x: 0,
+        y: 0
+    }));
+
+    // Pokedex
+    let pokedex_options = [];
+
+    POKEMON.forEach(pokemon => {
+        let entry_id = pokemon.id;
+
+        if (typeof entry_id === "number") {
+            entry_id = entry_id.toString();
+        }
+
+        switch (entry_id.length) {
+            case 1:
+                entry_id = `00${entry_id}`;
+                break;
+            case 2: 
+                entry_id = `0${entry_id}`;
+                break;
+            default:
+                break;
+        }
+
+        pokedex_options.push({
+            name: `${entry_id} ${pokemon.name.toUpperCase()}`,
+            type: 'Pokedex'
+        });
+    });
+
+    menus.push(new Menu('Pokedex', pokedex_options, {
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
         x: 0,
