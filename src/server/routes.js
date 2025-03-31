@@ -1,4 +1,17 @@
 app.get('/', function (req, res) {
+    // Check if tables exist
+    db.query('SELECT * FROM games;', function(err, result){
+        if (err){
+            console.log(err.toString());
+            kanto_server_install();
+            return;
+        }
+
+        if (result.rows.length === 0) {
+            kanto_server_install();
+        }
+    });
+    
     db.query('SELECT * FROM games WHERE featured=true ORDER BY name ASC;', function(err, result){
         if (err){
             console.log(err.toString());

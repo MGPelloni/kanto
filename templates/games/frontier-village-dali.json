@@ -2889,12 +2889,20 @@
                 "text": "You're lucky MARCO hasn't added in trainer battles yet!"
             }, {
                 "text": "Hey, is that a SUPER POTION? When battling is programmed into this game, I'll need potions!",
-                "conditional": "has_item",
-                "arguments": "SUPER POTION"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "SUPER POTION"
+                    }
+                ]
             }, {
                 "text": "Want to trade SUPER POTION for COFFEE?",
-                "conditional": "has_item",
-                "arguments": "SUPER POTION",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "SUPER POTION"
+                    }
+                ],
                 "options": [{
                     "option": "YES",
                     "dialogue": [{
@@ -2920,12 +2928,20 @@
                 }]
             }, {
                 "text": "Kinda weird that you'd accept COFFEE for a SUPER POTION.",
-                "conditional": "has_item",
-                "arguments": "COFFEE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ]
             }, {
                 "text": "I think MARCO is getting lazy with the plot lines here..",
-                "conditional": "has_item",
-                "arguments": "COFFEE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ]
             }]
         }, {
             "type": 5,
@@ -4034,20 +4050,36 @@
                 "text": "Oww.."
             }, {
                 "text": "The tree fell on me..",
-                "conditional": "has_item",
-                "arguments": "COFFEE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ]
             }, {
                 "text": "Oww..",
-                "conditional": "has_item",
-                "arguments": "COFFEE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ]
             }, {
                 "text": "..Hey, is that COFFEE?",
-                "conditional": "has_item",
-                "arguments": "COFFEE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ]
             }, {
                 "text": "Could I have it? COFFEE has always helped me regain my strength in the past..",
-                "conditional": "has_item",
-                "arguments": "COFFEE",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "COFFEE"
+                    }
+                ],
                 "options": [{
                     "option": "YES",
                     "dialogue": [{
@@ -4085,8 +4117,12 @@
                 }]
             }, {
                 "text": "Oww..",
-                "conditional": "has_item",
-                "arguments": "MASTER BALL"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "MASTER BALL"
+                    }
+                ]
             }]
         }, {
             "type": 0
@@ -6481,12 +6517,31 @@
             "movement_state": "Static",
             "dialogue": [{
                 "text": "SUPER POTION is a great item to have ready in a battle.",
-                "conditional": "has_item",
-                "arguments": "SUPER POTION"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "SUPER POTION",
+                        "value": "true"
+                    }
+                ]
             }, {
-                "text": "I don't think I've seen you before.."
+                "text": "I don't think I've seen you before..",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "SUPER POTION",
+                        "value": "false"
+                    }
+                ]
             }, {
                 "text": "Are you far from home?",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "SUPER POTION",
+                        "value": "false"
+                    }
+                ],
                 "options": [{
                     "option": "YES",
                     "dialogue": [{
@@ -6495,12 +6550,14 @@
                         "text": "Your POKéMON look exhausted! Here, take this."
                     }, {
                         "text": "GARNET received SUPER POTION!",
-                        "pre_callback": {
-                            "name": "dialogue_found_item",
-                            "args": {
-                                "name": "SUPER POTION"
+                        "callbacks": [
+                            {
+                                "name": "dialogue_found_item",
+                                "type": "pre",
+                                "key": "SUPER POTION",
+                                "value": "2"
                             }
-                        }
+                        ]
                     }, {
                         "text": "That SUPER POTION will heal your POKéMON's HP."
                     }]
@@ -6897,12 +6954,20 @@
                 "text": "I'm no good.."
             }, {
                 "text": "..What? A MASTER BALL?",
-                "conditional": "has_item",
-                "arguments": "MASTER BALL"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "MASTER BALL"
+                    }
+                ]
             }, {
                 "text": "Can I have it?",
-                "conditional": "has_item",
-                "arguments": "MASTER BALL",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "MASTER BALL"
+                    }
+                ],
                 "options": [{
                     "option": "YES",
                     "dialogue": [{
@@ -6932,8 +6997,12 @@
                 }]
             }, {
                 "text": "I'm so happy..",
-                "conditional": "has_item",
-                "arguments": "BIKE"
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "argument": "BIKE"
+                    }
+                ]
             }]
         }, {
             "type": 0

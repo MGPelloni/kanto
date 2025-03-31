@@ -672,9 +672,9 @@ function prepare_menus() {
         } 
     ], {
         width: 48,
-        height: 48,
+        height: 56,
         x: 112,
-        y: 56
+        y: 48
     }));
 }
 

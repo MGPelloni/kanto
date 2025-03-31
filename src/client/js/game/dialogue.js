@@ -65,76 +65,69 @@ class Dialogue {
     }
 
     analyze_queue() {
-        // Defaults
-        this.conditional_active = false;
-
-        // Check to see if we are dealing in conditionals
-        this.queue.forEach(message => {
-            if (message.conditional) {
-                this.conditional_active = true;
-            }
-        });
-
-        if (!this.conditional_active) {
-            return;
-        }
-
         // Check to see if any conditional is met
-        let conditional_met = false;
-
-        this.queue.forEach((message, i) => {
-            if (!message.conditional) {
+        let new_queue = [];
+        
+        this.queue.forEach((message) => {
+            if (!message.conditionals) {
+                new_queue.push(message);
                 return;
             }
 
-            switch (message.conditional) {
-                case 'has_item':
-                    player.items.forEach(item => {
-                        if (item.name == message.arguments) {
-                            conditional_met = true;
-                        }
-                    });
-
-                    if (!conditional_met) {
-                        return;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            conditional_met = true;
-        }); 
-
-        // If a conditional is met, only leave those messages in
-        // If no conditional is met, remove all conditional messages except for those without conditionals
-        let new_queue = [];
-
-        if (conditional_met) {
-            this.queue.forEach((message, i) => {
-                if (!message.conditional) {
-                    return;
-                }
-
-                switch (message.conditional) {
+            let conditionals_met = 0,
+                conditionals_required = message.conditionals.length;
+            
+            message.conditionals.forEach(conditional => {
+                switch (conditional.name) {
                     case 'has_item':
-                        player.items.forEach(item => {
-                            if (item.name == message.arguments) {
-                                new_queue.push(message);
+                        if (conditional.value == 'true') {
+                            player.items.forEach(item => {
+                                if (item.name == conditional.key) {
+                                    conditionals_met++;
+                                }
+                            });
+                        } else if (conditional.value == 'false') {
+                            let item_found = false;
+                            player.items.forEach(item => {
+                                if (item.name == conditional.key) {
+                                    item_found = true;
+                                }
+                            });
+
+                            if (!item_found) {
+                                conditionals_met++;
                             }
-                        });
+                        }
+                        break;
+                    case 'has_flag':
+                        if (conditional.value == 'false') {
+                            if (!player.flags.has(conditional.key)) {
+                                conditionals_met++;
+                            }
+                        } else {
+                            if (player.flags.has(conditional.key) && player.flags.get(conditional.key) == conditional.value) {
+                                conditionals_met++;
+                            }
+                        }
+                        break;
+                    case 'has_money':
+                        if (conditional.value == 'false') {
+                            if (player.money < conditional.key) {
+                                conditionals_met++;
+                            }
+                        } else if (player.money >= conditional.key) {
+                            conditionals_met++;
+                        }
                         break;
                     default:
                         break;
                 }
             });
-        } else {
-            this.queue.forEach((message, i) => {
-                if (!message.conditional) {
-                    new_queue.push(message);
-                }
-            });
-        }
+
+            if (conditionals_met == conditionals_required) {
+                new_queue.push(message);
+            }
+        }); 
 
         this.queue = new_queue;
     }

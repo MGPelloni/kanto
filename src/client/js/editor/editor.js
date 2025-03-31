@@ -95,6 +95,13 @@ class Editor {
                 });
             }
 
+
+            if (document.querySelector('#editor-message-add-conditional')) {
+                document.querySelector('#editor-message-add-conditional').addEventListener('click', e => {
+                    editor.add_message_field('conditional');
+                });
+            }
+
             if (document.querySelector('#editor-message-add-pre-callback')) {
                 document.querySelector('#editor-message-add-pre-callback').addEventListener('click', e => {
                     editor.add_message_field('pre_callback');
@@ -548,6 +555,18 @@ class Editor {
                 });
             }
 
+            if (message.conditionals) {
+                prepared_message.conditionals = [];
+
+                message.conditionals.forEach(conditional => {
+                    prepared_message.conditionals.push({
+                        name: conditional.name,
+                        key: conditional.key,
+                        value: conditional.value,
+                    });
+                });
+            }
+
             if (message.pre_callback) {
                 prepared_message.pre_callback = {...message.pre_callback};
                 prepared_message.pre_callback.args = this.prepare_callback_args(prepared_message.pre_callback.name, prepared_message.pre_callback.args);
@@ -605,8 +624,6 @@ class Editor {
         if (inputs) {
             inputs.forEach(input => {
 
-                console.log(input);
-                
                 if (!input.value) {
                     return;
                 }
@@ -619,8 +636,20 @@ class Editor {
 
                         data.options.push(input.value);
                         break;
+                    case 'conditional':
+                        if (!data.conditionals) {
+                            data.conditionals = [];
+                        }
+
+                        data.conditionals.push({name: input.value});
+                        break;
+                    case 'conditional_key':
+                        data.conditionals[data.conditionals.length - 1].key = input.value;
+                        break;
+                    case 'conditional_value':
+                        data.conditionals[data.conditionals.length - 1].value = input.value;
+                        break;
                     case 'pre_callback':
-                        console.log(input.options);
                         if (!data.pre_callback) {
                             data.pre_callback = {name: input.options[input.selectedIndex].text};
                         } else {
@@ -713,6 +742,9 @@ class Editor {
             case 'option':
                 message_container.innerHTML = '<div><span>Option:</span><input type="text" name="option"></div>';
                 break;
+            case 'conditional':
+                message_container.innerHTML = '<div><span>Conditional:</span>' + this.conditional_options() + '</div><div><span>Key:</span><input type="text" name="conditional_key"></div><div><span>Value:</span><input type="text" name="conditional_value"></div>';
+                break;
             case 'pre_callback':
                 message_container.innerHTML = '<div><span>Pre Callback:</span>' + this.callback_options('pre') + '<input type="text" name="pre_callback_args"></div>';
                 break;
@@ -742,17 +774,36 @@ class Editor {
             <option>dialogue_force_spin_east</option>
             <option>dialogue_force_spin_south</option>
             <option>dialogue_force_spin_west</option>
+            <option>dialogue_give_money</option>
+            <option>dialogue_take_money</option>
+            <option>dialogue_player_place</option>
+            <option>dialogue_set_flag</option>
+            <option>dialogue_delete_flag</option>
+        </select>`;
+    }
+
+    conditional_options() {
+        return `
+        <select name="conditional">
+            <option>has_item</option>
+            <option>has_money</option>
+            <option>has_pokedex</option>
+            <option>has_pokemon</option>
+            <option>has_flag</option>
         </select>`;
     }
 
     prepare_callback_args(name, args) {
+        args = args.split(',');
+
         switch (name) {
             case 'dialogue_sfx':
             case 'dialogue_give_item':
-                return {name: args};
+            case 'dialogue_take_item':
+                return {name: args[0]};
                 break;             
             case 'dialogue_cry_sfx':
-                return {id: args};
+                return {id: args[0]};
                 break;   
             case 'dialogue_force_move_north':
             case 'dialogue_force_move_east':
@@ -762,10 +813,26 @@ class Editor {
             case 'dialogue_force_spin_east':
             case 'dialogue_force_spin_south':
             case 'dialogue_force_spin_west':                
-                return {spaces: args};
-                break;                         
+                return {spaces: args[0]};
+                break; 
+            case 'dialogue_set_flag':
+                return {name: args[0], value: args[1]};
+                break;
+            case 'dialogue_delete_flag':
+                return {name: args[0]};
+            case 'dialogue_give_money':
+            case 'dialogue_take_money':
+                return {value: args[0]};
+                break;
+            case 'dialogue_give_pokemon':
+            case 'dialogue_take_pokemon':
+                return {id: args[0], level: args[1]};
+                break;
+            case 'dialogue_player_place':
+                return {x: args[0], y: args[1], map: args[2]};
+                break;
             default:
-                return {name: args};
+                return {name: args[0]};
                 break;
         }
     }

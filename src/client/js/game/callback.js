@@ -108,3 +108,28 @@ function dialogue_force_spin_west(args) {
         player.force_move(3, parseInt(args.spaces), true);
     }
 }
+
+function dialogue_give_money(args) {
+    player.money += parseInt(args.value);
+}
+
+function dialogue_take_money(args) {
+    player.money -= parseInt(args.value);
+
+    if (player.money < 0) {
+        player.money = 0;
+    }
+}
+
+function dialogue_set_flag(args) {
+    player.flags.set(args.name, args.value);
+}
+
+function dialogue_delete_flag(args) {
+    player.flags.delete(args.name);
+}
+
+function dialogue_place_player(args) {
+    player.place(args.x, args.y, args.map);
+    multiplayer_update_position(true);
+}

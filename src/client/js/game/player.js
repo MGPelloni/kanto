@@ -32,6 +32,7 @@ class Player {
         this.items = [];
         this.money = 0;
         this.history = {}; // Last spritesheet
+        this.flags = new Map();
 
         // Menu information
         this.menu = {
