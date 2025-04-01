@@ -80,7 +80,7 @@ class Dialogue {
             message.conditionals.forEach(conditional => {
                 switch (conditional.name) {
                     case 'has_item':
-                        if (conditional.value == 'true') {
+                        if (conditional.value == 'true' || conditional.value === undefined) {
                             player.items.forEach(item => {
                                 if (item.name == conditional.key) {
                                     conditionals_met++;
