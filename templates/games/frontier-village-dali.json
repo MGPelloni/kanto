@@ -2886,13 +2886,21 @@
             "facing": "South",
             "movement_state": "Static",
             "dialogue": [{
-                "text": "You're lucky MARCO hasn't added in trainer battles yet!"
+                "text": "You're lucky MARCO hasn't added in trainer battles yet!",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "COFFEE",
+                        "value": "false"
+                    }
+                ]
             }, {
                 "text": "Hey, is that a SUPER POTION? When battling is programmed into this game, I'll need potions!",
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "SUPER POTION"
+                        "key": "SUPER POTION",
+                        "value": "true"
                     }
                 ]
             }, {
@@ -2900,7 +2908,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "SUPER POTION"
+                        "key": "SUPER POTION",
+                        "value": "true"
                     }
                 ],
                 "options": [{
@@ -2931,7 +2940,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "COFFEE",
+                        "value": "true"
                     }
                 ]
             }, {
@@ -2939,7 +2949,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "COFFEE",
+                        "value": "true"
                     }
                 ]
             }]
@@ -4045,15 +4056,12 @@
         }, {
             "type": 3,
             "dialogue": [{
-                "text": "The tree fell on me.."
-            }, {
-                "text": "Oww.."
-            }, {
                 "text": "The tree fell on me..",
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "MASTER BALL",
+                        "value": "false"
                     }
                 ]
             }, {
@@ -4061,7 +4069,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "MASTER BALL",
+                        "value": "false"
                     }
                 ]
             }, {
@@ -4069,7 +4078,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "COFFEE",
+                        "value": "true"
                     }
                 ]
             }, {
@@ -4077,7 +4087,8 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "COFFEE"
+                        "key": "COFFEE",
+                        "value": "true"
                     }
                 ],
                 "options": [{
@@ -4120,7 +4131,7 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "MASTER BALL"
+                        "key": "MASTER BALL"
                     }
                 ]
             }]
@@ -6550,14 +6561,12 @@
                         "text": "Your POKéMON look exhausted! Here, take this."
                     }, {
                         "text": "GARNET received SUPER POTION!",
-                        "callbacks": [
-                            {
-                                "name": "dialogue_found_item",
-                                "type": "pre",
-                                "key": "SUPER POTION",
-                                "value": "2"
+                        "pre_callback": {
+                            "name": "dialogue_found_item",
+                            "args": {
+                                "name": "SUPER POTION"
                             }
-                        ]
+                        }
                     }, {
                         "text": "That SUPER POTION will heal your POKéMON's HP."
                     }]
@@ -6945,19 +6954,47 @@
             "facing": "North",
             "movement_state": "Frozen",
             "dialogue": [{
-                "text": "I had big dreams of joining the ELITE FOUR one day.."
+                "text": "I had big dreams of joining the ELITE FOUR one day..",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "BIKE",
+                        "value": "false"
+                    }
+                ]
             }, {
-                "text": "The first bug catcher to be a POKéMON master.."
+                "text": "The first bug catcher to be a POKéMON master..",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "BIKE",
+                        "value": "false"
+                    }
+                ]
             }, {
-                "text": "But I'm so bad at catching POKéMON! I've never caught one ever actually.."
+                "text": "But I'm so bad at catching POKéMON! I've never caught one ever actually..",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "BIKE",
+                        "value": "false"
+                    }
+                ]
             }, {
-                "text": "I'm no good.."
+                "text": "I'm no good..",
+                "conditionals": [
+                    {
+                        "name": "has_item",
+                        "key": "BIKE",
+                        "value": "false"
+                    }
+                ]
             }, {
                 "text": "..What? A MASTER BALL?",
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "MASTER BALL"
+                        "key": "MASTER BALL"
                     }
                 ]
             }, {
@@ -6965,7 +7002,7 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "MASTER BALL"
+                        "key": "MASTER BALL"
                     }
                 ],
                 "options": [{
@@ -7000,7 +7037,7 @@
                 "conditionals": [
                     {
                         "name": "has_item",
-                        "argument": "BIKE"
+                        "key": "BIKE"
                     }
                 ]
             }]
