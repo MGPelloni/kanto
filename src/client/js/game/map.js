@@ -22,6 +22,10 @@ class SpritePool {
     }
   }
 
+  empty() {
+    this.pool = [];
+  }
+
   updateAnimationFrames(frame) {
     for (const sprite of this.pool) {
       if (sprite instanceof PIXI.AnimatedSprite && sprite.inUse) {
@@ -246,7 +250,11 @@ class Kanto_Map {
     const start_y = Math.max(0, Math.floor(player_y - viewport));
     const end_x = Math.min(this.width, Math.floor(player_x + viewport)) + 1;
     const end_y = Math.min(this.height, Math.floor(player_y + viewport)) + 1;
-  
+    // console.log(`Viewport bounds: Start (${start_x}, ${start_y}) -> End (${end_x}, ${end_y})`);
+    // console.log(`Player Position: X=${player_x}, Y=${player_y}`);
+    // console.log(`Map Dimensions: Width=${this.width}, Height=${this.height}`);
+    // console.log(`Total Tiles: ${this.tiles.length}`);
+    // console.log(`Rendering Tiles within Viewport: (${start_x}, ${start_y}) to (${end_x}, ${end_y})`);
     tileSpritePool.releaseAll();
   
     // Clear just tile sprites, not entire background container (preserve persistent children if any)
@@ -262,14 +270,18 @@ class Kanto_Map {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) continue;
   
         const index = x + this.width * y;
-        if (index < 0 || index >= this.tiles.length) continue;
-  
         const tile = this.tiles[index];
         const sprite = getSpriteForTile(tile, tilemap);
   
         sprite.x = x * TILE_SIZE;
         sprite.y = y * TILE_SIZE;
         sprite.game_position = { map: this.id, x, y, index };
+
+        if (tile === 1032) {
+          console.log(`Rendering Tile: ${tile} at (${sprite.x}, ${sprite.y})`);
+          console.log(`Sprite Position: ${sprite.x}, ${sprite.y}`);
+          console.log(`Sprite Game Position: ${sprite.game_position.x}, ${sprite.game_position.y}`);
+        }
   
         background.addChild(sprite);
       }

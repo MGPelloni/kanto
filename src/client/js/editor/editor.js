@@ -189,6 +189,10 @@ class Editor {
 
     prepare_tiles() {
         background.children.forEach(sprite => {  
+            if (sprite.interactive) {
+                return;
+            }
+
             sprite.interactive = true;
             sprite.origin = {
                 texture: sprite.texture
@@ -364,6 +368,8 @@ class Editor {
     }
 
     adjust_tile(sprite) {
+        tileSpritePool.empty();
+        
         sprite.texture = tile_textures[this.selected_texture];
         sprite.origin.texture = sprite.texture;
 
@@ -959,7 +965,7 @@ class Editor {
     }
 
     create_new_map() {
-        let new_map = new Kanto_Map();
+        let new_map = new Kanto_Map(null, "Huge Map", 100, 100);
         maps.push(new_map);
         socket.emit('server_create_map', {lobby_id: lobby_id, game_id: game_id, map: new_map});
         player.place(new_map.starting_position.x, new_map.starting_position.y, new_map.id);
@@ -1186,7 +1192,7 @@ function expand_map(direction) {
 
     map.width = new_width;
     map.height = new_height;
-    map.build_tiles();
+    map.render_tiles();
     map.build_atts();
     map.build_items();
     maps[map.id] = map;
@@ -1280,7 +1286,7 @@ function condense_map(direction) {
 
     map.width = new_width;
     map.height = new_height;
-    map.build_tiles();
+    map.render_tiles();
     map.build_atts();
     map.build_items();
     maps[map.id] = map;

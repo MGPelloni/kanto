@@ -727,6 +727,7 @@ class Player {
         map.render_tiles(player);
 
         if (editor.enabled) {
+            editor.prepare_tiles();
             editor.log();
         }
     }
