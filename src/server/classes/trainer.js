@@ -19,9 +19,9 @@ class Trainer {
 
         switch (tile.type) {
             case 8:
-                let battle_roll = Math.floor(Math.random() * 10) + 1; // 10% chance
-
-                if (battle_roll == 10) {
+                let battle_roll = Math.floor(Math.random() * 16) + 1; // 6.25% chance
+                
+                if (battle_roll == 1) {
                     let pokemon_roll = Math.floor(Math.random() * tile.pokemon.length); // Selecting a PKMN from the list
                     this.wild_pokemon_battle(tile.pokemon[pokemon_roll].id, tile.pokemon[pokemon_roll].level);
                 }
