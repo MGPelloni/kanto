@@ -196,6 +196,7 @@ class Player {
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
+                            map.render_tiles(player);
 
                             if (collision_check(exit.x, exit.y + 1, exit.map) == false) {
                                 this.position.y++;
@@ -643,7 +644,7 @@ class Player {
                     }
                 });
                 
-                map.build_tiles();
+                map.render_tiles();
                 map.build_atts();
                 map.build_items();
                 maps[map.id] = map;
@@ -722,6 +723,8 @@ class Player {
             default:
                 break;
         }
+
+        map.render_tiles(player);
 
         if (editor.enabled) {
             editor.log();
