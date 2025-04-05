@@ -34,8 +34,22 @@ class Renderer {
                 background.addChild(sprite);
             }
         }
+
+        // Items
+        for (const item of map.items) {
+            if (item.position.map === map.id) {
+                const { x, y } = item.position;
+                // Check if the item is within the viewport
+                if (x >= startX && x < endX && y >= startY && y < endY) {
+                    item.sprite.x = x * TILE_SIZE;
+                    item.sprite.y = y * TILE_SIZE;
+                    background.addChild(item.sprite);
+                }
+            }
+        }
     }
 }
+
 
 
 class SpritePool {

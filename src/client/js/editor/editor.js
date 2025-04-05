@@ -490,8 +490,8 @@ class Editor {
     }
 
     save() {
-        let game_export = kanto_game_export();
-        store_data(meta.name, game_export);
+        // let game_export = kanto_game_export();
+        // store_data(meta.name, game_export);
     }
 
     publish() {

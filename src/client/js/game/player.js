@@ -571,6 +571,10 @@ class Player {
         this.position.y = y;
         this.position.index = this.position.x + this.current_map.width * this.position.y;
         this.position.tile = this.current_map.atts[x + this.current_map.width * y];
+
+        if (player) {
+            renderer.render();
+        }
         
         if (editor.enabled) {
             editor.prepare_tiles();
