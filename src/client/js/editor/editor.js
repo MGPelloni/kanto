@@ -384,7 +384,7 @@ class Editor {
     }
 
     adjust_tile(sprite) {
-        tileSpritePool.empty();
+        renderer.pool.empty();
         
         sprite.texture = tile_textures[this.selected_texture];
         sprite.origin.texture = sprite.texture;
@@ -1340,6 +1340,11 @@ function expand_map(direction) {
     }
 
     if (direction == 'North' || direction == 'South') {
+        if (map.height >= 400) {
+            console.log('Map size limit reached. Cannot expand map.');
+            return;
+        }
+
         for (let y = 0; y < new_height; y++) {
             for (let x = 0; x < new_width; x++) {
                 let index = x + new_width * y;
@@ -1351,6 +1356,11 @@ function expand_map(direction) {
             }
         }
     } else {
+        if (map.width >= 400) {
+            console.error('Map size limit reached. Cannot expand map.');
+            return;
+        }
+        
         for (let y = 0; y < new_height; y++) {
             for (let x = 0; x < new_width; x++) {
                 let index = x + new_width * y;
@@ -1369,6 +1379,7 @@ function expand_map(direction) {
     map.build_items();
     maps[map.id] = map;
     editor.update();
+    renderer.render();
 
     // Adjusting the player's position to work with the new boundaries
     switch (direction) {
@@ -1462,6 +1473,7 @@ function condense_map(direction) {
     map.build_items();
     maps[map.id] = map;
     editor.update();
+    renderer.render();
 
     // Adjusting the player's position to work with the new boundaries
     switch (direction) {

@@ -89,13 +89,11 @@ class SpritePool {
     }
 }
 
-const tileSpritePool = new SpritePool();
-
 function getSpriteForTile(tile, tilemap) {
     const w = TILE_SIZE, h = TILE_SIZE;
     const key = `tile_${tile}`;
     
-    return tileSpritePool.get(key, () => {
+    return renderer.pool.get(key, () => {
         if (tile === 38) return createSyncedAnim(create_flower_top_spritesheet());
         if (tile === 23) return createSyncedAnim(create_flower_bottom_spritesheet());
         
@@ -158,6 +156,6 @@ app.ticker.add(() => {
     animationCounter++;
     if (animationCounter % ANIM_FRAME_INTERVAL === 0) {
         global_animation_frame = (global_animation_frame + 1) % 8; // assuming 8-frame loop
-        tileSpritePool.updateAnimationFrames(global_animation_frame);
+        renderer.pool.updateAnimationFrames(global_animation_frame);
     }
 });

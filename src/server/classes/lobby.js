@@ -111,6 +111,11 @@ function expand_map(map, direction) {
     let new_width,
         new_height,
         splice_index;
+
+    if (map.width >= 400 || map.height >= 400) {
+        console.log('Map size limit reached. Cannot expand map.');
+        return;
+    }
         
     switch (direction) {
         case 'North':

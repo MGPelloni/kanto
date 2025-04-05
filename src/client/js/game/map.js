@@ -6,6 +6,17 @@ class Kanto_Map {
     this.name = name;
     this.x = ((width * TILE_SIZE) / 2) * -1;
     this.y = ((height * TILE_SIZE) / 2) * -1;
+
+    if (width > 400) {
+      console.error('Map width exceeds maximum limit of 400 tiles.');
+      width = 400;
+    }
+
+    if (height > 400) {
+      console.error('Map height exceeds maximum limit of 400 tiles.');
+      height = 400;
+    }
+
     this.height = height;
     this.width = width;
 
