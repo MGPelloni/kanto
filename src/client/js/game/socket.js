@@ -221,6 +221,14 @@ socket.on('server_adjust_att', (data) => {
     }
 });
 
+socket.on('server_adjust_property', (data) => {
+    maps[data.map][data.property] = data.value;
+
+    if (map.id == data.map) {
+        map[data.property] = data.value;
+    }
+});
+
 socket.on("server_expand_map", (data) => {
     if (map.id == data.map) {
         expand_map(data.direction);

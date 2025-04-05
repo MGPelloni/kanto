@@ -319,6 +319,24 @@ io.on("connection", (socket) => {
             }
         }
     }); 
+
+    socket.on("server_adjust_property", (data) => {
+        let lobby_key = data.lobby_id;
+
+        console.log("server_adjust_property", data);
+
+        if (lobby_key !== null) {
+            if (lobbies[lobby_key].game_id == data.game_id) {
+                lobbies[lobby_key].game.maps[data.map][data.property] = data.value;
+
+                socket.to(lobbies[lobby_key].id).emit('server_adjust_property', {
+                    map: data.map,
+                    index: data.index,
+                    property: data.property,
+                });
+            }
+        }
+    });
         
     socket.on("server_expand_map", (data) => {
         let lobby_key = data.lobby_id;

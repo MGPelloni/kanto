@@ -156,6 +156,7 @@ app.post('/game', (req, res) => {
             }
     
             if (result.rows.length > 0) {
+                console.log(result.rows[0].game_data);
                 res.json(result.rows[0].game_data);
                 return;
             } else {
@@ -224,6 +225,8 @@ app.post('/upload', (req, res) => {
         game_id = req.body.game_id;
     }
 
+    console.log(req.body.game_id);
+
     if (game_id) {
         db.query('SELECT * FROM games WHERE game_id=$1;', [game_id], function(err, result) { // TODO: Add author check here
             if (err){
@@ -232,7 +235,7 @@ app.post('/upload', (req, res) => {
             }
     
             if (result.rows.length > 0){
-                db.query('UPDATE games SET game_data=$2 WHERE game_id=$1;', [game_id, req.body], function(err, result){
+                db.query('UPDATE games SET game_data=$2, name=$3 WHERE game_id=$1;', [game_id, req.body, req.body.meta.name], function(err, result){
                     if (err){
                         console.log(err.toString());
                     }

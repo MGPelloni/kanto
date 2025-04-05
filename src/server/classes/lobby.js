@@ -44,6 +44,11 @@ class Lobby {
      * Generate NPCs, items, and other misc game data
      */
     generate_game(res) {
+        if (!res) {
+            console.log('Error: No game data found.');
+            return;
+        }
+
         this.game = JSON.parse(res.game_data);
         this.npcs = [];
         this.items = [];
@@ -53,6 +58,8 @@ class Lobby {
             map.id = i;
             this.build_npcs(map);
         });
+
+        console.log('Game loaded:', this.game);
 
         this.loaded = true;
         console.log('Lobby loaded:', this.id);
