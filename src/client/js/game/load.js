@@ -63,6 +63,7 @@ function kanto_fetch_game() {
 }
 
 function kanto_new_game() {
+    console.log("Creating new game...");
     meta = {
         name: 'Untitled Game'
     };
@@ -87,6 +88,8 @@ function kanto_load_game(data) {
 
     // Set global import game data [meta, maps, player]
     import_data = JSON.parse(data);
+
+    console.log("Game data loaded:", import_data);
     
     // Load Meta
     meta = import_data.meta;
@@ -226,6 +229,8 @@ function kanto_prepare() {
     prepare_spritesheets();
     prepare_item_sprites();
     prepare_audio();
+
+    renderer = new Renderer();
 }
 
 /**
@@ -250,6 +255,8 @@ function kanto_start() {
     app.ticker.maxFPS = FPS;
     app.ticker.add(move_loop);
     app.ticker.add(controls_loop);
+    
+    renderer.render();
 
     // Create editor
     if (game_mode == 'create') {

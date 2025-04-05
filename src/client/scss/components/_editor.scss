@@ -5,36 +5,46 @@
     background-color: #191919;
     outline: 2px solid #626262;
     overflow: scroll;
-
+    
     nav {
         margin: 0 0 15px;
         text-align: center;
-    }
+        overflow: scroll;
+        display: flex;
+        gap: 10px;
+        padding: 0 15px;
 
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    
     ul,
     ol {
         padding: 0;
         margin: 10px 0;
         list-style-type: none;
     }
-
+    
     ._container {
         width: calc(480px + 15px);
         padding: 0;
     }
-
+    
     ul.-styled li,
     ol.-styled li {
         padding: 3px 10px;
         margin: 0 0 5px;
         border-bottom: 2px solid transparent;
         cursor: pointer;
-
+        
         &.-active {
             background-color: #cedae6;
             border-color: #7caee0;
         }
-
+        
         &:hover {
             opacity: 0.6;
             background-color: #000000;
@@ -46,12 +56,12 @@
 #tile-editor {
     width: 100%;
     margin: 0 auto;
-
+    
     .general-editor-display {
         padding: 0;
         color: #fff;
     }
-
+    
     img {
         width: auto;
         max-width: none;
@@ -62,7 +72,7 @@
 
 .editor {
     display: none;
-
+    
     &.-active {
         display: block;
     }
@@ -73,19 +83,19 @@
     background-color: #191919;
     height: 260px;
     overflow-y: scroll;
-
+    
     h3 {
         margin: 1rem 0 1.5rem;
         border-bottom: 2px solid #bbbbbb;
         padding: 0 0 1rem;
     }
-
+    
     h5 {
         padding: 1rem;
         margin: 0 0 1rem;
         border-bottom: 2px solid black;
     }
-
+    
     textarea {
         width: 100%;
         min-height: 100px;
@@ -97,11 +107,11 @@
     text-align: right;
     padding: 10px;
     border-top: 2px solid black;
-
+    
     display: flex;
     overflow: scroll;
     align-items: center;
-
+    
     button {
         margin: 0.25rem;
         min-width: 150px;
@@ -110,18 +120,18 @@
 
 .editor-data-line {
     margin: 0 0 1rem;
-
+    
     label,
     span {
         margin: 0 1rem 0 0;
     }
-
+    
     &.-well {
         padding: 15px;
         background-color: #191919;
         border: 2px solid #484848;
     }
-
+    
     input:disabled {
         opacity: 0.5;
     }
@@ -145,7 +155,7 @@
     background-color: black;
     margin: 0 0 10px;
     overflow: scroll;
-
+    
     li {
         position: relative;
         padding: 10px;
@@ -154,7 +164,7 @@
         font-family: pokemon_gbregular;
         font-size: 9px;
         margin: 10px;
-
+        
         &[data-depth="1"] {
             margin-left: 30px;
         }
@@ -167,7 +177,7 @@
             margin-left: 90px;
         }
     }
-
+    
     div {
         position: absolute;
         top: 50%;
@@ -194,3 +204,21 @@
     margin: 0 0 0 2rem;
     background-repeat: no-repeat;
 }
+
+.layout-grid-container {
+    display: grid;
+    gap: 2px;
+    margin-top: 1rem;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .layout-grid-cell {
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    font-size: 14px;
+    padding: 0;
+    border: 1px solid #ccc;
+  }
+  

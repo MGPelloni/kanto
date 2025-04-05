@@ -39,6 +39,7 @@
                         <div class="_container">
                             <nav>
                                 <button data-open="#game-editor">Game</button>
+                                <button data-open="#layout-editor">Layouts</button>
                                 <button data-open="#map-editor">Maps</button>
                                 <button data-open="#tile-editor" data-mode="tiles">Tiles</button>
                                 <button data-open="#att-editor" data-mode="atts">Atts</button>
@@ -61,6 +62,32 @@
                                     <button data-open="#editor-publish-game">Publish Game</button>
                                 </div>
                             </div>
+                            <div id="layout-editor" class="editor">
+                                <div class="general-editor-display">
+                                  <h3>Layout Editor</h3>
+                                  <div class="editor-data-line">
+                                    <span>Name: </span>
+                                    <input type="text" id="layout-name" placeholder="Overworld" />
+                                  </div>
+                                  <div class="editor-data-line">
+                                    <span>Width: </span>
+                                    <input type="number" id="layout-width" min="1" />
+                                  </div>
+                                  <div class="editor-data-line">
+                                    <span>Height: </span>
+                                    <input type="number" id="layout-height" min="1" />
+                                  </div>
+                                  <button id="layout-generate-grid">Generate Grid</button>                              
+                                  <div id="layout-grid-container" class="layout-grid-container"></div>
+                                </div>
+                                <div class="general-editor-options">
+                                  <button id="layout-save">Save</button>
+                                  <button id="layout-edit">Edit</button>
+                                  <button id="layout-delete">Delete</button>
+                                  <button id="layout-cancel">Cancel</button>
+                                </div>
+                            </div>
+                              
                             <div id="map-editor" class="editor">
                                 <div class="general-editor-display">
                                     <div class="_grid -col-2 -gap-15">

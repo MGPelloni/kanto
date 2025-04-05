@@ -26,6 +26,7 @@ let import_data = {
 // Game Variables
 let game_id = url_parameter('g');
 let lobby_id = url_parameter('l');
+let renderer;
 let meta = {};
 let maps = [];
 let player; 

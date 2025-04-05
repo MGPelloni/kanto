@@ -25,6 +25,7 @@ class Editor {
             this.log();
 
             editor_event_listeners();
+            this.layout_listeners();
 
             // Async
             kanto_get_game_templates().then(data => {
@@ -73,7 +74,10 @@ class Editor {
             
             if (document.querySelector('#editor-new-map')) {
                 document.querySelector('#editor-new-map').addEventListener('click', e => {
-                    editor.create_new_map();
+                    let name = prompt('Map name:');
+                    let width = parseInt(prompt('Map width:'), 10);
+                    let height = parseInt(prompt('Map height:'), 10);
+                    editor.create_new_map(name, width, height);
                 });
             }
             
@@ -92,6 +96,18 @@ class Editor {
             if (document.querySelector('#editor-message-add-option')) {
                 document.querySelector('#editor-message-add-option').addEventListener('click', e => {
                     editor.add_message_field('option');
+                });
+            }
+
+            if (document.querySelector('#editor-add-layout')) {
+                document.querySelector('#editor-add-layout').addEventListener('click', e => {
+                    editor.add_layout();
+                });
+            }
+
+            if (document.querySelector('#editor-delete-layout')) {
+                document.querySelector('#editor-delete-layout').addEventListener('click', e => {
+                    editor.delete_layout();
                 });
             }
 
@@ -766,6 +782,163 @@ class Editor {
         message_form.appendChild(message_container);
     }
 
+    /**
+     * Gives the user the ability to stitch maps together utilizing a layout.
+     * 
+     * Example structure to add to game.json:
+     * "layouts": {
+            "overworld": {
+                "name": "Overworld",
+                "grid": [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+                ]
+            },
+            "dungeon1": {
+                "name": "Dungeon 1",
+                "grid": [
+                [10, 11],
+                [12, 13]
+                ]
+            }
+        }
+     */
+
+    layout_listeners() {
+        document.getElementById('layout-generate-grid').addEventListener('click', () => {
+            const width = parseInt(document.getElementById('layout-width').value, 10);
+            const height = parseInt(document.getElementById('layout-height').value, 10);
+            const gridContainer = document.getElementById('layout-grid-container');
+        
+            if (!width || !height) return alert('Set valid width and height.');
+        
+            gridContainer.style.gridTemplateColumns = `repeat(${width}, 48px)`;
+            gridContainer.innerHTML = '';
+        
+            for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const input = document.createElement('input');
+                input.className = 'layout-grid-cell';
+                input.type = 'text';
+                input.dataset.x = x;
+                input.dataset.y = y;
+                gridContainer.appendChild(input);
+            }
+            }
+        });
+        
+        document.getElementById('layout-save').addEventListener('click', () => {
+            const name = document.getElementById('layout-name').value;
+            const width = parseInt(document.getElementById('layout-width').value, 10);
+            const height = parseInt(document.getElementById('layout-height').value, 10);
+            const cells = document.querySelectorAll('.layout-grid-cell');
+        
+            if (!name || !width || !height) return alert('Name, width, height required.');
+        
+            const layout_grid = [];
+            for (let y = 0; y < height; y++) {
+            const row = [];
+            for (let x = 0; x < width; x++) {
+                const cell = Array.from(cells).find(c => parseInt(c.dataset.x) === x && parseInt(c.dataset.y) === y);
+                row.push(cell ? cell.value.trim() : '');
+            }
+            layout_grid.push(row);
+            }
+        
+            const layout = { name, grid: layout_grid };
+            if (!meta.layouts) meta.layouts = [];
+            meta.layouts.push(layout);
+        
+            alert(`Layout "${name}" saved.`);
+        });
+        
+        document.getElementById('layout-cancel').addEventListener('click', () => {
+            document.getElementById('layout-name').value = '';
+            document.getElementById('layout-width').value = '';
+            document.getElementById('layout-height').value = '';
+            document.getElementById('layout-grid-container').innerHTML = '';
+        });
+        
+        const widthInput = document.getElementById('layout-width');
+        const heightInput = document.getElementById('layout-height');
+        const gridContainer = document.getElementById('layout-grid-container');
+
+        function updateGridSize() {
+        const width = parseInt(widthInput.value, 10);
+        const height = parseInt(heightInput.value, 10);
+        if (!width || !height) return;
+
+        const oldCells = Array.from(document.querySelectorAll('.layout-grid-cell'));
+        const oldWidth = parseInt(gridContainer.style.gridTemplateColumns.split(' ').length || 0, 10);
+        const oldHeight = oldCells.length / oldWidth || 0;
+
+        gridContainer.style.gridTemplateColumns = `repeat(${width}, 48px)`;
+
+        const newCells = [];
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+            const existing = oldCells.find(c => parseInt(c.dataset.x) === x && parseInt(c.dataset.y) === y);
+            if (existing) {
+                newCells.push(existing);
+            } else {
+                const input = document.createElement('input');
+                input.className = 'layout-grid-cell';
+                input.type = 'text';
+                input.dataset.x = x;
+                input.dataset.y = y;
+                newCells.push(input);
+            }
+            }
+        }
+
+        gridContainer.innerHTML = '';
+        newCells.forEach(cell => gridContainer.appendChild(cell));
+        }
+
+        ['input', 'change'].forEach(evt => {
+        widthInput.addEventListener(evt, updateGridSize);
+        heightInput.addEventListener(evt, updateGridSize);
+        });
+
+        document.getElementById('layout-generate-grid').addEventListener('click', updateGridSize);
+
+    }
+    
+    add_layout() {
+        const name = prompt('Layout name:');
+        const width = parseInt(prompt('Layout width:'), 10);
+        const height = parseInt(prompt('Layout height:'), 10);
+    
+        if (!name || isNaN(width) || isNaN(height)) {
+            alert('Invalid layout parameters.');
+            return;
+        }
+    
+        const grid = [];
+    
+        for (let y = 0; y < height; y++) {
+            const input = prompt(`Row ${y} (comma-separated map IDs):`);
+            const row = input.split(',').map(id => {
+                const parsed = parseInt(id.trim(), 10);
+                return isNaN(parsed) ? null : parsed;
+            });
+    
+            if (row.length !== width) {
+                alert(`Row ${y} does not match width.`);
+                return;
+            }
+    
+            grid.push(row);
+        }
+    
+        const layout = { name, grid };
+    
+        if (!meta.layouts) meta.layouts = [];
+        meta.layouts.push(layout);
+    }
+
     callback_options(type = 'pre') {
         return `
         <select name="${type}_callback">
@@ -964,8 +1137,8 @@ class Editor {
         this.working_pokemon = [];
     }
 
-    create_new_map() {
-        let new_map = new Kanto_Map(null, "Huge Map", 100, 100);
+    create_new_map(name = "Untitled map", width = "10", height = "10") {
+        let new_map = new Kanto_Map(null, name, width, height);
         maps.push(new_map);
         socket.emit('server_create_map', {lobby_id: lobby_id, game_id: game_id, map: new_map});
         player.place(new_map.starting_position.x, new_map.starting_position.y, new_map.id);
@@ -1192,7 +1365,6 @@ function expand_map(direction) {
 
     map.width = new_width;
     map.height = new_height;
-    map.render_tiles();
     map.build_atts();
     map.build_items();
     maps[map.id] = map;
@@ -1286,7 +1458,6 @@ function condense_map(direction) {
 
     map.width = new_width;
     map.height = new_height;
-    map.render_tiles();
     map.build_atts();
     map.build_items();
     maps[map.id] = map;

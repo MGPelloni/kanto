@@ -18,7 +18,7 @@ class Player {
         this.speed = 1;
         this.in_battle = false;
         this.automove = {};
-
+        
         this.pokemon = [
             POKEMON[Math.floor(Math.random() * 151)]
         ];
@@ -196,7 +196,6 @@ class Player {
                         if (exit_check()) { // Check if the player is at an exit
                             let exit = this.current_map.atts[this.position.index];
                             this.place(exit.x, exit.y, exit.map);
-                            map.render_tiles(player);
 
                             if (collision_check(exit.x, exit.y + 1, exit.map) == false) {
                                 this.position.y++;
@@ -206,6 +205,7 @@ class Player {
 
                             multiplayer_update_position(true);
                             sfx.play('go-outside');
+                            renderer.render();
                         } else { // Collision into a barrier
                             sfx.play('collision');
                             multiplayer_update_facing();
@@ -644,7 +644,6 @@ class Player {
                     }
                 });
                 
-                map.render_tiles();
                 map.build_atts();
                 map.build_items();
                 maps[map.id] = map;
@@ -724,7 +723,7 @@ class Player {
                 break;
         }
 
-        map.render_tiles(player);
+        renderer.render();
 
         if (editor.enabled) {
             editor.prepare_tiles();
