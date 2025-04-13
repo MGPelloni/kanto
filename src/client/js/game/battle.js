@@ -87,37 +87,39 @@ function battle_start() {
                 }
             },
             post_callback: {
-                name: 'battle_complete'
+                name: 'battle_screens_open'
             }
         }]);
     }, 2000)
 }
 
-// function battle_screens_open() {
-//     menus.forEach((menu, i) => {
-//         if (menu.name == 'Battle') {
-//             battle.menu = menu;
-//             menu_index = i;
-//         }
-//     });
+function battle_screens_open() {
+    menus.forEach((menu, i) => {
+        if (menu.name == 'Battle') {
+            battle.menu = menu;
+            menu_index = i;
+        }
+    });
 
-//     if (battle.menu) {
-//         menu_container.visible = true;
-//         battle.menu.reset();
-//         battle.menu.open();
-//         player.menu.history.push(menu_index); 
-//         player.menu.current = menu_index;
-//         player.menu.active = true;
-//         player.controls = 'menu';
-//     }
+    if (battle.menu) {
+        // hide dialogue
+        message_container.visible = false;
+        menu_container.visible = true;
+        battle.menu.reset();
+        battle.menu.open();
+        player.menu.history.push(menu_index); 
+        player.menu.current = menu_index;
+        player.menu.active = true;
+        player.controls = 'menu';
+    }
 
-//     setTimeout(() => {
-//         if (battle.menu) {
-//             battle.menu.close();    
-//         }
-//         battle_complete();
-//     }, 3000)
-// }
+    // setTimeout(() => {
+    //     if (battle.menu) {
+    //         battle.menu.close();    
+    //     }
+    //     battle_complete();
+    // }, 3000)
+}
 
 function battle_complete() {
     music.immediate_play(14);

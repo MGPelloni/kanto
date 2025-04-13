@@ -1,0 +1,5484 @@
+[
+  {
+    "id": 1,
+    "name": "BULBASAUR",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "LEECH SEED",
+        "level": 7
+      },
+      {
+        "name": "VINE WHIP",
+        "level": 13
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 20
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 27
+      },
+      {
+        "name": "GROWTH",
+        "level": 34
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 41
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "IVYSAUR",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "IVYSAUR",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "LEECH SEED",
+        "level": 1
+      },
+      {
+        "name": "VINE WHIP",
+        "level": 13
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 22
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 30
+      },
+      {
+        "name": "GROWTH",
+        "level": 38
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 46
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 54
+      }
+    ],
+    "evolution": [
+      {
+        "to": "VENUSAUR",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "VENUSAUR",
+    "learnset": [
+      {
+        "name": "VINE WHIP",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "LEECH SEED",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 22
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 30
+      },
+      {
+        "name": "GROWTH",
+        "level": 43
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 55
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 65
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 4,
+    "name": "CHARMANDER",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 9
+      },
+      {
+        "name": "LEER",
+        "level": 15
+      },
+      {
+        "name": "RAGE",
+        "level": 22
+      },
+      {
+        "name": "SLASH",
+        "level": 30
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 38
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 46
+      }
+    ],
+    "evolution": [
+      {
+        "to": "CHARMELEON",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "CHARMELEON",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 15
+      },
+      {
+        "name": "RAGE",
+        "level": 24
+      },
+      {
+        "name": "SLASH",
+        "level": 33
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 42
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 56
+      }
+    ],
+    "evolution": [
+      {
+        "to": "CHARIZARD",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "CHARIZARD",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "RAGE",
+        "level": 24
+      },
+      {
+        "name": "SLASH",
+        "level": 36
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 46
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 55
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 7,
+    "name": "SQUIRTLE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 8
+      },
+      {
+        "name": "WATER GUN",
+        "level": 15
+      },
+      {
+        "name": "BITE",
+        "level": 22
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 28
+      },
+      {
+        "name": "SKULL BASH",
+        "level": 35
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "WARTORTLE",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "WARTORTLE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 15
+      },
+      {
+        "name": "BITE",
+        "level": 24
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 31
+      },
+      {
+        "name": "SKULL BASH",
+        "level": 39
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 47
+      }
+    ],
+    "evolution": [
+      {
+        "to": "BLASTOISE",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "BLASTOISE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 24
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 31
+      },
+      {
+        "name": "SKULL BASH",
+        "level": 42
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 52
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 10,
+    "name": "CATERPIE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "STRING SHOT",
+        "level": 1
+      }
+    ],
+    "evolution": [
+      {
+        "to": "METAPOD",
+        "level": 7
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "METAPOD",
+    "learnset": [
+      {
+        "name": "HARDEN",
+        "level": 1
+      }
+    ],
+    "evolution": [
+      {
+        "to": "BUTTERFREE",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "BUTTERFREE",
+    "learnset": [
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 16
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 17
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 21
+      },
+      {
+        "name": "WHIRLWIND",
+        "level": 26
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 32
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 13,
+    "name": "WEEDLE",
+    "learnset": [
+      {
+        "name": "POISON STING",
+        "level": 1
+      },
+      {
+        "name": "STRING SHOT",
+        "level": 1
+      }
+    ],
+    "evolution": [
+      {
+        "to": "KAKUNA",
+        "level": 7
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "KAKUNA",
+    "learnset": [
+      {
+        "name": "HARDEN",
+        "level": 1
+      }
+    ],
+    "evolution": [
+      {
+        "to": "BEEDRILL",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "BEEDRILL",
+    "learnset": [
+      {
+        "name": "FURY ATTACK",
+        "level": 1
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 16
+      },
+      {
+        "name": "TWINEEDLE",
+        "level": 20
+      },
+      {
+        "name": "RAGE",
+        "level": 25
+      },
+      {
+        "name": "PIN MISSILE",
+        "level": 30
+      },
+      {
+        "name": "AGILITY",
+        "level": 35
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 16,
+    "name": "PIDGEY",
+    "learnset": [
+      {
+        "name": "GUST",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 5
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 12
+      },
+      {
+        "name": "WHIRLWIND",
+        "level": 19
+      },
+      {
+        "name": "WING ATTACK",
+        "level": 28
+      },
+      {
+        "name": "AGILITY",
+        "level": 36
+      },
+      {
+        "name": "MIRROR MOVE",
+        "level": 44
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PIDGEOTTO",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "PIDGEOTTO",
+    "learnset": [
+      {
+        "name": "GUST",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 12
+      },
+      {
+        "name": "WHIRLWIND",
+        "level": 21
+      },
+      {
+        "name": "WING ATTACK",
+        "level": 31
+      },
+      {
+        "name": "AGILITY",
+        "level": 40
+      },
+      {
+        "name": "MIRROR MOVE",
+        "level": 49
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PIDGEOT",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "PIDGEOT",
+    "learnset": [
+      {
+        "name": "GUST",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "WHIRLWIND",
+        "level": 21
+      },
+      {
+        "name": "WING ATTACK",
+        "level": 31
+      },
+      {
+        "name": "AGILITY",
+        "level": 44
+      },
+      {
+        "name": "MIRROR MOVE",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 19,
+    "name": "RATTATA",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 7
+      },
+      {
+        "name": "HYPER FANG",
+        "level": 14
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 23
+      },
+      {
+        "name": "SUPER FANG",
+        "level": 34
+      }
+    ],
+    "evolution": [
+      {
+        "to": "RATICATE",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "RATICATE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "HYPER FANG",
+        "level": 14
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 27
+      },
+      {
+        "name": "SUPER FANG",
+        "level": 41
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 21,
+    "name": "SPEAROW",
+    "learnset": [
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 9
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 15
+      },
+      {
+        "name": "MIRROR MOVE",
+        "level": 22
+      },
+      {
+        "name": "DRILL PECK",
+        "level": 29
+      },
+      {
+        "name": "AGILITY",
+        "level": 36
+      }
+    ],
+    "evolution": [
+      {
+        "to": "FEAROW",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "FEAROW",
+    "learnset": [
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 15
+      },
+      {
+        "name": "MIRROR MOVE",
+        "level": 25
+      },
+      {
+        "name": "DRILL PECK",
+        "level": 34
+      },
+      {
+        "name": "AGILITY",
+        "level": 43
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 23,
+    "name": "EKANS",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 10
+      },
+      {
+        "name": "BITE",
+        "level": 17
+      },
+      {
+        "name": "GLARE",
+        "level": 24
+      },
+      {
+        "name": "SCREECH",
+        "level": 31
+      },
+      {
+        "name": "ACID",
+        "level": 38
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ARBOK",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "ARBOK",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 17
+      },
+      {
+        "name": "GLARE",
+        "level": 27
+      },
+      {
+        "name": "SCREECH",
+        "level": 36
+      },
+      {
+        "name": "ACID",
+        "level": 47
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 25,
+    "name": "PIKACHU",
+    "learnset": [
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 1
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 9
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 16
+      },
+      {
+        "name": "SWIFT",
+        "level": 26
+      },
+      {
+        "name": "AGILITY",
+        "level": 33
+      },
+      {
+        "name": "THUNDER",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "RAICHU",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "RAICHU",
+    "learnset": [
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 1
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 27,
+    "name": "SANDSHREW",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 10
+      },
+      {
+        "name": "SLASH",
+        "level": 17
+      },
+      {
+        "name": "POISON STING",
+        "level": 24
+      },
+      {
+        "name": "SWIFT",
+        "level": 31
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 38
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SANDSLASH",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "SANDSLASH",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "SLASH",
+        "level": 17
+      },
+      {
+        "name": "POISON STING",
+        "level": 27
+      },
+      {
+        "name": "SWIFT",
+        "level": 36
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 47
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 29,
+    "name": "NIDORAN-F",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "SCRATCH",
+        "level": 8
+      },
+      {
+        "name": "POISON STING",
+        "level": 14
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 21
+      },
+      {
+        "name": "BITE",
+        "level": 29
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 36
+      },
+      {
+        "name": "DOUBLE KICK",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "NIDORINA",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "name": "NIDORINA",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 14
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 23
+      },
+      {
+        "name": "BITE",
+        "level": 32
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 41
+      },
+      {
+        "name": "DOUBLE KICK",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "NIDOQUEEN",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "NIDOQUEEN",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 14
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 32,
+    "name": "NIDORAN-M",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "HORN ATTACK",
+        "level": 8
+      },
+      {
+        "name": "POISON STING",
+        "level": 14
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 21
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 29
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 36
+      },
+      {
+        "name": "DOUBLE KICK",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "NIDORINO",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "NIDORINO",
+    "learnset": [
+      {
+        "name": "HORN ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 14
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 23
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 32
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 41
+      },
+      {
+        "name": "DOUBLE KICK",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "NIDOKING",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "NIDOKING",
+    "learnset": [
+      {
+        "name": "HORN ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "THRASH",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 35,
+    "name": "CLEFAIRY",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "SING",
+        "level": 13
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 18
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 24
+      },
+      {
+        "name": "METRONOME",
+        "level": 31
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 39
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "CLEFABLE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "CLEFABLE",
+    "learnset": [
+      {
+        "name": "DOUBLE SLAP",
+        "level": 1
+      },
+      {
+        "name": "SING",
+        "level": 1
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 1
+      },
+      {
+        "name": "METRONOME",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 37,
+    "name": "VULPIX",
+    "learnset": [
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 16
+      },
+      {
+        "name": "ROAR",
+        "level": 21
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 28
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 35
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "NINETALES",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "NINETALES",
+    "learnset": [
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "ROAR",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 39,
+    "name": "JIGGLYPUFF",
+    "learnset": [
+      {
+        "name": "SING",
+        "level": 1
+      },
+      {
+        "name": "POUND",
+        "level": 9
+      },
+      {
+        "name": "DISABLE",
+        "level": 14
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 19
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 24
+      },
+      {
+        "name": "REST",
+        "level": 29
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 34
+      },
+      {
+        "name": "DOUBLE EDGE",
+        "level": 39
+      }
+    ],
+    "evolution": [
+      {
+        "to": "WIGGLYTUFF",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "WIGGLYTUFF",
+    "learnset": [
+      {
+        "name": "DOUBLE SLAP",
+        "level": 1
+      },
+      {
+        "name": "SING",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 41,
+    "name": "ZUBAT",
+    "learnset": [
+      {
+        "name": "LEECH LIFE",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 10
+      },
+      {
+        "name": "BITE",
+        "level": 15
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 21
+      },
+      {
+        "name": "WING ATTACK",
+        "level": 28
+      },
+      {
+        "name": "HAZE",
+        "level": 36
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GOLBAT",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "name": "GOLBAT",
+    "learnset": [
+      {
+        "name": "BITE",
+        "level": 1
+      },
+      {
+        "name": "SCREECH",
+        "level": 1
+      },
+      {
+        "name": "LEECH LIFE",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 10
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 21
+      },
+      {
+        "name": "WING ATTACK",
+        "level": 32
+      },
+      {
+        "name": "HAZE",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "CROBAT",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "name": "ODDISH",
+    "learnset": [
+      {
+        "name": "ABSORB",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 17
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 19
+      },
+      {
+        "name": "ACID",
+        "level": 24
+      },
+      {
+        "name": "PETAL DANCE",
+        "level": 33
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 46
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GLOOM",
+        "level": 21
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "GLOOM",
+    "learnset": [
+      {
+        "name": "ABSORB",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 1
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 19
+      },
+      {
+        "name": "ACID",
+        "level": 28
+      },
+      {
+        "name": "PETAL DANCE",
+        "level": 38
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 52
+      }
+    ],
+    "evolution": [
+      {
+        "to": "VILEPLUME",
+        "level": null
+      },
+      {
+        "to": "BELLOSSOM",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "VILEPLUME",
+    "learnset": [
+      {
+        "name": "ACID",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 1
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 1
+      },
+      {
+        "name": "PETAL DANCE",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 46,
+    "name": "PARAS",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 13
+      },
+      {
+        "name": "LEECH LIFE",
+        "level": 20
+      },
+      {
+        "name": "SPORE",
+        "level": 27
+      },
+      {
+        "name": "SLASH",
+        "level": 34
+      },
+      {
+        "name": "GROWTH",
+        "level": 41
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PARASECT",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "name": "PARASECT",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 1
+      },
+      {
+        "name": "LEECH LIFE",
+        "level": 1
+      },
+      {
+        "name": "SPORE",
+        "level": 30
+      },
+      {
+        "name": "SLASH",
+        "level": 39
+      },
+      {
+        "name": "GROWTH",
+        "level": 48
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 48,
+    "name": "VENONAT",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 24
+      },
+      {
+        "name": "LEECH LIFE",
+        "level": 27
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 30
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 35
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 38
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "VENOMOTH",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "VENOMOTH",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 1
+      },
+      {
+        "name": "LEECH LIFE",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 30
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 38
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 43
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 50
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 50,
+    "name": "DIGLETT",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 15
+      },
+      {
+        "name": "DIG",
+        "level": 19
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 24
+      },
+      {
+        "name": "SLASH",
+        "level": 31
+      },
+      {
+        "name": "EARTHQUAKE",
+        "level": 40
+      }
+    ],
+    "evolution": [
+      {
+        "to": "DUGTRIO",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "name": "DUGTRIO",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "DIG",
+        "level": 1
+      },
+      {
+        "name": "SAND ATTACK",
+        "level": 24
+      },
+      {
+        "name": "SLASH",
+        "level": 35
+      },
+      {
+        "name": "EARTHQUAKE",
+        "level": 47
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 52,
+    "name": "MEOWTH",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 12
+      },
+      {
+        "name": "PAY DAY",
+        "level": 17
+      },
+      {
+        "name": "SCREECH",
+        "level": 24
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 33
+      },
+      {
+        "name": "SLASH",
+        "level": 44
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PERSIAN",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "name": "PERSIAN",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "SCREECH",
+        "level": 1
+      },
+      {
+        "name": "PAY DAY",
+        "level": 17
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 37
+      },
+      {
+        "name": "SLASH",
+        "level": 51
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 54,
+    "name": "PSYDUCK",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 28
+      },
+      {
+        "name": "DISABLE",
+        "level": 31
+      },
+      {
+        "name": "CONFUSION",
+        "level": 36
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 43
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 52
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GOLDUCK",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "name": "GOLDUCK",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 39
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 48
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 59
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 56,
+    "name": "MANKEY",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "KARATE CHOP",
+        "level": 15
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 21
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 27
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 33
+      },
+      {
+        "name": "THRASH",
+        "level": 39
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PRIMEAPE",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "name": "PRIMEAPE",
+    "learnset": [
+      {
+        "name": "KARATE CHOP",
+        "level": 1
+      },
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "FURY SWIPES",
+        "level": 1
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 27
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 37
+      },
+      {
+        "name": "THRASH",
+        "level": 46
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ANNIHILAPE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "name": "GROWLITHE",
+    "learnset": [
+      {
+        "name": "BITE",
+        "level": 1
+      },
+      {
+        "name": "ROAR",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 18
+      },
+      {
+        "name": "LEER",
+        "level": 23
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 30
+      },
+      {
+        "name": "AGILITY",
+        "level": 39
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ARCANINE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "name": "ARCANINE",
+    "learnset": [
+      {
+        "name": "TAKE DOWN",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "ROAR",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 60,
+    "name": "POLIWAG",
+    "learnset": [
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 16
+      },
+      {
+        "name": "WATER GUN",
+        "level": 19
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 25
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 31
+      },
+      {
+        "name": "AMNESIA",
+        "level": 38
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 45
+      }
+    ],
+    "evolution": [
+      {
+        "to": "POLIWHIRL",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "name": "POLIWHIRL",
+    "learnset": [
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 26
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 33
+      },
+      {
+        "name": "AMNESIA",
+        "level": 41
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 49
+      }
+    ],
+    "evolution": [
+      {
+        "to": "POLIWRATH",
+        "level": null
+      },
+      {
+        "to": "POLITOED",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "name": "POLIWRATH",
+    "learnset": [
+      {
+        "name": "DOUBLE SLAP",
+        "level": 1
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 63,
+    "name": "ABRA",
+    "learnset": [
+      {
+        "name": "TELEPORT",
+        "level": 1
+      }
+    ],
+    "evolution": [
+      {
+        "to": "KADABRA",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "name": "KADABRA",
+    "learnset": [
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "TELEPORT",
+        "level": 1
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 27
+      },
+      {
+        "name": "RECOVER",
+        "level": 31
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 38
+      },
+      {
+        "name": "REFLECT",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ALAKAZAM",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "name": "ALAKAZAM",
+    "learnset": [
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "TELEPORT",
+        "level": 1
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 27
+      },
+      {
+        "name": "RECOVER",
+        "level": 31
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 38
+      },
+      {
+        "name": "REFLECT",
+        "level": 42
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 66,
+    "name": "MACHOP",
+    "learnset": [
+      {
+        "name": "KARATE CHOP",
+        "level": 1
+      },
+      {
+        "name": "LOW KICK",
+        "level": 20
+      },
+      {
+        "name": "LEER",
+        "level": 25
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 32
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 39
+      },
+      {
+        "name": "SUBMISSION",
+        "level": 46
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MACHOKE",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "name": "MACHOKE",
+    "learnset": [
+      {
+        "name": "KARATE CHOP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "LOW KICK",
+        "level": 1
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 36
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 44
+      },
+      {
+        "name": "SUBMISSION",
+        "level": 52
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MACHAMP",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "name": "MACHAMP",
+    "learnset": [
+      {
+        "name": "KARATE CHOP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "LOW KICK",
+        "level": 1
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 36
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 44
+      },
+      {
+        "name": "SUBMISSION",
+        "level": 52
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 69,
+    "name": "BELLSPROUT",
+    "learnset": [
+      {
+        "name": "VINE WHIP",
+        "level": 1
+      },
+      {
+        "name": "GROWTH",
+        "level": 1
+      },
+      {
+        "name": "WRAP",
+        "level": 13
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 18
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 21
+      },
+      {
+        "name": "ACID",
+        "level": 26
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 33
+      },
+      {
+        "name": "SLAM",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "WEEPINBELL",
+        "level": 21
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "name": "WEEPINBELL",
+    "learnset": [
+      {
+        "name": "VINE WHIP",
+        "level": 1
+      },
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "GROWTH",
+        "level": 1
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 18
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 23
+      },
+      {
+        "name": "ACID",
+        "level": 29
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 38
+      },
+      {
+        "name": "SLAM",
+        "level": 49
+      }
+    ],
+    "evolution": [
+      {
+        "to": "VICTREEBEL",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "name": "VICTREEBEL",
+    "learnset": [
+      {
+        "name": "ACID",
+        "level": 1
+      },
+      {
+        "name": "RAZOR LEAF",
+        "level": 1
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 1
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 1
+      },
+      {
+        "name": "WRAP",
+        "level": 13
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 15
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 72,
+    "name": "TENTACOOL",
+    "learnset": [
+      {
+        "name": "ACID",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 7
+      },
+      {
+        "name": "WRAP",
+        "level": 13
+      },
+      {
+        "name": "POISON STING",
+        "level": 18
+      },
+      {
+        "name": "WATER GUN",
+        "level": 22
+      },
+      {
+        "name": "CONSTRICT",
+        "level": 27
+      },
+      {
+        "name": "BARRIER",
+        "level": 33
+      },
+      {
+        "name": "SCREECH",
+        "level": 40
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "TENTACRUEL",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "name": "TENTACRUEL",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 1
+      },
+      {
+        "name": "ACID",
+        "level": 1
+      },
+      {
+        "name": "POISON STING",
+        "level": 18
+      },
+      {
+        "name": "WATER GUN",
+        "level": 22
+      },
+      {
+        "name": "CONSTRICT",
+        "level": 27
+      },
+      {
+        "name": "BARRIER",
+        "level": 35
+      },
+      {
+        "name": "SCREECH",
+        "level": 43
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 50
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 74,
+    "name": "GEODUDE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 11
+      },
+      {
+        "name": "ROCK THROW",
+        "level": 16
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 21
+      },
+      {
+        "name": "HARDEN",
+        "level": 26
+      },
+      {
+        "name": "EARTHQUAKE",
+        "level": 31
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 36
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GRAVELER",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "name": "GRAVELER",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 1
+      },
+      {
+        "name": "ROCK THROW",
+        "level": 16
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 21
+      },
+      {
+        "name": "HARDEN",
+        "level": 29
+      },
+      {
+        "name": "EARTHQUAKE",
+        "level": 36
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GOLEM",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "name": "GOLEM",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 1
+      },
+      {
+        "name": "ROCK THROW",
+        "level": 16
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 21
+      },
+      {
+        "name": "HARDEN",
+        "level": 29
+      },
+      {
+        "name": "EARTHQUAKE",
+        "level": 36
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 43
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 77,
+    "name": "PONYTA",
+    "learnset": [
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 30
+      },
+      {
+        "name": "STOMP",
+        "level": 32
+      },
+      {
+        "name": "GROWL",
+        "level": 35
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 39
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 43
+      },
+      {
+        "name": "AGILITY",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "RAPIDASH",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "name": "RAPIDASH",
+    "learnset": [
+      {
+        "name": "STOMP",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 39
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 47
+      },
+      {
+        "name": "AGILITY",
+        "level": 55
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 79,
+    "name": "SLOWPOKE",
+    "learnset": [
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 18
+      },
+      {
+        "name": "HEADBUTT",
+        "level": 22
+      },
+      {
+        "name": "GROWL",
+        "level": 27
+      },
+      {
+        "name": "WATER GUN",
+        "level": 33
+      },
+      {
+        "name": "AMNESIA",
+        "level": 40
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SLOWBRO",
+        "level": 37
+      },
+      {
+        "to": "SLOWKING",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "name": "SLOWBRO",
+    "learnset": [
+      {
+        "name": "HEADBUTT",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 27
+      },
+      {
+        "name": "WATER GUN",
+        "level": 33
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 37
+      },
+      {
+        "name": "AMNESIA",
+        "level": 44
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 55
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 81,
+    "name": "MAGNEMITE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SONIC BOOM",
+        "level": 21
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 25
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 29
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 35
+      },
+      {
+        "name": "SWIFT",
+        "level": 41
+      },
+      {
+        "name": "SCREECH",
+        "level": 47
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MAGNETON",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "name": "MAGNETON",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SONIC BOOM",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 29
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 38
+      },
+      {
+        "name": "SWIFT",
+        "level": 46
+      },
+      {
+        "name": "SCREECH",
+        "level": 54
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MAGNEZONE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": "FARFETCHD",
+    "learnset": [
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 7
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 15
+      },
+      {
+        "name": "SWORDS DANCE",
+        "level": 23
+      },
+      {
+        "name": "AGILITY",
+        "level": 31
+      },
+      {
+        "name": "SLASH",
+        "level": 39
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SIRFETCHD",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "name": "DODUO",
+    "learnset": [
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 20
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 24
+      },
+      {
+        "name": "DRILL PECK",
+        "level": 30
+      },
+      {
+        "name": "RAGE",
+        "level": 36
+      },
+      {
+        "name": "TRI ATTACK",
+        "level": 40
+      },
+      {
+        "name": "AGILITY",
+        "level": 44
+      }
+    ],
+    "evolution": [
+      {
+        "to": "DODRIO",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "name": "DODRIO",
+    "learnset": [
+      {
+        "name": "FURY ATTACK",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "DRILL PECK",
+        "level": 30
+      },
+      {
+        "name": "RAGE",
+        "level": 39
+      },
+      {
+        "name": "TRI ATTACK",
+        "level": 45
+      },
+      {
+        "name": "AGILITY",
+        "level": 51
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 86,
+    "name": "SEEL",
+    "learnset": [
+      {
+        "name": "HEADBUTT",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 30
+      },
+      {
+        "name": "AURORA BEAM",
+        "level": 35
+      },
+      {
+        "name": "REST",
+        "level": 40
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 45
+      },
+      {
+        "name": "ICE BEAM",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "DEWGONG",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "name": "DEWGONG",
+    "learnset": [
+      {
+        "name": "HEADBUTT",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "AURORA BEAM",
+        "level": 1
+      },
+      {
+        "name": "REST",
+        "level": 44
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 50
+      },
+      {
+        "name": "ICE BEAM",
+        "level": 56
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 88,
+    "name": "GRIMER",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "POISON GAS",
+        "level": 30
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 33
+      },
+      {
+        "name": "SLUDGE",
+        "level": 37
+      },
+      {
+        "name": "HARDEN",
+        "level": 42
+      },
+      {
+        "name": "SCREECH",
+        "level": 48
+      },
+      {
+        "name": "ACID ARMOR",
+        "level": 55
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MUK",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "name": "MUK",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "POISON GAS",
+        "level": 1
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 33
+      },
+      {
+        "name": "SLUDGE",
+        "level": 37
+      },
+      {
+        "name": "HARDEN",
+        "level": 45
+      },
+      {
+        "name": "SCREECH",
+        "level": 53
+      },
+      {
+        "name": "ACID ARMOR",
+        "level": 60
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 90,
+    "name": "SHELLDER",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 18
+      },
+      {
+        "name": "CLAMP",
+        "level": 23
+      },
+      {
+        "name": "AURORA BEAM",
+        "level": 30
+      },
+      {
+        "name": "LEER",
+        "level": 39
+      },
+      {
+        "name": "ICE BEAM",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "CLOYSTER",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "name": "CLOYSTER",
+    "learnset": [
+      {
+        "name": "SUPERSONIC",
+        "level": 1
+      },
+      {
+        "name": "AURORA BEAM",
+        "level": 1
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 1
+      },
+      {
+        "name": "CLAMP",
+        "level": 1
+      },
+      {
+        "name": "SPIKE CANNON",
+        "level": 50
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 92,
+    "name": "GASTLY",
+    "learnset": [
+      {
+        "name": "NIGHT SHADE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 1
+      },
+      {
+        "name": "LICK",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 27
+      },
+      {
+        "name": "DREAM EATER",
+        "level": 35
+      }
+    ],
+    "evolution": [
+      {
+        "to": "HAUNTER",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "name": "HAUNTER",
+    "learnset": [
+      {
+        "name": "NIGHT SHADE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 1
+      },
+      {
+        "name": "LICK",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 29
+      },
+      {
+        "name": "DREAM EATER",
+        "level": 38
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GENGAR",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "name": "GENGAR",
+    "learnset": [
+      {
+        "name": "NIGHT SHADE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 1
+      },
+      {
+        "name": "LICK",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 29
+      },
+      {
+        "name": "DREAM EATER",
+        "level": 38
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 95,
+    "name": "ONIX",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SCREECH",
+        "level": 1
+      },
+      {
+        "name": "BIND",
+        "level": 15
+      },
+      {
+        "name": "ROCK THROW",
+        "level": 19
+      },
+      {
+        "name": "RAGE",
+        "level": 25
+      },
+      {
+        "name": "SLAM",
+        "level": 33
+      },
+      {
+        "name": "HARDEN",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "STEELIX",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "name": "DROWZEE",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 12
+      },
+      {
+        "name": "CONFUSION",
+        "level": 17
+      },
+      {
+        "name": "HEADBUTT",
+        "level": 24
+      },
+      {
+        "name": "POISON GAS",
+        "level": 29
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 32
+      },
+      {
+        "name": "MEDITATE",
+        "level": 37
+      }
+    ],
+    "evolution": [
+      {
+        "to": "HYPNO",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "name": "HYPNO",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      },
+      {
+        "name": "HEADBUTT",
+        "level": 24
+      },
+      {
+        "name": "POISON GAS",
+        "level": 33
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 37
+      },
+      {
+        "name": "MEDITATE",
+        "level": 43
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 98,
+    "name": "KRABBY",
+    "learnset": [
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "VICE GRIP",
+        "level": 20
+      },
+      {
+        "name": "GUILLOTINE",
+        "level": 25
+      },
+      {
+        "name": "STOMP",
+        "level": 30
+      },
+      {
+        "name": "CRABHAMMER",
+        "level": 35
+      },
+      {
+        "name": "HARDEN",
+        "level": 40
+      }
+    ],
+    "evolution": [
+      {
+        "to": "KINGLER",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "name": "KINGLER",
+    "learnset": [
+      {
+        "name": "VICE GRIP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "GUILLOTINE",
+        "level": 25
+      },
+      {
+        "name": "STOMP",
+        "level": 34
+      },
+      {
+        "name": "CRABHAMMER",
+        "level": 42
+      },
+      {
+        "name": "HARDEN",
+        "level": 49
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 100,
+    "name": "VOLTORB",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SCREECH",
+        "level": 1
+      },
+      {
+        "name": "SONIC BOOM",
+        "level": 17
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 22
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 29
+      },
+      {
+        "name": "SWIFT",
+        "level": 36
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 43
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ELECTRODE",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "name": "ELECTRODE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SONIC BOOM",
+        "level": 1
+      },
+      {
+        "name": "SCREECH",
+        "level": 1
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 22
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 29
+      },
+      {
+        "name": "SWIFT",
+        "level": 40
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 50
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 102,
+    "name": "EXEGGCUTE",
+    "learnset": [
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      },
+      {
+        "name": "BARRAGE",
+        "level": 1
+      },
+      {
+        "name": "REFLECT",
+        "level": 25
+      },
+      {
+        "name": "LEECH SEED",
+        "level": 28
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 32
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 37
+      },
+      {
+        "name": "SOLAR BEAM",
+        "level": 42
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "EXEGGUTOR",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "name": "EXEGGUTOR",
+    "learnset": [
+      {
+        "name": "HYPNOSIS",
+        "level": 1
+      },
+      {
+        "name": "BARRAGE",
+        "level": 1
+      },
+      {
+        "name": "STOMP",
+        "level": 28
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 104,
+    "name": "CUBONE",
+    "learnset": [
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "BONE CLUB",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 25
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 31
+      },
+      {
+        "name": "THRASH",
+        "level": 38
+      },
+      {
+        "name": "BONEMERANG",
+        "level": 43
+      },
+      {
+        "name": "RAGE",
+        "level": 46
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MAROWAK",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "name": "MAROWAK",
+    "learnset": [
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 1
+      },
+      {
+        "name": "BONE CLUB",
+        "level": 1
+      },
+      {
+        "name": "THRASH",
+        "level": 41
+      },
+      {
+        "name": "BONEMERANG",
+        "level": 48
+      },
+      {
+        "name": "RAGE",
+        "level": 55
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 106,
+    "name": "HITMONLEE",
+    "learnset": [
+      {
+        "name": "DOUBLE KICK",
+        "level": 1
+      },
+      {
+        "name": "MEDITATE",
+        "level": 1
+      },
+      {
+        "name": "ROLLING KICK",
+        "level": 33
+      },
+      {
+        "name": "JUMP KICK",
+        "level": 38
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 43
+      },
+      {
+        "name": "HIGH JUMP KICK",
+        "level": 48
+      },
+      {
+        "name": "MEGA KICK",
+        "level": 53
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 107,
+    "name": "HITMONCHAN",
+    "learnset": [
+      {
+        "name": "COMET PUNCH",
+        "level": 1
+      },
+      {
+        "name": "AGILITY",
+        "level": 1
+      },
+      {
+        "name": "FIRE PUNCH",
+        "level": 33
+      },
+      {
+        "name": "ICE PUNCH",
+        "level": 38
+      },
+      {
+        "name": "THUNDER PUNCH",
+        "level": 43
+      },
+      {
+        "name": "MEGA PUNCH",
+        "level": 48
+      },
+      {
+        "name": "COUNTER",
+        "level": 53
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 108,
+    "name": "LICKITUNG",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 1
+      },
+      {
+        "name": "STOMP",
+        "level": 7
+      },
+      {
+        "name": "DISABLE",
+        "level": 15
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 23
+      },
+      {
+        "name": "SLAM",
+        "level": 31
+      },
+      {
+        "name": "SCREECH",
+        "level": 39
+      }
+    ],
+    "evolution": [
+      {
+        "to": "LICKILICKY",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "name": "KOFFING",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SMOG",
+        "level": 1
+      },
+      {
+        "name": "SLUDGE",
+        "level": 32
+      },
+      {
+        "name": "SMOKESCREEN",
+        "level": 37
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 40
+      },
+      {
+        "name": "HAZE",
+        "level": 45
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 48
+      }
+    ],
+    "evolution": [
+      {
+        "to": "WEEZING",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "name": "WEEZING",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SMOG",
+        "level": 1
+      },
+      {
+        "name": "SLUDGE",
+        "level": 1
+      },
+      {
+        "name": "SMOKESCREEN",
+        "level": 39
+      },
+      {
+        "name": "SELF DESTRUCT",
+        "level": 43
+      },
+      {
+        "name": "HAZE",
+        "level": 49
+      },
+      {
+        "name": "EXPLOSION",
+        "level": 53
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 111,
+    "name": "RHYHORN",
+    "learnset": [
+      {
+        "name": "HORN ATTACK",
+        "level": 1
+      },
+      {
+        "name": "STOMP",
+        "level": 30
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 35
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 40
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 45
+      },
+      {
+        "name": "LEER",
+        "level": 50
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 55
+      }
+    ],
+    "evolution": [
+      {
+        "to": "RHYDON",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "name": "RHYDON",
+    "learnset": [
+      {
+        "name": "STOMP",
+        "level": 1
+      },
+      {
+        "name": "HORN ATTACK",
+        "level": 1
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 48
+      },
+      {
+        "name": "LEER",
+        "level": 55
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 64
+      }
+    ],
+    "evolution": [
+      {
+        "to": "RHYPERIOR",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "name": "CHANSEY",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 1
+      },
+      {
+        "name": "SING",
+        "level": 24
+      },
+      {
+        "name": "GROWL",
+        "level": 30
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 38
+      },
+      {
+        "name": "DEFENSE CURL",
+        "level": 44
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 48
+      },
+      {
+        "name": "DOUBLE EDGE",
+        "level": 54
+      }
+    ],
+    "evolution": [
+      {
+        "to": "BLISSEY",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "name": "TANGELA",
+    "learnset": [
+      {
+        "name": "BIND",
+        "level": 1
+      },
+      {
+        "name": "CONSTRICT",
+        "level": 1
+      },
+      {
+        "name": "ABSORB",
+        "level": 29
+      },
+      {
+        "name": "POISON POWDER",
+        "level": 32
+      },
+      {
+        "name": "STUN SPORE",
+        "level": 36
+      },
+      {
+        "name": "SLEEP POWDER",
+        "level": 39
+      },
+      {
+        "name": "SLAM",
+        "level": 45
+      },
+      {
+        "name": "GROWTH",
+        "level": 49
+      }
+    ],
+    "evolution": [
+      {
+        "to": "TANGROWTH",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "name": "KANGASKHAN",
+    "learnset": [
+      {
+        "name": "COMET PUNCH",
+        "level": 1
+      },
+      {
+        "name": "RAGE",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 26
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 31
+      },
+      {
+        "name": "MEGA PUNCH",
+        "level": 36
+      },
+      {
+        "name": "LEER",
+        "level": 41
+      },
+      {
+        "name": "DIZZY PUNCH",
+        "level": 46
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 116,
+    "name": "HORSEA",
+    "learnset": [
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "SMOKESCREEN",
+        "level": 19
+      },
+      {
+        "name": "LEER",
+        "level": 24
+      },
+      {
+        "name": "WATER GUN",
+        "level": 30
+      },
+      {
+        "name": "AGILITY",
+        "level": 37
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 45
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SEADRA",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "name": "SEADRA",
+    "learnset": [
+      {
+        "name": "SMOKESCREEN",
+        "level": 1
+      },
+      {
+        "name": "BUBBLE",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 24
+      },
+      {
+        "name": "WATER GUN",
+        "level": 30
+      },
+      {
+        "name": "AGILITY",
+        "level": 41
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 52
+      }
+    ],
+    "evolution": [
+      {
+        "to": "KINGDRA",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "name": "GOLDEEN",
+    "learnset": [
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 19
+      },
+      {
+        "name": "HORN ATTACK",
+        "level": 24
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 30
+      },
+      {
+        "name": "WATERFALL",
+        "level": 37
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 45
+      },
+      {
+        "name": "AGILITY",
+        "level": 54
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SEAKING",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "name": "SEAKING",
+    "learnset": [
+      {
+        "name": "TAIL WHIP",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "HORN ATTACK",
+        "level": 24
+      },
+      {
+        "name": "FURY ATTACK",
+        "level": 30
+      },
+      {
+        "name": "WATERFALL",
+        "level": 39
+      },
+      {
+        "name": "HORN DRILL",
+        "level": 48
+      },
+      {
+        "name": "AGILITY",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 120,
+    "name": "STARYU",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 17
+      },
+      {
+        "name": "HARDEN",
+        "level": 22
+      },
+      {
+        "name": "RECOVER",
+        "level": 27
+      },
+      {
+        "name": "SWIFT",
+        "level": 32
+      },
+      {
+        "name": "MINIMIZE",
+        "level": 37
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 42
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 47
+      }
+    ],
+    "evolution": [
+      {
+        "to": "STARMIE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "name": "STARMIE",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "HARDEN",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 122,
+    "name": "MR-MIME",
+    "learnset": [
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "BARRIER",
+        "level": 1
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 23
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 31
+      },
+      {
+        "name": "MEDITATE",
+        "level": 39
+      },
+      {
+        "name": "SUBSTITUTE",
+        "level": 47
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MR-RIME",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "name": "SCYTHER",
+    "learnset": [
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 17
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 20
+      },
+      {
+        "name": "DOUBLE TEAM",
+        "level": 24
+      },
+      {
+        "name": "SLASH",
+        "level": 29
+      },
+      {
+        "name": "SWORDS DANCE",
+        "level": 35
+      },
+      {
+        "name": "AGILITY",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "SCIZOR",
+        "level": null
+      },
+      {
+        "to": "KLEAVOR",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "name": "JYNX",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "LOVELY KISS",
+        "level": 1
+      },
+      {
+        "name": "LICK",
+        "level": 18
+      },
+      {
+        "name": "DOUBLE SLAP",
+        "level": 23
+      },
+      {
+        "name": "ICE PUNCH",
+        "level": 31
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 39
+      },
+      {
+        "name": "THRASH",
+        "level": 47
+      },
+      {
+        "name": "BLIZZARD",
+        "level": 58
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 125,
+    "name": "ELECTABUZZ",
+    "learnset": [
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 34
+      },
+      {
+        "name": "SCREECH",
+        "level": 37
+      },
+      {
+        "name": "THUNDER PUNCH",
+        "level": 42
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 49
+      },
+      {
+        "name": "THUNDER",
+        "level": 54
+      }
+    ],
+    "evolution": [
+      {
+        "to": "ELECTIVIRE",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 126,
+    "name": "MAGMAR",
+    "learnset": [
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 36
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 39
+      },
+      {
+        "name": "FIRE PUNCH",
+        "level": 43
+      },
+      {
+        "name": "SMOKESCREEN",
+        "level": 48
+      },
+      {
+        "name": "SMOG",
+        "level": 52
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 55
+      }
+    ],
+    "evolution": [
+      {
+        "to": "MAGMORTAR",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "name": "PINSIR",
+    "learnset": [
+      {
+        "name": "VICE GRIP",
+        "level": 1
+      },
+      {
+        "name": "SEISMIC TOSS",
+        "level": 25
+      },
+      {
+        "name": "GUILLOTINE",
+        "level": 30
+      },
+      {
+        "name": "FOCUS ENERGY",
+        "level": 36
+      },
+      {
+        "name": "HARDEN",
+        "level": 43
+      },
+      {
+        "name": "SLASH",
+        "level": 49
+      },
+      {
+        "name": "SWORDS DANCE",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 128,
+    "name": "TAUROS",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "STOMP",
+        "level": 21
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 28
+      },
+      {
+        "name": "LEER",
+        "level": 35
+      },
+      {
+        "name": "RAGE",
+        "level": 44
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 51
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 129,
+    "name": "MAGIKARP",
+    "learnset": [
+      {
+        "name": "SPLASH",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 15
+      }
+    ],
+    "evolution": [
+      {
+        "to": "GYARADOS",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "name": "GYARADOS",
+    "learnset": [
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "BITE",
+        "level": 1
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 1
+      },
+      {
+        "name": "DRAGON RAGE",
+        "level": 1
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 52
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 131,
+    "name": "LAPRAS",
+    "learnset": [
+      {
+        "name": "GROWL",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "SING",
+        "level": 16
+      },
+      {
+        "name": "MIST",
+        "level": 20
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 25
+      },
+      {
+        "name": "CONFUSE RAY",
+        "level": 31
+      },
+      {
+        "name": "ICE BEAM",
+        "level": 38
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 46
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 132,
+    "name": "DITTO",
+    "learnset": [
+      {
+        "name": "TRANSFORM",
+        "level": 1
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 133,
+    "name": "EEVEE",
+    "learnset": [
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 27
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 31
+      },
+      {
+        "name": "BITE",
+        "level": 37
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 45
+      }
+    ],
+    "evolution": [
+      {
+        "to": "VAPOREON",
+        "level": null
+      },
+      {
+        "to": "JOLTEON",
+        "level": null
+      },
+      {
+        "to": "FLAREON",
+        "level": null
+      },
+      {
+        "to": "ESPEON",
+        "level": null
+      },
+      {
+        "to": "UMBREON",
+        "level": null
+      },
+      {
+        "to": "LEAFEON",
+        "level": null
+      },
+      {
+        "to": "GLACEON",
+        "level": null
+      },
+      {
+        "to": "SYLVEON",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "name": "VAPOREON",
+    "learnset": [
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 37
+      },
+      {
+        "name": "BITE",
+        "level": 40
+      },
+      {
+        "name": "ACID ARMOR",
+        "level": 42
+      },
+      {
+        "name": "HAZE",
+        "level": 44
+      },
+      {
+        "name": "MIST",
+        "level": 48
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 135,
+    "name": "JOLTEON",
+    "learnset": [
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 37
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 40
+      },
+      {
+        "name": "DOUBLE KICK",
+        "level": 42
+      },
+      {
+        "name": "AGILITY",
+        "level": 44
+      },
+      {
+        "name": "PIN MISSILE",
+        "level": 48
+      },
+      {
+        "name": "THUNDER",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 136,
+    "name": "FLAREON",
+    "learnset": [
+      {
+        "name": "SAND ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "EMBER",
+        "level": 1
+      },
+      {
+        "name": "QUICK ATTACK",
+        "level": 1
+      },
+      {
+        "name": "TAIL WHIP",
+        "level": 37
+      },
+      {
+        "name": "BITE",
+        "level": 40
+      },
+      {
+        "name": "LEER",
+        "level": 42
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 44
+      },
+      {
+        "name": "RAGE",
+        "level": 48
+      },
+      {
+        "name": "FLAMETHROWER",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 137,
+    "name": "PORYGON",
+    "learnset": [
+      {
+        "name": "TACKLE",
+        "level": 1
+      },
+      {
+        "name": "SHARPEN",
+        "level": 1
+      },
+      {
+        "name": "CONVERSION",
+        "level": 1
+      },
+      {
+        "name": "PSYBEAM",
+        "level": 23
+      },
+      {
+        "name": "RECOVER",
+        "level": 28
+      },
+      {
+        "name": "AGILITY",
+        "level": 35
+      },
+      {
+        "name": "TRI ATTACK",
+        "level": 42
+      }
+    ],
+    "evolution": [
+      {
+        "to": "PORYGON2",
+        "level": null
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "name": "OMANYTE",
+    "learnset": [
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 1
+      },
+      {
+        "name": "HORN ATTACK",
+        "level": 34
+      },
+      {
+        "name": "LEER",
+        "level": 39
+      },
+      {
+        "name": "SPIKE CANNON",
+        "level": 46
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 53
+      }
+    ],
+    "evolution": [
+      {
+        "to": "OMASTAR",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "name": "OMASTAR",
+    "learnset": [
+      {
+        "name": "HORN ATTACK",
+        "level": 1
+      },
+      {
+        "name": "WATER GUN",
+        "level": 1
+      },
+      {
+        "name": "WITHDRAW",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 39
+      },
+      {
+        "name": "SPIKE CANNON",
+        "level": 44
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 49
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 140,
+    "name": "KABUTO",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "HARDEN",
+        "level": 1
+      },
+      {
+        "name": "ABSORB",
+        "level": 34
+      },
+      {
+        "name": "SLASH",
+        "level": 39
+      },
+      {
+        "name": "LEER",
+        "level": 44
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 49
+      }
+    ],
+    "evolution": [
+      {
+        "to": "KABUTOPS",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": 141,
+    "name": "KABUTOPS",
+    "learnset": [
+      {
+        "name": "SCRATCH",
+        "level": 1
+      },
+      {
+        "name": "ABSORB",
+        "level": 1
+      },
+      {
+        "name": "HARDEN",
+        "level": 1
+      },
+      {
+        "name": "SLASH",
+        "level": 39
+      },
+      {
+        "name": "LEER",
+        "level": 46
+      },
+      {
+        "name": "HYDRO PUMP",
+        "level": 53
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 142,
+    "name": "AERODACTYL",
+    "learnset": [
+      {
+        "name": "WING ATTACK",
+        "level": 1
+      },
+      {
+        "name": "AGILITY",
+        "level": 1
+      },
+      {
+        "name": "SUPERSONIC",
+        "level": 33
+      },
+      {
+        "name": "BITE",
+        "level": 38
+      },
+      {
+        "name": "TAKE DOWN",
+        "level": 45
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 54
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 143,
+    "name": "SNORLAX",
+    "learnset": [
+      {
+        "name": "HEADBUTT",
+        "level": 1
+      },
+      {
+        "name": "AMNESIA",
+        "level": 1
+      },
+      {
+        "name": "REST",
+        "level": 1
+      },
+      {
+        "name": "BODY SLAM",
+        "level": 35
+      },
+      {
+        "name": "HARDEN",
+        "level": 41
+      },
+      {
+        "name": "DOUBLE EDGE",
+        "level": 48
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 56
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 144,
+    "name": "ARTICUNO",
+    "learnset": [
+      {
+        "name": "ICE BEAM",
+        "level": 1
+      },
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "BLIZZARD",
+        "level": 51
+      },
+      {
+        "name": "AGILITY",
+        "level": 55
+      },
+      {
+        "name": "MIST",
+        "level": 60
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 145,
+    "name": "ZAPDOS",
+    "learnset": [
+      {
+        "name": "DRILL PECK",
+        "level": 1
+      },
+      {
+        "name": "THUNDER SHOCK",
+        "level": 1
+      },
+      {
+        "name": "THUNDER",
+        "level": 51
+      },
+      {
+        "name": "AGILITY",
+        "level": 55
+      },
+      {
+        "name": "LIGHT SCREEN",
+        "level": 60
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 146,
+    "name": "MOLTRES",
+    "learnset": [
+      {
+        "name": "PECK",
+        "level": 1
+      },
+      {
+        "name": "FIRE SPIN",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 51
+      },
+      {
+        "name": "AGILITY",
+        "level": 55
+      },
+      {
+        "name": "SKY ATTACK",
+        "level": 60
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 147,
+    "name": "DRATINI",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 10
+      },
+      {
+        "name": "AGILITY",
+        "level": 20
+      },
+      {
+        "name": "SLAM",
+        "level": 30
+      },
+      {
+        "name": "DRAGON RAGE",
+        "level": 40
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 50
+      }
+    ],
+    "evolution": [
+      {
+        "to": "DRAGONAIR",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": 148,
+    "name": "DRAGONAIR",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 1
+      },
+      {
+        "name": "AGILITY",
+        "level": 20
+      },
+      {
+        "name": "SLAM",
+        "level": 35
+      },
+      {
+        "name": "DRAGON RAGE",
+        "level": 45
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 55
+      }
+    ],
+    "evolution": [
+      {
+        "to": "DRAGONITE",
+        "level": 55
+      }
+    ]
+  },
+  {
+    "id": 149,
+    "name": "DRAGONITE",
+    "learnset": [
+      {
+        "name": "WRAP",
+        "level": 1
+      },
+      {
+        "name": "LEER",
+        "level": 1
+      },
+      {
+        "name": "THUNDER WAVE",
+        "level": 1
+      },
+      {
+        "name": "AGILITY",
+        "level": 1
+      },
+      {
+        "name": "SLAM",
+        "level": 35
+      },
+      {
+        "name": "DRAGON RAGE",
+        "level": 45
+      },
+      {
+        "name": "HYPER BEAM",
+        "level": 60
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 150,
+    "name": "MEWTWO",
+    "learnset": [
+      {
+        "name": "DISABLE",
+        "level": 1
+      },
+      {
+        "name": "CONFUSION",
+        "level": 1
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 1
+      },
+      {
+        "name": "SWIFT",
+        "level": 1
+      },
+      {
+        "name": "BARRIER",
+        "level": 63
+      },
+      {
+        "name": "RECOVER",
+        "level": 70
+      },
+      {
+        "name": "MIST",
+        "level": 75
+      },
+      {
+        "name": "AMNESIA",
+        "level": 81
+      }
+    ],
+    "evolution": []
+  },
+  {
+    "id": 151,
+    "name": "MEW",
+    "learnset": [
+      {
+        "name": "POUND",
+        "level": 1
+      },
+      {
+        "name": "TRANSFORM",
+        "level": 10
+      },
+      {
+        "name": "MEGA PUNCH",
+        "level": 20
+      },
+      {
+        "name": "METRONOME",
+        "level": 30
+      },
+      {
+        "name": "PSYCHIC",
+        "level": 40
+      }
+    ],
+    "evolution": []
+  }
+]

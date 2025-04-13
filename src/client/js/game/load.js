@@ -587,6 +587,7 @@ function prepare_menus() {
             name: 'Fight',
             type: 'menu',
             callback: () => {
+                battle_fight();
                 menus[player.menu.current].close();
             }
         },
@@ -612,10 +613,10 @@ function prepare_menus() {
             }
         },
     ], {
-        width: 96,
-        height: 64,
-        x: GAME_WIDTH - 96,
-        y: GAME_HEIGHT - 64
+        width: GAME_WIDTH,
+        height: 80,
+        x: GAME_WIDTH - 80,
+        y: GAME_HEIGHT - 80
     }));
 
     // Pokemon

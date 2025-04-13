@@ -13,55 +13,11 @@ const POKEMON = [{
         sp_def: 65,
         speed: 45
     },
-    learnset: [
-        {
-            name: "TACKLE",
-            level: 1
-        },
-        {
-            name: "GROWL",
-            level: 1
-        },           
-        {
-            name: "LEECH SEED",
-            level: 7
-        },
-        {
-            name: "VINE WHIP",
-            level: 13
-        },
-        {
-            name: "POISON POWDER",
-            level: 20
-        },
-        {
-            name: "RAZOR LEAF",
-            level: 27
-        },
-        {
-            name: "GROWTH",
-            level: 34
-        },
-        {
-            name: "SLEEP POWDER",
-            level: 41
-        },
-        {
-            name: "SOLARBEAM",
-            level: 48
-        },
-    ],
     tm: [
         'SWORDS DANCE',
     ],
     hm: [
         'CUT'
-    ],
-    evolutions: [
-        {
-            name: "Ivysaur",
-            level: 16
-        }
     ],
     growth: "MEDIUM_SLOW"
 },
@@ -2382,3 +2338,5 @@ const POKEMON = [{
     }
 }
 ]
+
+// module.exports = { POKEMON };
