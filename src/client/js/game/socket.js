@@ -38,6 +38,21 @@ socket.on('lobby_loaded', (data) => {
     socket.emit('map_server_sync', {lobby_id: lobby_id, map: player.position.map});
 });
 
+socket.on('player_sync', (data) => {
+    player.pokemon = data.pokemon;
+    // player.items = data.items;
+
+    player.pokemon.forEach(pokemon => {
+        player.pokedex.add(pokemon.id);
+    });
+
+    if (data.position) {
+        player.place(data.position.x, data.position.y, data.position.map);
+    }
+
+    console.log('[player_sync]', data.pokemon);
+});
+
 
 socket.on('create_current_trainers', (data) => {
     data.forEach(trainer => {
@@ -190,6 +205,11 @@ socket.on('chat_server_message', (data) => {
 });
 
 socket.on('wild_pokemon_battle', (data) => {
+    console.log('[wild_pokemon_battle]', data);
+    battle = {
+        pokemon: data.pokemon,
+        wild: true,
+    }
     player.wild_pokemon_battle(data.pokemon);
 });
 
@@ -245,4 +265,14 @@ socket.on("server_create_map", (data) => {
     let kanto_map = new Kanto_Map(data.map.id, data.map.name, data.map.width, data.map.height, data.map.tiles, data.map.atts, data.map.music, data.map.starting_position);
     maps.push(kanto_map);
     editor.update();
+});
+
+// socket.on("battle_move", (data) => {
+//     console.log('[battle_move]', data);
+//     dialogue.add_message(`${data.attacker.toUpperCase()} used ${data.moveName}!`);
+// });
+
+socket.on("battle_result", (data) => {
+    console.log('[battle_result]', data);
+    dialogue.queue_messages(data.messages);
 });

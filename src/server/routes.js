@@ -96,7 +96,6 @@ app.get('/delete', (req, res) => {
     });
 });
 
-
 app.get('/games', (req, res) => { // Create View
     let requesting_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
     db.query('SELECT * FROM games;', function(err, result){

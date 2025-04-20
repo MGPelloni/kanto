@@ -25,6 +25,9 @@ const db = new Client({
 	password: process.env.DB_PASS || 'password',
 });
 
+// Get learnsets.json and set as global variable
+global.LEARNSETS = JSON.parse(fs.readFileSync('src/server/data/learnsets.json', 'utf8'));
+
 // Kanto
 const lobbies = {};
 

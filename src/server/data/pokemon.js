@@ -11,7 +11,8 @@ const POKEMON = [{
         hp: 45,
         sp_atk: 65,
         sp_def: 65,
-        speed: 45
+        speed: 45,
+        exp: 64
     },
     tm: [
         'SWORDS DANCE',

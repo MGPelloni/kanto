@@ -584,12 +584,9 @@ function prepare_menus() {
 
     menus.push(new Menu('Battle', [
         {
-            name: 'Fight',
+            name: 'FIGHT',
             type: 'menu',
-            callback: () => {
-                battle_fight();
-                menus[player.menu.current].close();
-            }
+            open_menu: 'Moves'
         },
         {
             name: 'PKMN',
@@ -599,14 +596,14 @@ function prepare_menus() {
             }
         },
         {
-            name: 'Item',
+            name: 'ITEM',
             type: 'menu',
             callback: () => {
                 menus[player.menu.current].close();
             }
         },
         {
-            name: 'Run',
+            name: 'RUN',
             type: 'menu',
             callback: () => {
                 sfx.play('run')
@@ -616,6 +613,47 @@ function prepare_menus() {
         width: GAME_WIDTH,
         height: 80,
         x: GAME_WIDTH - 80,
+        y: GAME_HEIGHT - 80
+    }));
+
+    // Moves
+    menus.push(new Menu('Moves', [
+        {
+            name: 'Move 1',
+            type: 'menu',
+            callback: () => {
+                battle_move(0);
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'Move 2',
+            type: 'menu',
+            callback: () => {
+                battle_move(1);
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'Move 3',
+            type: 'menu',
+            callback: () => {
+                battle_move(2);
+                menus[player.menu.current].close();
+            }
+        },
+        {
+            name: 'Move 4',
+            type: 'menu',
+            callback: () => {
+                battle_move(3);
+                menus[player.menu.current].close();
+            }
+        },
+    ], {
+        width: GAME_WIDTH,
+        height: 80,
+        x: GAME_WIDTH - 140,
         y: GAME_HEIGHT - 80
     }));
 

@@ -155,6 +155,7 @@ class Dialogue {
                 });
 
                 if (this.post_callback) {
+                    console.log('Post callback:', this.post_callback);  
                     if (typeof window[this.post_callback.name] === "function") { 
                         window[this.post_callback['name']](this.post_callback['args']);
                     }

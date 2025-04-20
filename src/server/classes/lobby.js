@@ -3,6 +3,7 @@ class Lobby {
         this.id = id;
         this.game_id = game_id;
         this.trainers = trainers;
+        this.battles = [];
         this.game = false;
         this.loaded = false;
         this.name = 'Untitled Lobby';

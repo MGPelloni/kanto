@@ -19,15 +19,8 @@ class Player {
         this.in_battle = false;
         this.automove = {};
         
-        this.pokemon = [
-            POKEMON[Math.floor(Math.random() * 151)]
-        ];
-
+        this.pokemon = [];
         this.pokedex = new Set();
-
-        this.pokemon.forEach(pokemon => {
-            this.pokedex.add(pokemon.id);
-        });
 
         this.items = [];
         this.money = 0;

@@ -97,3 +97,63 @@ function requireHTTPS(req, res, next) {
     }
     next();
 }
+
+function get_pokemon(id, level = 5) {
+    let pokemon = POKEMON[id - 1];
+
+    console.log('Pokemon:', pokemon);
+
+    if (!pokemon) {
+        console.log('Error: Pokemon not found');
+        return null;
+    } else {
+        pokemon = JSON.parse(JSON.stringify(pokemon)); // Deep copy
+    }
+
+    pokemon.level = level;
+
+    if (pokemon) {
+        // Find the pokemon
+        pokemon.moves = [];
+
+        let pkmn = LEARNSETS.find(learnset => learnset.id === pokemon.id);
+        pkmn.learnset.forEach(learnset => {
+            if (learnset.level <= level) {
+                let move_obj = MOVES.find(m => m.name === learnset.name);
+                if (move_obj) {
+                    pokemon.moves.push(move_obj);
+                }
+            }
+        });
+
+        // Only keep the last 4 moves
+        if (pokemon.moves.length > 4) {
+            pokemon.moves = pokemon.moves.slice(-4);
+        }
+
+        console.log('Moves:', pokemon.moves);
+    } else {
+        console.log('Error: Pokemon not found');
+        return null;
+    }
+
+    // Calculate the stats based on the level of the pokemon
+    pokemon.stats = {};
+    pokemon.stats.atk = Math.floor(((2 * pokemon.base.atk * level) / 100) + level + 5);
+    pokemon.stats.def = Math.floor(((2 * pokemon.base.def * level) / 100) + level + 5);
+    pokemon.stats.hp = Math.floor(((2 * pokemon.base.hp * level) / 100) + level + 10);
+    pokemon.stats.sp_atk = Math.floor(((2 * pokemon.base.sp_atk * level) / 100) + level + 5);
+    pokemon.stats.sp_def = Math.floor(((2 * pokemon.base.sp_def * level) / 100) + level + 5);
+    pokemon.stats.speed = Math.floor(((2 * pokemon.base.speed * level) / 100) + level + 5);
+
+    // Set the current HP to the max HP
+    pokemon.currentHP = pokemon.stats.hp;
+    pokemon.maxHP = pokemon.stats.hp;
+
+    // Exp
+    pokemon.exp = 0;
+    pokemon.exp_needed = Math.floor((Math.pow(pokemon.level, 3) * 0.8) + (pokemon.level * 4));
+    pokemon.exp_needed = Math.floor(pokemon.exp_needed * 1.25); // 1.25x EXP for now
+
+    return pokemon;
+}

@@ -331,3 +331,13 @@ function kanto_close_menus() {
         menu.close();
     });
 }
+
+function battle_move(move) {
+    kanto_close_menus();
+
+    socket.emit('battle_move', {
+        lobby_id: lobby_id,
+        target: 'opponent',
+        move: move
+    });
+}

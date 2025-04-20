@@ -14,6 +14,14 @@ function dialogue_cry_sfx(args) {
     }
 }
 
+function dialogue_play_music(args) {
+    console.log('callback event: dialogue_play_music', args);
+
+    if (args.id) {
+        music.immediate_play(args.id);
+    }
+}
+
 function dialogue_found_item(args) {
     console.log('callback event: dialogue_found_item', args);
 

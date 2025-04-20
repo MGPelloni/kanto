@@ -9,7 +9,20 @@ class Trainer {
         this.color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
         this.in_battle = false;
 
-        this.battle = {};
+        this.pokemon = [
+            get_pokemon(Math.floor(Math.random() * 151), 3),
+            get_pokemon(Math.floor(Math.random() * 151), 3),
+            get_pokemon(Math.floor(Math.random() * 151), 3),
+        ];
+
+        this.items = [];
+        this.battle = null;
+
+        // Emit trainer sync
+        io.to(this.socket_id).emit('player_sync', {
+            pokemon: this.pokemon,
+            items: this.items,
+        });
     }
 
     check_tile(lobby_key) {
@@ -37,15 +50,25 @@ class Trainer {
         }
 
         this.in_battle = true;
-        this.battle.type = 'wild';
-        this.battle.pokemon = new Pokemon(id, level);
+
+        console.log('Wild Pokemon Battle:', this.name, this.level);
+
+        let opponent = {
+            pokemon: [
+                get_pokemon(id, parseInt(level))
+            ]
+        }
+
+        lobbies[this.lobby_id].battles.push(new Battle(this.lobby_id, this.socket_id, this, opponent, 'wild'));
+
+        console.log('lobby battles:', lobbies[this.lobby_id].battles);
 
         io.to(this.lobby_id).emit('trainer_entering_battle', {
             socket_id: this.socket_id
         });
 
         io.to(this.socket_id).emit('wild_pokemon_battle', {
-            pokemon: this.battle.pokemon
+            pokemon: opponent.pokemon[0]
         });
     }
 
